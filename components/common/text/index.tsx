@@ -1,7 +1,6 @@
 import { Text as DefaultText, TextProps as DefaultTextProps, StyleSheet } from "react-native";
 
 interface TextProps extends DefaultTextProps {
-  children: string;
   size?: "sm" | "md" | "lg";
 }
 

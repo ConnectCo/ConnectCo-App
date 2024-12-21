@@ -1,10 +1,6 @@
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 
-interface ButtonProps extends TouchableOpacityProps {
-  children: React.ReactNode;
-}
-
-export default function Button({ children, ...restProps }: ButtonProps) {
+export default function Button({ children, ...restProps }: TouchableOpacityProps) {
   return (
     <TouchableOpacity activeOpacity={0.6} {...restProps}>
       {children}
