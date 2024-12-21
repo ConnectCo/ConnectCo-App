@@ -28,7 +28,7 @@ const screens = [
 export default function MainHeader({ title }: MainHeaderProps) {
   return (
     <Header>
-      <Text size="lg" style={styles.text}>
+      <Text size="xl" style={styles.text}>
         {title}
       </Text>
       <Flex direction="row" align="center" gap={4}>
