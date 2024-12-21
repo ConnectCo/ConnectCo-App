@@ -1,5 +1,6 @@
+import { StyleSheet, Text as DefaultText, TextProps as DefaultTextProps } from "react-native";
+
 import { colors } from "@/constants/color";
-import { Text as DefaultText, TextProps as DefaultTextProps, StyleSheet } from "react-native";
 
 interface TextProps extends DefaultTextProps {
   size?: "sm" | "md" | "lg" | "xl";

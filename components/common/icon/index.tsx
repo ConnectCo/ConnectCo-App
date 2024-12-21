@@ -1,5 +1,6 @@
-import { colors, ColorValueType } from "@/constants/color";
 import Svg, { Circle, Path } from "react-native-svg";
+
+import { colors, ColorValueType } from "@/constants/color";
 
 interface IconProps {
   size?: number;

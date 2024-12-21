@@ -1,7 +1,10 @@
 import { StyleSheet, TouchableOpacityProps } from "react-native";
-import Button from ".";
-import Text from "../text";
+
 import { colors } from "@/constants/color";
+
+import Text from "../text";
+
+import Button from ".";
 
 interface TextButtonProps extends TouchableOpacityProps {
   children: string;

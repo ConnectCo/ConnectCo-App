@@ -1,6 +1,8 @@
 import { StyleSheet, TextInput, TextInputProps } from "react-native";
-import Flex from "../flex";
+
 import { colors } from "@/constants/color";
+
+import Flex from "../flex";
 
 interface InputProps extends TextInputProps {
   type?: "fill" | "outline";

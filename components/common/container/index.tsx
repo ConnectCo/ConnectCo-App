@@ -1,5 +1,6 @@
-import { colors } from "@/constants/color";
 import { ScrollView, ScrollViewProps, StyleSheet, View, ViewProps } from "react-native";
+
+import { colors } from "@/constants/color";
 
 type ContainerProps<T extends "View" | "ScrollView"> = {
   as: T;

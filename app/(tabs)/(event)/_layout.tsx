@@ -1,5 +1,6 @@
-import MainHeader from "@/components/common/header/main-header";
 import { Stack } from "expo-router";
+
+import MainHeader from "@/components/common/header/main-header";
 
 export default function EventLayout() {
   return (
