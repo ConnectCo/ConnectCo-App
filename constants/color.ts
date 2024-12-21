@@ -7,6 +7,7 @@ export const colors = {
   gray400: "#ACACAC",
   gray500: "#666666",
   black: "#1D1D1D",
+  white: "#FFFFFF",
 } as const;
 
 type ColorType = typeof colors;
