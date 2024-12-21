@@ -1,9 +1,12 @@
 import { Image } from "expo-image";
+
+import { Dimensions, StyleSheet } from "react-native";
+
+import { colors } from "@/constants/color";
+
 import Button from "../button";
 import Flex from "../flex";
 import Text from "../text";
-import { Dimensions, StyleSheet } from "react-native";
-import { colors } from "@/constants/color";
 
 const { width } = Dimensions.get("screen");
 

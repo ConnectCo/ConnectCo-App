@@ -1,10 +1,11 @@
+import { StyleSheet } from "react-native";
+
 import Button from "@/components/common/button";
+import Card from "@/components/common/card";
 import Container from "@/components/common/container";
 import Flex from "@/components/common/flex";
 import Icon from "@/components/common/icon";
 import Text from "@/components/common/text";
-import { StyleSheet } from "react-native";
-import Card from "@/components/common/card";
 
 const eventList = [
   {

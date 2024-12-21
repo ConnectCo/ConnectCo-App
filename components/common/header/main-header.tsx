@@ -1,10 +1,14 @@
+import { Link } from "expo-router";
+
 import { StyleSheet } from "react-native";
-import Header from ".";
+
+import { colors } from "@/constants/color";
+
+import Flex from "../flex";
 import Icon from "../icon";
 import Text from "../text";
-import { colors } from "@/constants/color";
-import { Link } from "expo-router";
-import Flex from "../flex";
+
+import Header from ".";
 
 interface MainHeaderProps {
   title: string;

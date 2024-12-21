@@ -1,6 +1,7 @@
+import { Tabs } from "expo-router";
+
 import Icon from "@/components/common/icon";
 import { colors, ColorValueType } from "@/constants/color";
-import { Tabs } from "expo-router";
 
 interface IconProps {
   fill: ColorValueType;
