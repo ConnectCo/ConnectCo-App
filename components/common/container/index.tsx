@@ -1,3 +1,4 @@
+import { colors } from "@/constants/color";
 import { ScrollView, ScrollViewProps, StyleSheet, View, ViewProps } from "react-native";
 
 type ContainerProps<T extends "View" | "ScrollView"> = {
@@ -23,5 +24,6 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
     paddingHorizontal: 24,
+    backgroundColor: colors.white,
   },
 });
