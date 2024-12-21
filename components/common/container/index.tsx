@@ -10,9 +10,10 @@ export default function Container<T extends "View" | "ScrollView">({
   ...restProps
 }: ContainerProps<T>) {
   const Component = as === "View" ? View : ScrollView;
+  const { style, ...props } = restProps;
 
   return (
-    <Component style={styles.container} {...(restProps as any)}>
+    <Component style={[styles.container, style]} {...(props as any)}>
       {children}
     </Component>
   );
