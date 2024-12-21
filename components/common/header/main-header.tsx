@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   },
   buttonsWrap: {
     flexDirection: "row",
+    alignItems: "center",
     gap: 4,
   },
 });
