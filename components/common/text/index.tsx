@@ -2,7 +2,7 @@ import { colors } from "@/constants/color";
 import { Text as DefaultText, TextProps as DefaultTextProps, StyleSheet } from "react-native";
 
 interface TextProps extends DefaultTextProps {
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
 }
 
 export default function Text({ children, size = "md", ...restProps }: TextProps) {
