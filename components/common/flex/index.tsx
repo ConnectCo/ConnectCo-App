@@ -23,7 +23,7 @@ const convertJustifyStyle = (style: JustifyType) => {
 const convertAlignStyle = (style: AlignType) => {
   if (style === "start") return "flex-start";
   if (style === "end") return "flex-end";
-  return style; // "center", "baseline", "stretch" 그대로 반환
+  return style;
 };
 
 export default function Flex({
@@ -35,6 +35,7 @@ export default function Flex({
   ...restProps
 }: FlexProps) {
   const { style, ...props } = restProps;
+
   return (
     <View
       style={[

@@ -1,3 +1,4 @@
+import { colors } from "@/constants/color";
 import { Text as DefaultText, TextProps as DefaultTextProps, StyleSheet } from "react-native";
 
 interface TextProps extends DefaultTextProps {
@@ -5,14 +6,19 @@ interface TextProps extends DefaultTextProps {
 }
 
 export default function Text({ children, size = "md", ...restProps }: TextProps) {
+  const { style, ...props } = restProps;
+
   return (
-    <DefaultText style={styles[size]} {...restProps}>
+    <DefaultText style={[styles.text, styles[size], style]} {...props}>
       {children}
     </DefaultText>
   );
 }
 
 const styles = StyleSheet.create({
+  text: {
+    color: colors.black,
+  },
   sm: {
     fontSize: 12,
     lineHeight: 16,

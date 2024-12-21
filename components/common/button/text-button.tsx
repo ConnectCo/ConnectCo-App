@@ -1,18 +1,19 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacityProps } from "react-native";
 import Button from ".";
 import Text from "../text";
 import { colors } from "@/constants/color";
 
-interface TextButtonProps {
+interface TextButtonProps extends TouchableOpacityProps {
   children: string;
   type?: "fill" | "outline";
 }
 
 export default function TextButton({ children, type = "fill", ...restProps }: TextButtonProps) {
-  const textStyle = styles[type];
+  const { backgroundColor, color } = styles[type];
+
   return (
-    <Button style={[styles.container, textStyle]} {...restProps}>
-      <Text style={[styles.text, textStyle]}>{children}</Text>
+    <Button style={[styles.container, { backgroundColor }]} {...restProps}>
+      <Text style={[styles.text, { color }]}>{children}</Text>
     </Button>
   );
 }
@@ -21,7 +22,6 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 12,
     borderColor: colors.primary200,
-    boxSizing: "border",
     borderWidth: 1,
     borderRadius: 10,
   },
