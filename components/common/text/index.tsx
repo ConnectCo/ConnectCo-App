@@ -4,14 +4,14 @@ import { colors } from "@/constants/color";
 
 interface TextProps extends DefaultTextProps {
   size?: "sm" | "md" | "lg" | "xl";
-  weight?: "normal" | "regular" | "semibold" | "bold";
+  weight?: 400 | 500 | 600 | 700;
   align?: "auto" | "justify" | "left" | "center" | "right";
 }
 
 export default function Text({
   children,
   size = "md",
-  weight = "normal",
+  weight = 400,
   align = "auto",
   ...restProps
 }: TextProps) {

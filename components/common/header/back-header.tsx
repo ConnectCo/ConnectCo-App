@@ -24,7 +24,7 @@ export default function BackHeader({ title }: BackHeaderProps) {
       <Button style={styles.section} onPress={onPressBack}>
         <Icon.ArrowLeft />
       </Button>
-      <Text size="xl" weight="bold" align="center" style={styles.title}>
+      <Text size="xl" weight={700} align="center" style={styles.title}>
         {title}
       </Text>
       <View style={styles.section} />

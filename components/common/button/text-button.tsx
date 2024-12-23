@@ -17,7 +17,7 @@ export default function TextButton({ children, type = "fill", ...restProps }: Te
 
   return (
     <Button style={[styles.container, { backgroundColor }, style]} {...props}>
-      <Text size="lg" weight="semibold" align="center" style={{ color }}>
+      <Text size="lg" weight={600} align="center" style={{ color }}>
         {children}
       </Text>
     </Button>

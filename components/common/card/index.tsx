@@ -28,10 +28,10 @@ export default function Card({ id, title, college, duration }: CardProps) {
       <Flex direction="row" align="center" gap={24}>
         <Image source={require("../../../assets/images/hanyang.png")} style={styles.image} />
         <Flex>
-          <Text size="sm" weight="bold" style={styles.college}>
+          <Text size="sm" weight={700} style={styles.college}>
             {college}
           </Text>
-          <Text size="lg" weight="semibold" style={styles.title}>
+          <Text size="lg" weight={600} style={styles.title}>
             {title}
           </Text>
           <Text size="sm" numberOfLines={1} style={styles.duration}>

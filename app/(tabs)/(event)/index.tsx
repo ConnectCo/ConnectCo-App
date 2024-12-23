@@ -40,7 +40,7 @@ export default function EventScreen() {
       <Flex gap={30}>
         <Flex gap={20}>
           <Flex direction="row" justify="between" align="center">
-            <Text size="xl" weight="semibold">
+            <Text size="xl" weight={600}>
               추천 이벤트
             </Text>
             <Button>
@@ -55,7 +55,7 @@ export default function EventScreen() {
         </Flex>
         <Flex gap={20}>
           <Flex direction="row" justify="between" align="center">
-            <Text size="xl" weight="semibold">
+            <Text size="xl" weight={600}>
               이벤트 목록
             </Text>
             <Button>

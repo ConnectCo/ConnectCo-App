@@ -32,7 +32,7 @@ const screens = [
 export default function MainHeader({ title }: MainHeaderProps) {
   return (
     <Header>
-      <Text size="xl" weight="bold" style={styles.text}>
+      <Text size="xl" weight={700} style={styles.text}>
         {title}
       </Text>
       <Flex direction="row" align="center" gap={4}>
