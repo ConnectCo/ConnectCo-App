@@ -19,7 +19,7 @@ export default function EventLayout() {
         }}
       />
       <Stack.Screen
-        name="college/index"
+        name="college/[id]"
         options={{
           headerShown: false,
         }}

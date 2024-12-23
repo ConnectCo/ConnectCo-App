@@ -36,7 +36,7 @@ export default function DetailScreen() {
   const [selected, setSelected] = useState(false);
 
   const onRouteCollegeProfile = () => {
-    router.push("/(tabs)/(event)/college");
+    router.push(`/(tabs)/(event)/college/${id}`);
   };
 
   const onRouteSuggest = () => {
