@@ -1,4 +1,5 @@
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 
 import { Dimensions, StyleSheet } from "react-native";
 
@@ -11,21 +12,26 @@ import Text from "../text";
 const { width } = Dimensions.get("screen");
 
 interface CardProps {
+  id: number;
   title: string;
   college: string;
   duration: string;
 }
 
-export default function Card({ title, college, duration }: CardProps) {
+export default function Card({ id, title, college, duration }: CardProps) {
+  const router = useRouter();
+  const onRouteDetail = () => {
+    router.push(`/(tabs)/(event)/${id}`);
+  };
   return (
-    <Button style={styles.container}>
+    <Button style={styles.container} onPress={onRouteDetail}>
       <Flex direction="row" align="center" gap={24}>
         <Image source={require("../../../assets/images/hanyang.png")} style={styles.image} />
         <Flex>
-          <Text size="sm" style={styles.college}>
+          <Text size="sm" weight="bold" style={styles.college}>
             {college}
           </Text>
-          <Text size="lg" style={styles.title}>
+          <Text size="lg" weight="semibold" style={styles.title}>
             {title}
           </Text>
           <Text size="sm" numberOfLines={1} style={styles.duration}>
@@ -50,11 +56,9 @@ const styles = StyleSheet.create({
     height: 60,
   },
   college: {
-    fontWeight: 700,
     color: colors.gray500,
   },
   title: {
-    fontWeight: 600,
     marginTop: 4,
     marginBottom: 8,
   },

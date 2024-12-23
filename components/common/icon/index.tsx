@@ -97,6 +97,14 @@ const Icon = {
       />
     </Svg>
   ),
+  ArrowLeft: ({ size = 36, fill = colors.black }: IconProps) => (
+    <Svg width={size} height={size} viewBox="0 0 36 36" fill="none">
+      <Path
+        d="M21 26.481L12.5193 18.0003L21 9.51953L22.5808 11.1003L15.6808 18.0003L22.5808 24.9003L21 26.481Z"
+        fill={fill}
+      />
+    </Svg>
+  ),
 };
 
 export default Icon;
