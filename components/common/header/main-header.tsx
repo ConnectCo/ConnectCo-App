@@ -32,7 +32,7 @@ const screens = [
 export default function MainHeader({ title }: MainHeaderProps) {
   return (
     <Header>
-      <Text size="xl" style={styles.text}>
+      <Text size="xl" weight="bold" style={styles.text}>
         {title}
       </Text>
       <Flex direction="row" align="center" gap={4}>
@@ -49,6 +49,5 @@ export default function MainHeader({ title }: MainHeaderProps) {
 const styles = StyleSheet.create({
   text: {
     color: colors.white,
-    fontWeight: 700,
   },
 });

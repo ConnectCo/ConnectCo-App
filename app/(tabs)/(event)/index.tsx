@@ -40,7 +40,7 @@ export default function EventScreen() {
       <Flex gap={30}>
         <Flex gap={20}>
           <Flex direction="row" justify="between" align="center">
-            <Text size="xl" style={styles.title}>
+            <Text size="xl" weight="semibold">
               추천 이벤트
             </Text>
             <Button>
@@ -48,13 +48,14 @@ export default function EventScreen() {
             </Button>
           </Flex>
           <Flex gap={16}>
-            <Card college="한양대학교" title="한양대학교 행사" duration="2023.10.17 ~ 2023.10.29" />
-            <Card college="한양대학교" title="한양대학교 행사" duration="2023.10.17 ~ 2023.10.29" />
+            {eventList.slice(0, 2).map((event) => (
+              <Card key={event.id} {...event} />
+            ))}
           </Flex>
         </Flex>
         <Flex gap={20}>
           <Flex direction="row" justify="between" align="center">
-            <Text size="xl" style={styles.title}>
+            <Text size="xl" weight="semibold">
               이벤트 목록
             </Text>
             <Button>
@@ -78,8 +79,5 @@ export default function EventScreen() {
 const styles = StyleSheet.create({
   container: {
     paddingBottom: 20,
-  },
-  title: {
-    fontWeight: 600,
   },
 });
