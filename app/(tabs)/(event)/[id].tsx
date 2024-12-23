@@ -39,6 +39,10 @@ export default function DetailScreen() {
     router.push("/(tabs)/(event)/college");
   };
 
+  const onRouteSuggest = () => {
+    router.push(`/(tabs)/(event)/suggest/${id}`);
+  };
+
   const onSelect = () => {
     setSelected((prev) => !prev);
   };
@@ -89,10 +93,12 @@ export default function DetailScreen() {
             />
           </Flex>
           <Flex direction="row" gap={12}>
-            <TextButton style={{ flex: 1 }} type="outline">
+            <TextButton style={styles.button} type="outline">
               1:1 채팅
             </TextButton>
-            <TextButton style={{ flex: 1 }}>협찬 제안</TextButton>
+            <TextButton onPress={onRouteSuggest} style={styles.button}>
+              협찬 제안
+            </TextButton>
           </Flex>
         </Flex>
       </Container>
@@ -121,5 +127,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray300,
     marginTop: 24,
     marginBottom: 16,
+  },
+  button: {
+    flex: 1,
   },
 });
