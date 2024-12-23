@@ -19,9 +19,15 @@ export default function EventLayout() {
         }}
       />
       <Stack.Screen
-        name="college/index"
+        name="college/[id]"
         options={{
           headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="suggest/[id]"
+        options={{
+          header: () => <BackHeader type="primary" title="협찬 제안 정보" />,
         }}
       />
     </Stack>

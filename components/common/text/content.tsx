@@ -1,7 +1,6 @@
-import { StyleSheet } from "react-native";
+import Flex from "../flex";
 
-import Flex from "../common/flex";
-import Text from "../common/text";
+import Text from ".";
 
 interface ContentProps {
   title: string;
@@ -14,11 +13,7 @@ export default function Content({ title, content }: ContentProps) {
       <Text size="lg" weight={600}>
         {title}
       </Text>
-      <Text style={styles.content}>{content}</Text>
+      <Text>{content}</Text>
     </Flex>
   );
 }
-
-const styles = StyleSheet.create({
-  content: {},
-});

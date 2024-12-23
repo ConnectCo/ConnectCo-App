@@ -3,12 +3,9 @@ import { Image } from "expo-image";
 import { useState } from "react";
 import { Dimensions, FlatList, StyleSheet, View, ViewToken } from "react-native";
 
-import Text from "../common/text";
+import { ImageProps } from "@/types/image";
 
-interface ImageProps {
-  id: number;
-  source: any;
-}
+import Text from "../text";
 
 interface ViewableItemsProps {
   viewableItems: ViewToken<ImageProps>[];
