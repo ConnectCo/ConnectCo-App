@@ -8,9 +8,9 @@ import TextButton from "@/components/common/button/text-button";
 import Container from "@/components/common/container";
 import Flex from "@/components/common/flex";
 import Icon from "@/components/common/icon";
+import ImageScroll from "@/components/common/image-scroll";
 import Text from "@/components/common/text";
-import Content from "@/components/event/content";
-import ImageScroll from "@/components/event/image-scroll";
+import Content from "@/components/common/text/content";
 import { colors } from "@/constants/color";
 
 const images = [

@@ -21,9 +21,12 @@ export default function Input({
 }: InputProps) {
   const inputStyle = styles[type];
   const isOutline = type === "outline";
+  const { multiline, ...props } = restProps;
+  const height = multiline ? { minHeight: 59.7 } : { maxHeight: 40 };
+  const align = multiline ? "start" : "center";
 
   return (
-    <Flex direction="row" align="center" style={[styles.container, inputStyle]}>
+    <Flex direction="row" align={align} gap={5} style={[styles.container, inputStyle, height]}>
       {left}
       <TextInput
         value={value}
@@ -31,7 +34,8 @@ export default function Input({
         placeholder={placeholder}
         placeholderTextColor={isOutline ? colors.gray300 : colors.gray500}
         style={styles.input}
-        {...restProps}
+        multiline={multiline}
+        {...props}
       />
       {right}
     </Flex>
@@ -44,13 +48,11 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
     paddingVertical: 12,
     paddingHorizontal: 8,
-    maxHeight: 40,
   },
   input: {
     flex: 1,
-    fontSize: 14,
     fontWeight: 500,
-    lineHeight: 18,
+    padding: 0,
     color: colors.black,
   },
   fill: {

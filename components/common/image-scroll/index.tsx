@@ -3,7 +3,7 @@ import { Image } from "expo-image";
 import { useState } from "react";
 import { Dimensions, FlatList, StyleSheet, View, ViewToken } from "react-native";
 
-import Text from "../common/text";
+import Text from "../text";
 
 interface ImageProps {
   id: number;
