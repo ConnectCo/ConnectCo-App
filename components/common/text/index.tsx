@@ -4,13 +4,24 @@ import { colors } from "@/constants/color";
 
 interface TextProps extends DefaultTextProps {
   size?: "sm" | "md" | "lg" | "xl";
+  weight?: 400 | 500 | 600 | 700;
+  align?: "auto" | "justify" | "left" | "center" | "right";
 }
 
-export default function Text({ children, size = "md", ...restProps }: TextProps) {
+export default function Text({
+  children,
+  size = "md",
+  weight = 400,
+  align = "auto",
+  ...restProps
+}: TextProps) {
   const { style, ...props } = restProps;
 
   return (
-    <DefaultText style={[styles.text, styles[size], style]} {...props}>
+    <DefaultText
+      style={[styles.text, styles[size], { fontWeight: weight, textAlign: align }, style]}
+      {...props}
+    >
       {children}
     </DefaultText>
   );

@@ -17,7 +17,9 @@ export default function TextButton({ children, type = "fill", ...restProps }: Te
 
   return (
     <Button style={[styles.container, { backgroundColor }, style]} {...props}>
-      <Text style={[styles.text, { color }]}>{children}</Text>
+      <Text size="lg" weight={600} align="center" style={{ color }}>
+        {children}
+      </Text>
     </Button>
   );
 }
@@ -28,11 +30,6 @@ const styles = StyleSheet.create({
     borderColor: colors.primary200,
     borderWidth: 1,
     borderRadius: 10,
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: 600,
-    textAlign: "center",
   },
   fill: {
     backgroundColor: colors.primary200,
