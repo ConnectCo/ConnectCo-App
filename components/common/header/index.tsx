@@ -1,4 +1,5 @@
-import { SafeAreaView, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { colors } from "@/constants/color";
 
@@ -11,12 +12,13 @@ interface HeaderProps {
 
 export default function Header({ type = "primary", children }: HeaderProps) {
   const backgroundColor = type === "primary" ? colors.primary200 : colors.gray100;
+  const { top } = useSafeAreaInsets();
   return (
-    <SafeAreaView style={{ backgroundColor }}>
+    <View style={{ backgroundColor, paddingTop: top }}>
       <Flex direction="row" justify="between" align="center" style={styles.innerContainer}>
         {children}
       </Flex>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -24,5 +26,6 @@ const styles = StyleSheet.create({
   innerContainer: {
     paddingHorizontal: 24,
     paddingVertical: 14,
+    boxShadow: "0 4 4 0 rgba(0, 0, 0, 0.102)",
   },
 });
