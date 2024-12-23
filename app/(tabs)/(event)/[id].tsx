@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
@@ -29,13 +29,14 @@ const images = [
 ];
 
 export default function DetailScreen() {
+  const router = useRouter();
   const { id } = useLocalSearchParams();
   // id를 이용해서 이벤트 상세 내용 불러오기
 
   const [selected, setSelected] = useState(false);
 
   const onRouteCollegeProfile = () => {
-    // Move to college profile screen
+    router.push("/(tabs)/(event)/college");
   };
 
   const onSelect = () => {
