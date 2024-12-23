@@ -3,11 +3,40 @@ import * as Linking from "expo-linking";
 import { StyleSheet } from "react-native";
 
 import Button from "@/components/common/button";
+import Card from "@/components/common/card";
+import Container from "@/components/common/container";
 import Flex from "@/components/common/flex";
 import BackHeader from "@/components/common/header/back-header";
 import Icon from "@/components/common/icon";
 import Text from "@/components/common/text";
 import { colors } from "@/constants/color";
+
+const eventList = [
+  {
+    id: 1,
+    college: "한양대학교",
+    title: "한양대학교 행사",
+    duration: "2023.10.17 ~ 2023.10.29",
+  },
+  {
+    id: 2,
+    college: "건국대학교",
+    title: "산업디자인과 전시회",
+    duration: "2023.10.17 ~ 2023.10.29",
+  },
+  {
+    id: 3,
+    college: "서울대학교",
+    title: "서울대학교 축제",
+    duration: "2023.11.01 ~ 2023.11.05",
+  },
+  {
+    id: 4,
+    college: "연세대학교",
+    title: "연세대학교 음악회",
+    duration: "2023.11.10 ~ 2023.11.12",
+  },
+];
 
 export default function College() {
   const openURL = (url: string) => {
@@ -16,25 +45,47 @@ export default function College() {
     });
   };
   return (
-    <BackHeader title="한양대학교">
-      <Flex direction="row" justify="center" gap={20}>
-        <Flex gap={4} align="center">
-          <Button onPress={() => openURL("https://www.hanyang.ac.kr")} style={styles.button}>
-            <Icon.Home />
-          </Button>
-          <Text size="sm">홈페이지</Text>
+    <>
+      <BackHeader title="한양대학교">
+        <Flex direction="row" justify="center" gap={20}>
+          <Flex gap={4} align="center">
+            <Button onPress={() => openURL("https://www.hanyang.ac.kr")} style={styles.button}>
+              <Icon.Home />
+            </Button>
+            <Text size="sm">홈페이지</Text>
+          </Flex>
+          <Flex gap={4} align="center">
+            <Button
+              onPress={() => openURL("https://www.hanyang.ac.kr/web/www/-33")}
+              style={styles.button}
+            >
+              <Icon.Calendar />
+            </Button>
+            <Text size="sm">학사일정</Text>
+          </Flex>
         </Flex>
-        <Flex gap={4} align="center">
-          <Button
-            onPress={() => openURL("https://www.hanyang.ac.kr/web/www/-33")}
-            style={styles.button}
-          >
-            <Icon.Calendar />
-          </Button>
-          <Text size="sm">학사일정</Text>
+      </BackHeader>
+      <Container as="ScrollView">
+        <Flex gap={20}>
+          <Flex direction="row" justify="between" align="center">
+            <Text size="xl" weight={600}>
+              이벤트 목록
+            </Text>
+            <Button>
+              <Flex direction="row" align="center" gap={4}>
+                <Icon.Switch />
+                <Text>추천순</Text>
+              </Flex>
+            </Button>
+          </Flex>
+          <Flex gap={16}>
+            {eventList.map((event) => (
+              <Card key={event.id} {...event} />
+            ))}
+          </Flex>
         </Flex>
-      </Flex>
-    </BackHeader>
+      </Container>
+    </>
   );
 }
 

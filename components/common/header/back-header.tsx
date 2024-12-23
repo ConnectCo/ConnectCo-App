@@ -27,7 +27,7 @@ export default function BackHeader({ children, title, type = "gray" }: BackHeade
 
   return (
     <Header type={type}>
-      <Flex style={styles.section} gap={10}>
+      <Flex style={styles.section} gap={16}>
         <Flex direction="row">
           <Button style={styles.section} onPress={onPressBack}>
             <Icon.ArrowLeft fill={color} />
