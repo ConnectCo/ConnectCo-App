@@ -18,6 +18,12 @@ export default function EventLayout() {
           header: () => <BackHeader title="이벤트 상세보기" />,
         }}
       />
+      <Stack.Screen
+        name="college/index"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }
