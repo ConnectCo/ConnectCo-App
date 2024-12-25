@@ -10,6 +10,7 @@ import Input from ".";
 
 interface InputWithTitleProps extends TextInputProps {
   title: string;
+  optional?: boolean;
   left?: React.ReactNode;
   right?: React.ReactNode;
   description?: string;
@@ -19,6 +20,7 @@ interface InputWithTitleProps extends TextInputProps {
 
 export default function InputWithTitle({
   title,
+  optional,
   left,
   right,
   description,
@@ -32,9 +34,16 @@ export default function InputWithTitle({
   return (
     <Flex gap={8}>
       <Flex gap={4}>
-        <Text size="lg" weight={600}>
-          {title}
-        </Text>
+        <Flex direction="row" align="center">
+          <Text size="lg" weight={600}>
+            {title}{" "}
+          </Text>
+          {optional && (
+            <Text weight={500} style={styles.optional}>
+              (선택)
+            </Text>
+          )}
+        </Flex>
         <Component onPress={() => onPress?.()}>
           <Input
             left={left}
@@ -57,5 +66,8 @@ export default function InputWithTitle({
 const styles = StyleSheet.create({
   description: {
     color: colors.gray500,
+  },
+  optional: {
+    color: colors.gray300,
   },
 });
