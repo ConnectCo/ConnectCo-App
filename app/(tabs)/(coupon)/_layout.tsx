@@ -8,6 +8,18 @@ export default function CouponLayout() {
     <Stack>
       <Stack.Screen name="index" options={{ header: () => <MainHeader title="쿠폰" /> }} />
       <Stack.Screen name="[id]" options={{ header: () => <BackHeader title="쿠폰 상세보기" /> }} />
+      <Stack.Screen
+        name="store/[id]"
+        options={{
+          header: () => <BackHeader title="가게 상세보기" />,
+        }}
+      />
+      <Stack.Screen
+        name="suggest/[id]"
+        options={{
+          header: () => <BackHeader type="primary" title="협찬 제안 정보" />,
+        }}
+      />
     </Stack>
   );
 }

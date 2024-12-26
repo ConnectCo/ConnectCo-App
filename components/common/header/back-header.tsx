@@ -32,7 +32,7 @@ export default function BackHeader({ children, title, type = "gray" }: BackHeade
           <Button style={styles.section} onPress={onPressBack}>
             <Icon.ArrowLeft fill={color} />
           </Button>
-          <Text size="xl" weight={700} align="center" style={[styles.title, { color }]}>
+          <Text size="xxl" weight={700} align="center" style={[styles.title, { color }]}>
             {title}
           </Text>
           <View style={styles.section} />

@@ -27,6 +27,7 @@ export default function Card({ id, title, host, duration, source, type = "event"
   const onRouteDetail = () => {
     router.push(`/(tabs)/(${type})/${id}`);
   };
+
   return (
     <Button style={styles.container} onPress={onRouteDetail}>
       <Flex direction="row" align="center" gap={24}>
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 8,
     borderRadius: 10,
-    boxShadow: "0 0 10 0.1 rgba(0, 0, 0, 0.26)",
+    boxShadow: "0 0 5 0.1 rgba(0, 0, 0, 0.26)",
     elevation: 5,
   },
   image: {

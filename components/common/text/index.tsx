@@ -3,7 +3,7 @@ import { StyleSheet, Text as DefaultText, TextProps as DefaultTextProps } from "
 import { colors } from "@/constants/color";
 
 interface TextProps extends DefaultTextProps {
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg" | "xl" | "xxl";
   weight?: 400 | 500 | 600 | 700;
   align?: "auto" | "justify" | "left" | "center" | "right";
 }
@@ -44,6 +44,10 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   xl: {
+    fontSize: 20,
+    lineHeight: 22,
+  },
+  xxl: {
     fontSize: 20,
     lineHeight: 26,
   },

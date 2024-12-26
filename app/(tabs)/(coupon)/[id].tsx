@@ -28,7 +28,7 @@ export default function DetailScreen() {
   const [selected, setSelected] = useState(false);
 
   const onRouteCollegeProfile = () => {
-    router.push(`/(tabs)/(coupon)/college/${id}`);
+    router.push(`/(tabs)/(coupon)/store/${id}`);
   };
 
   const onRouteSuggest = () => {
