@@ -43,7 +43,7 @@ export default function RootLayout() {
             options={{ header: () => <BackHeader type="primary" title="이벤트 등록하기" /> }}
           />
           <Stack.Screen name="search" options={{ header: () => <SearchHeader /> }} />
-          <Stack.Screen name="alarm" options={{ headerShown: false }} />
+          <Stack.Screen name="alarm" options={{ header: () => <BackHeader title="알림" /> }} />
         </Stack>
       </QueryClientProvider>
       <StatusBar style="auto" />
