@@ -6,6 +6,7 @@ interface IconProps {
   size?: number;
   fill?: ColorValueType;
   selected?: boolean;
+  dot?: boolean;
 }
 
 const Icon = {
@@ -63,7 +64,7 @@ const Icon = {
       <Path d="M13.5 13.5L20.5 20.5" stroke={fill} strokeWidth="1.5" strokeMiterlimit="2.50784" />
     </Svg>
   ),
-  Alarm: ({ size = 24, fill = colors.white }: IconProps) => (
+  Alarm: ({ size = 24, fill = colors.white, dot = false }: IconProps) => (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <Path
         d="M14 18.5C14 19.0304 13.7893 19.5391 13.4142 19.9142C13.0391 20.2893 12.5304 20.5 12 20.5C11.4696 20.5 10.9609 20.2893 10.5858 19.9142C10.2107 19.5391 10 19.0304 10 18.5L12 18.5H14Z"
@@ -79,7 +80,9 @@ const Icon = {
         d="M12 4.5C8.27208 4.5 5.25 7.52208 5.25 11.25V14.75C5.25 15.1642 4.91421 15.5 4.5 15.5C3.67157 15.5 3 16.1716 3 17C3 17.8284 3.67157 18.5 4.5 18.5H5.25H18.75H19.5C20.3284 18.5 21 17.8284 21 17C21 16.1716 20.3284 15.5 19.5 15.5C19.0858 15.5 18.75 15.1642 18.75 14.75V11.25C18.75 7.52208 15.7279 4.5 12 4.5Z"
         stroke={fill}
         strokeWidth="1.5"
+        fill={dot ? colors.white : "none"}
       />
+      {dot && <Circle cx="17" cy="6" r="3" fill="#179EFF" />}
     </Svg>
   ),
   Reset: ({ size = 24, fill = colors.black }: IconProps) => (

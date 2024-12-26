@@ -14,28 +14,32 @@ const { width } = Dimensions.get("screen");
 interface CardProps {
   id: number;
   title: string;
-  college: string;
+  host: string;
   duration: string;
+  source: string;
+  type?: "event" | "coupon";
 }
 
-export default function Card({ id, title, college, duration }: CardProps) {
+export default function Card({ id, title, host, duration, source, type = "event" }: CardProps) {
   const router = useRouter();
+  const durationByScreen = type === "event" ? "이벤트 기간" : "신청 마감일";
+
   const onRouteDetail = () => {
     router.push(`/(tabs)/(event)/${id}`);
   };
   return (
     <Button style={styles.container} onPress={onRouteDetail}>
       <Flex direction="row" align="center" gap={24}>
-        <Image source={require("../../../assets/images/hanyang.png")} style={styles.image} />
+        <Image source={source} style={styles.image} />
         <Flex>
-          <Text size="sm" weight={700} style={styles.college}>
-            {college}
+          <Text size="sm" weight={700} style={styles.host}>
+            {host}
           </Text>
           <Text size="lg" weight={600} style={styles.title}>
             {title}
           </Text>
           <Text size="sm" numberOfLines={1} style={styles.duration}>
-            이벤트 기간 - {duration}
+            {durationByScreen} - {duration}
           </Text>
         </Flex>
       </Flex>
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
   },
-  college: {
+  host: {
     color: colors.gray500,
   },
   title: {

@@ -13,7 +13,7 @@ import SelectImage from "@/components/common/select-image";
 import { colors } from "@/constants/color";
 import { ImagePickerProps } from "@/types/image";
 
-export default function Add() {
+export default function AddScreen() {
   const [images, setImages] = useState<ImagePickerProps[]>([]);
 
   const onPickImage = async () => {
