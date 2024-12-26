@@ -29,18 +29,6 @@ export default function CouponLayout() {
           header: () => <BackHeader type="primary" title="협찬 신청 정보" />,
         }}
       />
-      <Stack.Screen
-        name="store/[id]"
-        options={{
-          header: () => <BackHeader title="가게 상세보기" />,
-        }}
-      />
-      <Stack.Screen
-        name="suggest/[id]"
-        options={{
-          header: () => <BackHeader type="primary" title="협찬 제안 정보" />,
-        }}
-      />
     </Stack>
   );
 }
