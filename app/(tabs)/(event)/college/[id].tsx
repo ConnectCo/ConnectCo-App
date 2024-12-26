@@ -14,27 +14,31 @@ import { colors } from "@/constants/color";
 const eventList = [
   {
     id: 1,
-    college: "한양대학교",
+    host: "한양대학교",
     title: "한양대학교 행사",
     duration: "2023.10.17 ~ 2023.10.29",
+    source: require("../../../../assets/images/hanyang.png"),
   },
   {
     id: 2,
-    college: "건국대학교",
+    host: "건국대학교",
     title: "산업디자인과 전시회",
     duration: "2023.10.17 ~ 2023.10.29",
+    source: require("../../../../assets/images/hanyang.png"),
   },
   {
     id: 3,
-    college: "서울대학교",
+    host: "서울대학교",
     title: "서울대학교 축제",
     duration: "2023.11.01 ~ 2023.11.05",
+    source: require("../../../../assets/images/hanyang.png"),
   },
   {
     id: 4,
-    college: "연세대학교",
+    host: "연세대학교",
     title: "연세대학교 음악회",
     duration: "2023.11.10 ~ 2023.11.12",
+    source: require("../../../../assets/images/hanyang.png"),
   },
 ];
 
@@ -44,6 +48,7 @@ export default function CollegeScreen() {
       console.error("Failed to open URL:", err);
     });
   };
+
   return (
     <>
       <BackHeader title="한양대학교">
@@ -68,7 +73,7 @@ export default function CollegeScreen() {
       <Container as="ScrollView">
         <Flex gap={20}>
           <Flex direction="row" justify="between" align="center">
-            <Text size="xl" weight={600}>
+            <Text size="xxl" weight={600}>
               이벤트 목록
             </Text>
             <Button>

@@ -40,7 +40,7 @@ export default function SuggestScreen() {
           left={<Icon.Search fill={colors.gray300} />}
           right={<Icon.Dropdown />}
           title="쿠폰 불러오기"
-          placeholder="어떤 쿠폰은 불러올까요?"
+          placeholder="어떤 쿠폰을 불러올까요?"
           description="쿠폰 정보 등록, 수정은 마이페이지에서 가능합니다."
           type="button"
           onPress={() => {}}

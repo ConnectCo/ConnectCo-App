@@ -1,5 +1,3 @@
-import { StyleSheet } from "react-native";
-
 import MainScreen from "@/components/common/main";
 
 const couponList = [

@@ -13,6 +13,12 @@ export default function EventLayout() {
         }}
       />
       <Stack.Screen
+        name="add"
+        options={{
+          header: () => <BackHeader type="primary" title="이벤트 등록하기" />,
+        }}
+      />
+      <Stack.Screen
         name="[id]"
         options={{
           header: () => <BackHeader title="이벤트 상세보기" />,

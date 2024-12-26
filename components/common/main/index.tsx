@@ -28,7 +28,7 @@ export default function MainScreen({ items, type = "event" }: MainScreenProps) {
       <Flex gap={30}>
         <Flex gap={20}>
           <Flex direction="row" justify="between" align="center">
-            <Text size="xl" weight={600}>
+            <Text size="xxl" weight={600}>
               추천 {eventScreen}
             </Text>
             <Button>
@@ -43,7 +43,7 @@ export default function MainScreen({ items, type = "event" }: MainScreenProps) {
         </Flex>
         <Flex gap={20}>
           <Flex direction="row" justify="between" align="center">
-            <Text size="xl" weight={600}>
+            <Text size="xxl" weight={600}>
               {eventScreen} 목록
             </Text>
             <Button>

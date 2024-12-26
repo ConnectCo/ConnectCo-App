@@ -12,6 +12,7 @@ import Header from ".";
 
 interface MainHeaderProps {
   title: string;
+  type?: "event" | "coupon";
 }
 
 const screens = [
@@ -29,15 +30,15 @@ const screens = [
   },
 ];
 
-export default function MainHeader({ title }: MainHeaderProps) {
+export default function MainHeader({ title, type = "event" }: MainHeaderProps) {
   return (
     <Header>
-      <Text size="xl" weight={700} style={styles.text}>
+      <Text size="xxl" weight={700} style={styles.text}>
         {title}
       </Text>
       <Flex direction="row" align="center" gap={4}>
-        {screens.map(({ href, ScreenIcon }) => (
-          <Link key={href} href={href}>
+        {screens.map(({ href, ScreenIcon }, idx) => (
+          <Link key={idx === 0 ? `/(tabs)/(${type})/add/index` : href} href={href}>
             <ScreenIcon />
           </Link>
         ))}

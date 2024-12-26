@@ -24,7 +24,7 @@ interface CommonDetailProps {
   children: React.ReactNode;
   type?: "event" | "coupon" | "store";
   onPressFavorite: () => void;
-  onRouteProfile: () => void;
+  onRouteProfile?: () => void;
   onRouteSwag: () => void;
   onRouteChat: () => void;
 }
@@ -62,7 +62,7 @@ export default function CommonDetail({
       <Container as="View">
         <Flex gap={10}>
           <Flex direction="row" justify="between" align="center">
-            <Text size="xl" weight={600}>
+            <Text size="xxl" weight={600}>
               {title}
             </Text>
             <Button onPress={onPressFavorite}>
@@ -78,7 +78,7 @@ export default function CommonDetail({
         </Flex>
         <View style={styles.divider} />
         <Flex gap={50}>
-          <Flex gap={24}>{children}</Flex>
+          <Flex gap={25}>{children}</Flex>
           <Flex direction="row" gap={12}>
             <TextButton onPress={onRouteChat} style={styles.button} type="outline">
               1:1 채팅
@@ -112,8 +112,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 1,
     backgroundColor: colors.gray300,
-    marginTop: 24,
-    marginBottom: 16,
+    marginVertical: 20,
   },
   button: {
     flex: 1,
