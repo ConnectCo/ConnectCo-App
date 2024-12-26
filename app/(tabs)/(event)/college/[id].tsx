@@ -38,7 +38,7 @@ const eventList = [
   },
 ];
 
-export default function College() {
+export default function CollegeScreen() {
   const openURL = (url: string) => {
     Linking.openURL(url).catch((err) => {
       console.error("Failed to open URL:", err);

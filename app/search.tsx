@@ -7,7 +7,7 @@ import { colors } from "@/constants/color";
 
 const HISTORIES = ["최근", "검색어", "목록"];
 
-export default function Search() {
+export default function SearchScreen() {
   return (
     <Container as="ScrollView">
       <Flex gap={14}>
