@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import BackHeader from "@/components/common/header/back-header";
+import SearchHeader from "@/components/search/header";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,7 +42,7 @@ export default function RootLayout() {
             name="add"
             options={{ header: () => <BackHeader type="primary" title="이벤트 등록하기" /> }}
           />
-          <Stack.Screen name="search" options={{ headerShown: false }} />
+          <Stack.Screen name="search" options={{ header: () => <SearchHeader /> }} />
           <Stack.Screen name="alarm" options={{ headerShown: false }} />
         </Stack>
       </QueryClientProvider>
