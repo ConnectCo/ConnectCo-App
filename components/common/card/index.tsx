@@ -25,7 +25,7 @@ export default function Card({ id, title, host, duration, source, type = "event"
   const durationByScreen = type === "event" ? "이벤트 기간" : "신청 마감일";
 
   const onRouteDetail = () => {
-    router.push(`/(tabs)/(event)/${id}`);
+    router.push(`/(tabs)/(${type})/${id}`);
   };
   return (
     <Button style={styles.container} onPress={onRouteDetail}>
