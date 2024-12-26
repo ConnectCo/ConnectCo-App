@@ -40,10 +40,6 @@ export default function RootLayout() {
         <GestureHandlerRootView>
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="add"
-              options={{ header: () => <BackHeader type="primary" title="이벤트 등록하기" /> }}
-            />
             <Stack.Screen name="search" options={{ header: () => <SearchHeader /> }} />
             <Stack.Screen name="alarm" options={{ header: () => <BackHeader title="알림" /> }} />
           </Stack>
