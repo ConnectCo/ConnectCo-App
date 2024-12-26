@@ -26,7 +26,7 @@ export default function CouponLayout() {
       <Stack.Screen
         name="suggest/[id]"
         options={{
-          header: () => <BackHeader type="primary" title="협찬 제안 정보" />,
+          header: () => <BackHeader type="primary" title="협찬 신청 정보" />,
         }}
       />
     </Stack>
