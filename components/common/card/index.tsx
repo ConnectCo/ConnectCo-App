@@ -11,7 +11,7 @@ import Text from "../text";
 
 const { width } = Dimensions.get("screen");
 
-interface CardProps {
+export interface CardProps {
   id: number;
   title: string;
   host: string;
@@ -25,7 +25,7 @@ export default function Card({ id, title, host, duration, source, type = "event"
   const durationByScreen = type === "event" ? "이벤트 기간" : "신청 마감일";
 
   const onRouteDetail = () => {
-    router.push(`/(tabs)/(${type})/${id}`);
+    router.push(`/(${type})/${id}`);
   };
 
   return (

@@ -8,15 +8,15 @@ import Content from "@/components/common/text/content";
 const images = [
   {
     id: 1,
-    source: require("../../../assets/images/coupon.png"),
+    source: require("../../assets/images/coupon.png"),
   },
   {
     id: 2,
-    source: require("../../../assets/images/coupon.png"),
+    source: require("../../assets/images/coupon.png"),
   },
   {
     id: 3,
-    source: require("../../../assets/images/coupon.png"),
+    source: require("../../assets/images/coupon.png"),
   },
 ];
 
@@ -28,11 +28,11 @@ export default function DetailScreen() {
   const [selected, setSelected] = useState(false);
 
   const onRouteCollegeProfile = () => {
-    router.push(`/(tabs)/(coupon)/store/${id}`);
+    router.push(`/(coupon)/store/${id}`);
   };
 
   const onRouteSuggest = () => {
-    router.push(`/(tabs)/(coupon)/suggest/${id}`);
+    router.push(`/(coupon)/suggest/${id}`);
   };
 
   const onSelect = () => {

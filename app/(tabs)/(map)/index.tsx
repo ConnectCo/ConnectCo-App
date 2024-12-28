@@ -1,16 +1,19 @@
 import * as Location from "expo-location";
 
-import { useRef } from "react";
-import { Alert, StyleSheet } from "react-native";
+import { useRef, useState } from "react";
+import { Alert, StyleSheet, View } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 
+import CustomBottomSheet from "@/components/map/bottom-sheet";
 import { postMessageInstance } from "@/utils/webview";
 
 let interval: NodeJS.Timeout;
 const uri = "http://localhost:5173/";
 
 export default function MapScreen() {
+  const [items, setItems] = useState([]);
   const webviewRef = useRef<WebView>(null);
+
   const postMessage = postMessageInstance(webviewRef);
 
   const onMessage = (e: WebViewMessageEvent) => {
@@ -20,6 +23,10 @@ export default function MapScreen() {
       case "init":
         clearInterval(interval);
         sendRealtimLocation();
+        break;
+      case "filter":
+      case "pinned":
+        setItems(data);
         break;
       default:
         break;
@@ -48,13 +55,17 @@ export default function MapScreen() {
   }
 
   return (
-    <WebView
-      ref={webviewRef}
-      style={styles.container}
-      source={{ uri }}
-      onLoad={onLoad}
-      onMessage={onMessage}
-    />
+    <View style={styles.container}>
+      <WebView
+        ref={webviewRef}
+        style={styles.container}
+        source={{ uri }}
+        onLoad={onLoad}
+        onMessage={onMessage}
+        scrollEnabled={false}
+      />
+      <CustomBottomSheet items={items} />
+    </View>
   );
 }
 
