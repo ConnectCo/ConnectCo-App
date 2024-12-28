@@ -1,22 +1,14 @@
 import { StyleSheet } from "react-native";
 
 import Button from "@/components/common/button";
-import Card from "@/components/common/card";
+import Card, { CardProps } from "@/components/common/card";
 import Container from "@/components/common/container";
 import Flex from "@/components/common/flex";
 import Icon from "@/components/common/icon";
 import Text from "@/components/common/text";
 
-interface ItemProps {
-  id: number;
-  title: string;
-  host: string;
-  duration: string;
-  source: string;
-}
-
 interface MainScreenProps {
-  items: ItemProps[];
+  items: CardProps[];
   type?: "event" | "coupon";
 }
 

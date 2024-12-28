@@ -41,7 +41,7 @@ export default function MainHeader({ title, type = "event" }: MainHeaderProps) {
       </Text>
       <Flex direction="row" align="center" gap={4}>
         {iconByScreen.map(({ href, ScreenIcon }, idx) => (
-          <Link key={idx === 0 ? `/(tabs)/(${type})/add/index` : href} href={href}>
+          <Link key={idx === 0 ? `/(${type})/add/index` : href} href={href}>
             <ScreenIcon />
           </Link>
         ))}

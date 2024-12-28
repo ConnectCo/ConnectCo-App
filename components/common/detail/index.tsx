@@ -1,4 +1,5 @@
 import { ScrollView, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { colors } from "@/constants/color";
 import { ImageProps } from "@/types/image";
@@ -43,6 +44,7 @@ export default function CommonDetail({
   onRouteSwag,
   onRouteChat,
 }: CommonDetailProps) {
+  const { bottom } = useSafeAreaInsets();
   const isStore = type === "store";
   const button = isStore ? "전화걸기" : `협찬 ${type === "event" ? "제안" : "신청"}`;
 
@@ -51,15 +53,15 @@ export default function CommonDetail({
       <ImageScroll images={images} />
       {!isStore && (
         <Button onPress={onRouteProfile}>
-          <Flex direction="row" align="center" justify="between" style={styles.collegeWrap}>
-            <Text weight={600} style={styles.college}>
+          <Flex direction="row" align="center" justify="between" style={styles.wrap}>
+            <Text weight={600} style={styles.profile}>
               {profile?.name}
             </Text>
             <Icon.ArrowRight fill={colors.gray500} />
           </Flex>
         </Button>
       )}
-      <Container as="View">
+      <Container as="View" style={{ paddingBottom: bottom }}>
         <Flex gap={10}>
           <Flex direction="row" justify="between" align="center">
             <Text size="xxl" weight={600}>
@@ -97,12 +99,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
   },
-  collegeWrap: {
+  wrap: {
     paddingVertical: 12,
     paddingHorizontal: 24,
     backgroundColor: colors.gray100,
   },
-  college: {
+  profile: {
     color: colors.gray500,
   },
   endDate: {
