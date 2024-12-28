@@ -1,13 +1,33 @@
 import * as Location from "expo-location";
 
 import { useRef } from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 
+import CustomBottomSheet from "@/components/map/bottom-sheet";
 import { postMessageInstance } from "@/utils/webview";
 
 let interval: NodeJS.Timeout;
 const uri = "http://localhost:5173/";
+
+const couponList = [
+  {
+    id: 1,
+    type: "coupon" as const,
+    host: "호말",
+    title: "쿠키 무료 제공 쿠폰",
+    duration: "2023.10.17 ~ 2023.10.29",
+    source: require("../../../assets/images/homeal.png"),
+  },
+  {
+    id: 2,
+    type: "coupon" as const,
+    host: "호말",
+    title: "전 음료 10%할인 쿠폰",
+    duration: "2023.10.17 ~ 2023.10.29",
+    source: require("../../../assets/images/homeal.png"),
+  },
+];
 
 export default function MapScreen() {
   const webviewRef = useRef<WebView>(null);
@@ -48,13 +68,16 @@ export default function MapScreen() {
   }
 
   return (
-    <WebView
-      ref={webviewRef}
-      style={styles.container}
-      source={{ uri }}
-      onLoad={onLoad}
-      onMessage={onMessage}
-    />
+    <View style={styles.container}>
+      <WebView
+        ref={webviewRef}
+        style={styles.container}
+        source={{ uri }}
+        onLoad={onLoad}
+        onMessage={onMessage}
+      />
+      <CustomBottomSheet items={couponList} />
+    </View>
   );
 }
 
