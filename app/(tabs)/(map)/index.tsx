@@ -1,6 +1,6 @@
 import * as Location from "expo-location";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 
@@ -10,27 +10,10 @@ import { postMessageInstance } from "@/utils/webview";
 let interval: NodeJS.Timeout;
 const uri = "http://localhost:5173/";
 
-const couponList = [
-  {
-    id: 1,
-    type: "coupon" as const,
-    host: "호말",
-    title: "쿠키 무료 제공 쿠폰",
-    duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/images/homeal.png"),
-  },
-  {
-    id: 2,
-    type: "coupon" as const,
-    host: "호말",
-    title: "전 음료 10%할인 쿠폰",
-    duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/images/homeal.png"),
-  },
-];
-
 export default function MapScreen() {
+  const [items, setItems] = useState([]);
   const webviewRef = useRef<WebView>(null);
+
   const postMessage = postMessageInstance(webviewRef);
 
   const onMessage = (e: WebViewMessageEvent) => {
@@ -40,6 +23,10 @@ export default function MapScreen() {
       case "init":
         clearInterval(interval);
         sendRealtimLocation();
+        break;
+      case "filter":
+      case "pinned":
+        setItems(data);
         break;
       default:
         break;
@@ -75,8 +62,9 @@ export default function MapScreen() {
         source={{ uri }}
         onLoad={onLoad}
         onMessage={onMessage}
+        scrollEnabled={false}
       />
-      <CustomBottomSheet items={couponList} />
+      <CustomBottomSheet items={items} />
     </View>
   );
 }

@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { StyleSheet } from "react-native";
+import { useRef } from "react";
+import { ScrollView, StyleSheet } from "react-native";
 
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 
@@ -15,25 +15,12 @@ interface DrawerProps {
 }
 
 export default function CustomBottomSheet({ items }: DrawerProps) {
-  const [modalExpanded, setModalExpanded] = useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const component = modalExpanded ? "ScrollView" : "View";
-
-  const onChange = (index: number) => {
-    setModalExpanded(index > 0);
-  };
-
   return (
-    <BottomSheet
-      ref={bottomSheetRef}
-      onChange={onChange}
-      index={0}
-      snapPoints={["80%"]}
-      style={styles.container}
-    >
+    <BottomSheet ref={bottomSheetRef} index={0} snapPoints={["80%"]} style={styles.container}>
       <BottomSheetView style={styles.innerContainer}>
-        <Container as={component}>
+        <Container as="View" style={{ overflow: "hidden" }}>
           <Flex gap={20}>
             <Flex direction="row" justify="between" align="center">
               <Text size="xxl" weight={600}>
@@ -46,11 +33,15 @@ export default function CustomBottomSheet({ items }: DrawerProps) {
                 </Flex>
               </Button>
             </Flex>
-            <Flex gap={15}>
-              {items.map((item) => (
-                <Card key={item.id} {...item} />
-              ))}
-            </Flex>
+            <ScrollView bounces={false} style={styles.scrollView}>
+              <Flex gap={15}>
+                {items.length === 0 ? (
+                  <Text align="center">주변에 아무것도 없어요 :(</Text>
+                ) : (
+                  items.map((item) => <Card key={item.id} {...item} />)
+                )}
+              </Flex>
+            </ScrollView>
           </Flex>
         </Container>
       </BottomSheetView>
@@ -66,5 +57,8 @@ const styles = StyleSheet.create({
   innerContainer: {
     flex: 1,
     height: 200,
+  },
+  scrollView: {
+    overflow: "visible",
   },
 });
