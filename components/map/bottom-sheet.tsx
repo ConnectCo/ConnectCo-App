@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { Dimensions, ScrollView, StyleSheet } from "react-native";
 
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 
@@ -13,6 +13,8 @@ import Text from "../common/text";
 interface DrawerProps {
   items: CardProps[];
 }
+
+const { height } = Dimensions.get("window");
 
 export default function CustomBottomSheet({ items }: DrawerProps) {
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     flex: 1,
-    height: 200,
+    height: height * 0.2,
   },
   scrollView: {
     overflow: "visible",
