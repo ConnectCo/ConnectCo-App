@@ -1,16 +1,27 @@
 import { Image } from "expo-image";
+import { Route, useRouter } from "expo-router";
 
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import Button from "@/components/common/button";
 import ChipButton from "@/components/common/button/chip-button";
-import Card from "@/components/common/card";
 import Container from "@/components/common/container";
 import Flex from "@/components/common/flex";
 import Icon from "@/components/common/icon";
 import Text from "@/components/common/text";
+import MyItems from "@/components/mypage/my-items";
 import { colors } from "@/constants/color";
+
+const storeList = [
+  {
+    id: 1,
+    host: "호말 커피",
+    title: "90년대 사무실 분위기에서 느끼는 힙스러움!",
+    coupon: 3,
+    source: require("../../../assets/images/homeal.png"),
+  },
+];
 
 const couponList = [
   {
@@ -47,6 +58,12 @@ const eventList = [
 ];
 
 export default function MypageScreen() {
+  const router = useRouter();
+
+  const onRouteAdd = (path: Route) => {
+    router.push(path);
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Container as="View" style={styles.contentGap}>
@@ -84,57 +101,15 @@ export default function MypageScreen() {
         </Flex>
       </Container>
       <View style={styles.divider} />
-      <Container as="View" style={styles.contentGap}>
-        <Flex direction="row" align="center" justify="between">
-          <Text size="xl" weight={700}>
-            나의 가게
-          </Text>
-          <ChipButton onPress={() => {}}>
-            <Flex direction="row" align="center" gap={5}>
-              <Icon.Add size={12} fill={colors.black} />
-              <Text>가게 추가</Text>
-            </Flex>
-          </ChipButton>
-        </Flex>
-      </Container>
+      <MyItems
+        items={storeList}
+        type="store"
+        onPressAdd={() => onRouteAdd("/(tabs)/(mypage)/add")}
+      />
       <View style={styles.divider} />
-      <Container as="View" style={styles.contentGap}>
-        <Flex direction="row" align="center" justify="between">
-          <Text size="xl" weight={700}>
-            나의 쿠폰
-          </Text>
-          <ChipButton onPress={() => {}}>
-            <Flex direction="row" align="center" gap={5}>
-              <Icon.Add size={12} fill={colors.black} />
-              <Text>쿠폰 추가</Text>
-            </Flex>
-          </ChipButton>
-        </Flex>
-        <Flex gap={15}>
-          {couponList.map((coupon) => (
-            <Card key={coupon.id} {...coupon} type="coupon" />
-          ))}
-        </Flex>
-      </Container>
+      <MyItems items={couponList} type="coupon" onPressAdd={() => onRouteAdd("/(coupon)/add")} />
       <View style={styles.divider} />
-      <Container as="View" style={styles.contentGap}>
-        <Flex direction="row" align="center" justify="between">
-          <Text size="xl" weight={700}>
-            나의 이벤트
-          </Text>
-          <ChipButton onPress={() => {}}>
-            <Flex direction="row" align="center" gap={5}>
-              <Icon.Add size={12} fill={colors.black} />
-              <Text>이벤트 추가</Text>
-            </Flex>
-          </ChipButton>
-        </Flex>
-        <Flex gap={15}>
-          {eventList.map((event) => (
-            <Card key={event.id} {...event} />
-          ))}
-        </Flex>
-      </Container>
+      <MyItems items={eventList} type="event" onPressAdd={() => onRouteAdd("/(event)/add")} />
     </ScrollView>
   );
 }

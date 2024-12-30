@@ -15,14 +15,31 @@ export interface CardProps {
   id: number;
   title: string;
   host: string;
-  duration: string;
   source: string;
-  type?: "event" | "coupon";
+  duration?: string;
+  coupon?: number;
+  type?: "event" | "coupon" | "store";
 }
 
-export default function Card({ id, title, host, duration, source, type = "event" }: CardProps) {
+export default function Card({
+  id,
+  title,
+  host,
+  duration,
+  source,
+  type = "event",
+  coupon,
+}: CardProps) {
   const router = useRouter();
-  const durationByScreen = type === "event" ? "이벤트 기간" : "신청 마감일";
+
+  const isCouponNeeded = type === "store";
+  const descriptionByType = isCouponNeeded
+    ? "신청 가능 쿠폰 갯수"
+    : type === "event"
+      ? "이벤트 기간"
+      : "신청 마감일";
+
+  const additionalInfo = isCouponNeeded ? coupon : duration;
 
   const onRouteDetail = () => {
     router.push(`/(${type})/${id}`);
@@ -36,11 +53,11 @@ export default function Card({ id, title, host, duration, source, type = "event"
           <Text size="sm" weight={700} style={styles.host}>
             {host}
           </Text>
-          <Text size="lg" weight={600} style={styles.title}>
+          <Text size="lg" weight={600} style={[styles.title, styles.duration]} numberOfLines={1}>
             {title}
           </Text>
           <Text size="sm" numberOfLines={1} style={styles.duration}>
-            {durationByScreen} - {duration}
+            {descriptionByType} - {additionalInfo}
           </Text>
         </Flex>
       </Flex>
