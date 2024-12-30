@@ -40,8 +40,8 @@ export default function MainHeader({ title, type = "event" }: MainHeaderProps) {
         {title}
       </Text>
       <Flex direction="row" align="center" gap={4}>
-        {iconByScreen.map(({ href, ScreenIcon }) => (
-          <Link key={href} href={href}>
+        {iconByScreen.map(({ href, ScreenIcon }, idx) => (
+          <Link key={href} href={idx === 0 ? `/(${type})${href}` : href}>
             <ScreenIcon />
           </Link>
         ))}

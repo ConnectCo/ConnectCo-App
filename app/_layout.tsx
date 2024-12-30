@@ -11,6 +11,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import BackHeader from "@/components/common/header/back-header";
 import SearchHeader from "@/components/search/header";
+import { couponStacks } from "@/components/stacks/coupon";
+import { eventStacks } from "@/components/stacks/event";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -44,6 +46,8 @@ export default function RootLayout() {
         <GestureHandlerRootView>
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            {eventStacks()}
+            {couponStacks()}
             <Stack.Screen name="search" options={{ header: () => <SearchHeader /> }} />
             <Stack.Screen name="alarm" options={{ header: () => <BackHeader title="알림" /> }} />
           </Stack>
