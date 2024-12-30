@@ -1,5 +1,5 @@
 import { Image } from "expo-image";
-import { useRouter } from "expo-router";
+import { Route, useRouter } from "expo-router";
 
 import { Dimensions, StyleSheet } from "react-native";
 
@@ -41,8 +41,10 @@ export default function Card({
 
   const additionalInfo = isCouponNeeded ? coupon : duration;
 
+  const path = isCouponNeeded ? `/(coupon)/store/${id}` : `/(${type})/${id}`;
+
   const onRouteDetail = () => {
-    router.push(`/(${type})/${id}`);
+    router.push(path as Route);
   };
 
   return (
