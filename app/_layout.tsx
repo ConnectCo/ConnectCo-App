@@ -6,7 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { initializeKakaoSDK } from "@react-native-kakao/core";
+// import { initializeKakaoSDK } from "@react-native-kakao/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import BackHeader from "@/components/common/header/back-header";
@@ -30,7 +30,7 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
-      initializeKakaoSDK(kakaoNativeAppKey);
+      // initializeKakaoSDK(kakaoNativeAppKey);
     }
   }, [loaded]);
 

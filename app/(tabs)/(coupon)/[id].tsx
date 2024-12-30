@@ -27,7 +27,7 @@ export default function DetailScreen() {
 
   const [selected, setSelected] = useState(false);
 
-  const onRouteCollegeProfile = () => {
+  const onRouteStoreProfile = () => {
     router.push(`/(coupon)/store/${id}`);
   };
 
@@ -52,7 +52,7 @@ export default function DetailScreen() {
       description={"왕십리 최고의 카페 호말커피의\n맛있는 쿠키 6종 中 1가지를 무료로 제공합니다."}
       selected={selected}
       onPressFavorite={onSelect}
-      onRouteProfile={onRouteCollegeProfile}
+      onRouteProfile={onRouteStoreProfile}
       onRouteSwag={onRouteSuggest}
       onRouteChat={() => {}}
     >
