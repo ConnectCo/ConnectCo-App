@@ -10,13 +10,13 @@ import Flex from "../common/flex";
 import Icon from "../common/icon";
 import Text from "../common/text";
 
-interface DrawerProps {
+interface MapBottomSheetProps {
   items: CardProps[];
 }
 
 const { height } = Dimensions.get("window");
 
-export default function CustomBottomSheet({ items }: DrawerProps) {
+export default function MapBottomSheet({ items }: MapBottomSheetProps) {
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   return (
