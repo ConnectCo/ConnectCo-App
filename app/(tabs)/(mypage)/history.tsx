@@ -6,18 +6,14 @@ import Card from "@/components/common/card";
 import Container from "@/components/common/container";
 import Flex from "@/components/common/flex";
 
-const categories = [
+const histories = [
   {
-    ko: "이벤트",
+    ko: "협찬 신청 내역",
+    en: "sponsor",
+  },
+  {
+    ko: "이벤트 신청 내역",
     en: "event",
-  },
-  {
-    ko: "쿠폰",
-    en: "coupon",
-  },
-  {
-    ko: "가게",
-    en: "store",
   },
 ];
 
@@ -52,8 +48,8 @@ const eventList = [
   },
 ];
 
-export default function FavoriteScreen() {
-  const [selectedCategory, setSelectedCategory] = useState("event");
+export default function HistoryScreen() {
+  const [selectedCategory, setSelectedCategory] = useState("sponsor");
 
   const onSelectCategory = (category: string) => {
     setSelectedCategory(category);
@@ -62,7 +58,7 @@ export default function FavoriteScreen() {
   return (
     <Container as="View">
       <Flex direction="row" gap={8}>
-        {categories.map((category) => (
+        {histories.map((category) => (
           <SelectButton
             type={selectedCategory === category.en ? "fill" : "outline"}
             onPress={() => onSelectCategory(category.en)}

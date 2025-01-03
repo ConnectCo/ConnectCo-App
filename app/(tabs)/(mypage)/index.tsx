@@ -68,6 +68,10 @@ export default function MypageScreen() {
     router.push("/(tabs)/(mypage)/favorite");
   };
 
+  const onRouteHistory = () => {
+    router.push("/(tabs)/(mypage)/history");
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Container as="View" style={styles.contentGap}>
@@ -86,7 +90,7 @@ export default function MypageScreen() {
           </ChipButton>
         </Flex>
         <Flex direction="row" justify="between" gap={10}>
-          <Button style={styles.button}>
+          <Button style={styles.button} onPress={onRouteHistory}>
             <Flex direction="row" align="center" justify="between">
               <Text size="lg" weight={600} style={styles.buttonText}>
                 활동 내역
