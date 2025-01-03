@@ -1,6 +1,6 @@
 import { Image } from "expo-image";
-import { Route, useRouter } from "expo-router";
 
+// import {  useRouter } from "expo-router";
 import { Dimensions, StyleSheet } from "react-native";
 
 import { colors } from "@/constants/color";
@@ -19,6 +19,7 @@ export interface CardProps {
   duration?: string;
   coupon?: number;
   type?: "event" | "coupon" | "store";
+  onPress: () => void;
 }
 
 export default function Card({
@@ -29,8 +30,9 @@ export default function Card({
   source,
   type = "event",
   coupon,
+  onPress,
 }: CardProps) {
-  const router = useRouter();
+  // const router = useRouter();
 
   const isCouponNeeded = type === "store";
   const descriptionByType = isCouponNeeded
@@ -41,14 +43,14 @@ export default function Card({
 
   const additionalInfo = isCouponNeeded ? coupon : duration;
 
-  const path = isCouponNeeded ? `/(coupon)/store/${id}` : `/(${type})/${id}`;
+  // const path = isCouponNeeded ? `/(coupon)/store/${id}` : `/(${type})/${id}`;
 
-  const onRouteDetail = () => {
-    router.push(path as Route);
-  };
+  // const onRouteDetail = () => {
+  //   router.push(path as Route);
+  // };
 
   return (
-    <Button style={styles.container} onPress={onRouteDetail}>
+    <Button style={styles.container} onPress={onPress}>
       <Flex direction="row" align="center" gap={24}>
         <Image source={source} style={styles.image} />
         <Flex>

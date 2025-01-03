@@ -18,6 +18,10 @@ interface MyItemsProps {
 export default function MyItems({ type = "event", items, onPressAdd }: MyItemsProps) {
   const name = type === "event" ? "이벤트" : type === "store" ? "가게" : "쿠폰";
 
+  const onRoute = () => {
+    // 디자인 바뀌면 라우팅 설정하기
+  };
+
   return (
     <Container as="View" style={styles.container}>
       <Flex direction="row" align="center" justify="between">
@@ -35,7 +39,9 @@ export default function MyItems({ type = "event", items, onPressAdd }: MyItemsPr
         {items.length === 0 ? (
           <Text>나의 {name} 데이터가 없어요 :(</Text>
         ) : (
-          items.map((item) => <Card key={item.id} {...item} type={type} />)
+          items.map((item) => (
+            <Card key={item.id} {...item} type={type} onPress={() => onRoute()} />
+          ))
         )}
       </Flex>
     </Container>

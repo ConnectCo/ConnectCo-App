@@ -1,3 +1,5 @@
+import { Route, router } from "expo-router";
+
 import { useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
 
@@ -59,6 +61,12 @@ export default function FavoriteScreen() {
     setSelectedCategory(category);
   };
 
+  const onRouteDetail = (id: number) => {
+    const path =
+      selectedCategory === "store" ? `/(coupon)/store/${id}` : `/(${selectedCategory})/${id}`;
+    router.push(path as Route);
+  };
+
   return (
     <Container as="View">
       <Flex direction="row" gap={8}>
@@ -78,7 +86,7 @@ export default function FavoriteScreen() {
           style={styles.flatList}
           contentContainerStyle={styles.contentContainerStyle}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <Card {...item} />}
+          renderItem={({ item }) => <Card {...item} onPress={() => onRouteDetail(item.id)} />}
           bounces={false}
         />
       </Flex>

@@ -1,3 +1,5 @@
+import { Route, router } from "expo-router";
+
 import { StyleSheet } from "react-native";
 
 import Button from "@/components/common/button";
@@ -15,6 +17,10 @@ interface MainScreenProps {
 export default function MainScreen({ items, type = "event" }: MainScreenProps) {
   const eventScreen = type === "event" ? "이벤트" : "쿠폰";
 
+  const onRouteDetail = (id: number) => {
+    router.push(`/(${type})/${id}` as Route);
+  };
+
   return (
     <Container as="ScrollView" contentContainerStyle={styles.container}>
       <Flex gap={30}>
@@ -29,7 +35,7 @@ export default function MainScreen({ items, type = "event" }: MainScreenProps) {
           </Flex>
           <Flex gap={16}>
             {items.slice(0, 2).map((item) => (
-              <Card key={item.id} type={type} {...item} />
+              <Card key={item.id} type={type} {...item} onPress={() => onRouteDetail(item.id)} />
             ))}
           </Flex>
         </Flex>
@@ -47,7 +53,7 @@ export default function MainScreen({ items, type = "event" }: MainScreenProps) {
           </Flex>
           <Flex gap={16}>
             {items.map((item) => (
-              <Card key={item.id} type={type} {...item} />
+              <Card key={item.id} type={type} {...item} onPress={() => onRouteDetail(item.id)} />
             ))}
           </Flex>
         </Flex>
