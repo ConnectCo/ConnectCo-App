@@ -14,6 +14,7 @@ export default function MypageLayout() {
         name="add"
         options={{ header: () => <BackHeader title="가게 등록하기" type="primary" /> }}
       />
+      <Stack.Screen name="favorite" options={{ header: () => <BackHeader title="찜한 목록" /> }} />
     </Stack>
   );
 }

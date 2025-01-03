@@ -64,6 +64,10 @@ export default function MypageScreen() {
     router.push(path);
   };
 
+  const onRouteFavorite = () => {
+    router.push("/(tabs)/(mypage)/favorite");
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Container as="View" style={styles.contentGap}>
@@ -90,7 +94,7 @@ export default function MypageScreen() {
               <Icon.ArrowRight />
             </Flex>
           </Button>
-          <Button style={styles.button}>
+          <Button style={styles.button} onPress={onRouteFavorite}>
             <Flex direction="row" align="center" justify="between">
               <Text size="lg" weight={600} style={styles.buttonText}>
                 찜한 목록
