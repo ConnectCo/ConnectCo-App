@@ -102,6 +102,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         iosUrlScheme,
       },
     ],
+    [
+      "@react-native-seoul/naver-login",
+      {
+        urlScheme: bundleIdentifier,
+      },
+    ],
   ],
   experiments: {
     typedRoutes: true,
