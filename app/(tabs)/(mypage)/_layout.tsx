@@ -16,6 +16,7 @@ export default function MypageLayout() {
       />
       <Stack.Screen name="favorite" options={{ header: () => <BackHeader title="찜한 목록" /> }} />
       <Stack.Screen name="history" options={{ header: () => <BackHeader title="활동 내역" /> }} />
+      <Stack.Screen name="suggestion" options={{ headerShown: false }} />
     </Stack>
   );
 }

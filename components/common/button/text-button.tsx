@@ -27,16 +27,16 @@ export default function TextButton({ children, type = "fill", ...restProps }: Te
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 12,
-    borderColor: colors.primary200,
+    borderColor: colors.primary300,
     borderWidth: 1,
     borderRadius: 10,
   },
   fill: {
-    backgroundColor: colors.primary200,
+    backgroundColor: colors.primary300,
     color: colors.white,
   },
   outline: {
     backgroundColor: colors.gray100,
-    color: colors.primary200,
+    color: colors.primary300,
   },
 });

@@ -11,7 +11,7 @@ import Text from "../common/text";
 
 interface MyItemsProps {
   type: "event" | "store" | "coupon";
-  items: CardProps[];
+  items: Omit<CardProps, "onPress">[];
   onPressAdd: () => void;
 }
 

@@ -11,7 +11,7 @@ interface HeaderProps {
 }
 
 export default function Header({ type = "primary", children }: HeaderProps) {
-  const backgroundColor = type === "primary" ? colors.primary200 : colors.gray100;
+  const backgroundColor = type === "primary" ? colors.primary300 : colors.gray100;
   const { top } = useSafeAreaInsets();
   return (
     <View style={{ backgroundColor, paddingTop: top }}>

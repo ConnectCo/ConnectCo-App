@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonText: {
-    color: colors.primary200,
+    color: colors.primary300,
   },
   divider: {
     height: 5,

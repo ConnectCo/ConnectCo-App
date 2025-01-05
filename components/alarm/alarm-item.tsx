@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   unread: {
-    backgroundColor: colors.primary100,
+    backgroundColor: colors.primary200,
   },
   text: {
     width: width - 106,
