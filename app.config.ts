@@ -6,7 +6,7 @@ dotenv.config();
 
 const kakaoNativeAppKey = process.env.EXPO_PUBLIC_NATIVE_APP_KEY;
 const bundleIdentifier = process.env.EXPO_PUBLIC_APP_BUNDLE_IDENTIFIER;
-const googleCliendId = process.env.EXPO_PUBLIC_GOOGLE_CLIEND_ID;
+const iosUrlScheme = process.env.EXPO_PUBLIC_IOS_URL_SCHEME;
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -22,6 +22,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     supportsTablet: true,
     bundleIdentifier: bundleIdentifier,
     usesAppleSignIn: true,
+    infoPlist: {
+      CFBundleURLTypes: [
+        {
+          CFBundleURLSchemes: [iosUrlScheme],
+        },
+      ],
+    },
   },
   android: {
     adaptiveIcon: {
@@ -87,6 +94,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         ios: {
           handleKakaoOpenUrl: true,
         },
+      },
+    ],
+    [
+      "@react-native-google-signin/google-signin",
+      {
+        iosUrlScheme,
       },
     ],
   ],

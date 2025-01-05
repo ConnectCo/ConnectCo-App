@@ -3,6 +3,7 @@ import { Image } from "expo-image";
 
 import { StyleSheet } from "react-native";
 
+// import { GoogleSignin } from "@react-native-google-signin/google-signin";
 // import { login } from "@react-native-kakao/user";
 import { colors } from "@/constants/color";
 
@@ -18,8 +19,17 @@ export default function AuthScreen() {
   const onKakaoLogin = async () => {
     try {
       // const res = await login();
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onGoogleLogin = async () => {
+    try {
+      // await GoogleSignin.hasPlayServices();
+      // const response = await GoogleSignin.signIn();
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -30,7 +40,7 @@ export default function AuthScreen() {
         <AppleAuth />
         <AuthButton onPress={onKakaoLogin} type="kakao" />
         <AuthButton onPress={() => console.log("naver")} type="naver" />
-        <AuthButton onPress={() => console.log("google")} type="google" />
+        <AuthButton onPress={onGoogleLogin} type="google" />
       </Flex>
     </Flex>
   );

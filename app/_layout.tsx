@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+// import { GoogleSignin } from "@react-native-google-signin/google-signin";
 // import { initializeKakaoSDK } from "@react-native-kakao/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -19,6 +20,7 @@ SplashScreen.preventAutoHideAsync();
 const queryClient = new QueryClient();
 
 const kakaoNativeAppKey = process.env.EXPO_PUBLIC_NATIVE_APP_KEY || "";
+const iosClientId = process.env.EXPO_PUBLIC_GOOGLE_CLIEND_ID || "";
 
 export const unstable_settings = {
   initialRouteName: "(tabs)/(event)/index",
@@ -32,6 +34,9 @@ export default function RootLayout() {
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
+      // GoogleSignin.configure({
+      //   iosClientId,
+      // });
       // initializeKakaoSDK(kakaoNativeAppKey);
     }
   }, [loaded]);
