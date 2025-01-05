@@ -1,12 +1,12 @@
 import { Route, router } from "expo-router";
 
 import { useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
 import SelectButton from "@/components/common/button/select-button";
 import Card from "@/components/common/card";
-import Container from "@/components/common/container";
 import Flex from "@/components/common/flex";
+import { colors } from "@/constants/color";
 
 const categories = [
   {
@@ -68,8 +68,8 @@ export default function FavoriteScreen() {
   };
 
   return (
-    <Container as="View">
-      <Flex direction="row" gap={8}>
+    <View style={styles.container}>
+      <Flex direction="row" gap={8} style={styles.buttonContainer}>
         {categories.map((category) => (
           <SelectButton
             type={selectedCategory === category.en ? "fill" : "outline"}
@@ -80,26 +80,33 @@ export default function FavoriteScreen() {
           </SelectButton>
         ))}
       </Flex>
-      <Flex>
-        <FlatList
-          data={eventList}
-          style={styles.flatList}
-          contentContainerStyle={styles.contentContainerStyle}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <Card {...item} onPress={() => onRouteDetail(item.id)} />}
-          bounces={false}
-        />
-      </Flex>
-    </Container>
+      <FlatList
+        data={eventList}
+        contentContainerStyle={styles.contentContainerStyle}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <Card {...item} onPress={() => onRouteDetail(item.id)} />}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  flatList: {
-    overflow: "visible",
+  container: {
+    flex: 1,
+    backgroundColor: colors.white,
+    zIndex: 0,
+  },
+  buttonContainer: {
+    paddingTop: 20,
+    paddingBottom: 10,
+    paddingHorizontal: 24,
+    backgroundColor: colors.white,
   },
   contentContainerStyle: {
-    paddingVertical: 24,
+    paddingHorizontal: 24,
+    paddingTop: 10,
+    paddingBottom: 20,
     gap: 15,
   },
 });

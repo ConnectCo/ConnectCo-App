@@ -1,20 +1,20 @@
 import { Route, router } from "expo-router";
 
 import { useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
 import SelectButton from "@/components/common/button/select-button";
 import Card from "@/components/common/card";
-import Container from "@/components/common/container";
 import Flex from "@/components/common/flex";
+import { colors } from "@/constants/color";
 
 const histories = [
   {
-    ko: "협찬 신청 내역",
+    ko: "협찬",
     en: "sponsor",
   },
   {
-    ko: "이벤트 신청 내역",
+    ko: "이벤트",
     en: "event",
   },
 ];
@@ -53,49 +53,56 @@ const eventList = [
 export default function HistoryScreen() {
   const [selectedCategory, setSelectedCategory] = useState("sponsor");
 
-  const onSelectCategory = (history: string) => {
+  const onSelectHistory = (history: string) => {
     setSelectedCategory(history);
   };
 
   const onRouteDetail = (id: number) => {
-    const path =
-      selectedCategory === "store" ? `/(coupon)/store/${id}` : `/(${selectedCategory})/${id}`;
+    // 선택한것이 이벤트인지 쿠폰인지 구별 후 라우팅 시키기
+    const path = `/(${selectedCategory})/${id}`;
     router.push(path as Route);
   };
 
   return (
-    <Container as="View">
-      <Flex direction="row" gap={8}>
+    <View style={styles.container}>
+      <Flex direction="row" gap={8} style={styles.buttonContainer}>
         {histories.map((history) => (
           <SelectButton
             type={selectedCategory === history.en ? "fill" : "outline"}
-            onPress={() => onSelectCategory(history.en)}
+            onPress={() => onSelectHistory(history.en)}
             key={history.en}
           >
-            {history.ko}
+            {history.ko} 신청 내역
           </SelectButton>
         ))}
       </Flex>
-      <Flex>
-        <FlatList
-          data={eventList}
-          style={styles.flatList}
-          contentContainerStyle={styles.contentContainerStyle}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <Card {...item} onPress={() => onRouteDetail(item.id)} />}
-          bounces={false}
-        />
-      </Flex>
-    </Container>
+      <FlatList
+        data={eventList}
+        contentContainerStyle={styles.contentContainerStyle}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <Card {...item} onPress={() => onRouteDetail(item.id)} />}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  flatList: {
-    overflow: "visible",
+  container: {
+    flex: 1,
+    backgroundColor: colors.white,
+    zIndex: 0,
+  },
+  buttonContainer: {
+    paddingTop: 20,
+    paddingBottom: 10,
+    paddingHorizontal: 24,
+    backgroundColor: colors.white,
   },
   contentContainerStyle: {
-    paddingVertical: 24,
+    paddingHorizontal: 24,
+    paddingTop: 10,
+    paddingBottom: 20,
     gap: 15,
   },
 });
