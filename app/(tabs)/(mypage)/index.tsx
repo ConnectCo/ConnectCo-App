@@ -4,6 +4,7 @@ import { Route, useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import AuthScreen from "@/components/common/auth";
 import Button from "@/components/common/button";
 import ChipButton from "@/components/common/button/chip-button";
 import Container from "@/components/common/container";
@@ -59,6 +60,7 @@ const eventList = [
 
 export default function MypageScreen() {
   const router = useRouter();
+  const isAuthorized = false;
 
   const onRouteAdd = (path: Route) => {
     router.push(path);
@@ -72,7 +74,7 @@ export default function MypageScreen() {
     router.push("/(tabs)/(mypage)/history");
   };
 
-  return (
+  return isAuthorized ? (
     <ScrollView style={styles.container}>
       <Container as="View" style={styles.contentGap}>
         <Flex direction="row" align="center" justify="between">
@@ -119,6 +121,8 @@ export default function MypageScreen() {
       <View style={styles.divider} />
       <MyItems items={eventList} type="event" onPressAdd={() => onRouteAdd("/(event)/add")} />
     </ScrollView>
+  ) : (
+    <AuthScreen />
   );
 }
 

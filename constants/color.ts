@@ -9,6 +9,9 @@ export const colors = {
   gray500: "#666666",
   black: "#1D1D1D",
   white: "#FFFFFF",
+  google: "#4285F4",
+  kakao: "#FEE500",
+  naver: "#03C75A",
 } as const;
 
 type ColorType = typeof colors;

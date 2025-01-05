@@ -6,6 +6,7 @@ dotenv.config();
 
 const kakaoNativeAppKey = process.env.EXPO_PUBLIC_NATIVE_APP_KEY;
 const bundleIdentifier = process.env.EXPO_PUBLIC_APP_BUNDLE_IDENTIFIER;
+const googleCliendId = process.env.EXPO_PUBLIC_GOOGLE_CLIEND_ID;
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -20,6 +21,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     supportsTablet: true,
     bundleIdentifier: bundleIdentifier,
+    usesAppleSignIn: true,
   },
   android: {
     adaptiveIcon: {
@@ -34,6 +36,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     favicon: "./assets/images/favicon.png",
   },
   plugins: [
+    "expo-apple-authentication",
     "expo-router",
     [
       "expo-splash-screen",
