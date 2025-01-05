@@ -19,7 +19,7 @@ const storeList = [
     host: "호말 커피",
     title: "90년대 사무실 분위기에서 느끼는 힙스러움!",
     coupon: 3,
-    source: require("../../../assets/images/homeal.png"),
+    source: require("../../../assets/static/homeal.png"),
   },
 ];
 
@@ -29,14 +29,14 @@ const couponList = [
     host: "호말",
     title: "쿠키 무료 제공 쿠폰",
     duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/images/homeal.png"),
+    source: require("../../../assets/static/homeal.png"),
   },
   {
     id: 2,
     host: "호말",
     title: "전 음료 10%할인 쿠폰",
     duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/images/homeal.png"),
+    source: require("../../../assets/static/homeal.png"),
   },
 ];
 
@@ -46,14 +46,14 @@ const eventList = [
     host: "한양대학교",
     title: "한양대학교 행사",
     duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/images/hanyang.png"),
+    source: require("../../../assets/static/hanyang.png"),
   },
   {
     id: 2,
     host: "건국대학교",
     title: "산업디자인과 전시회",
     duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/images/hanyang.png"),
+    source: require("../../../assets/static/hanyang.png"),
   },
 ];
 
@@ -78,7 +78,7 @@ export default function MypageScreen() {
         <Flex direction="row" align="center" justify="between">
           <Flex direction="row" align="center" gap={5}>
             <Image
-              source={require("../../../assets/images/default-profile.png")}
+              source={require("../../../assets/static/default-profile.png")}
               style={{ width: 40, height: 40 }}
             />
             <Text size="xl" weight={700}>

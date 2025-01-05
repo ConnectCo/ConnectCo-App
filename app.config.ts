@@ -51,6 +51,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     [
+      "expo-asset",
+      {
+        assets: ["./assets/static"],
+      },
+    ],
+    [
       "expo-location",
       {
         locationAlwaysAndWhenInUsePermission: "connectco가 사용자의 위치에 접근하고자 합니다.",

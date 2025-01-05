@@ -12,15 +12,15 @@ import Content from "@/components/common/text/content";
 const images = [
   {
     id: 1,
-    source: require("../../../assets/images/store.png"),
+    source: require("../../../assets/static/store.png"),
   },
   {
     id: 2,
-    source: require("../../../assets/images/store.png"),
+    source: require("../../../assets/static/store.png"),
   },
   {
     id: 3,
-    source: require("../../../assets/images/store.png"),
+    source: require("../../../assets/static/store.png"),
   },
 ];
 
@@ -30,14 +30,14 @@ const couponList = [
     host: "호말",
     title: "쿠키 무료 제공 쿠폰",
     duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/images/homeal.png"),
+    source: require("../../../assets/static/homeal.png"),
   },
   {
     id: 2,
     host: "호말",
     title: "전 음료 10%할인 쿠폰",
     duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/images/homeal.png"),
+    source: require("../../../assets/static/homeal.png"),
   },
 ];
 

@@ -8,15 +8,15 @@ import Content from "@/components/common/text/content";
 const images = [
   {
     id: 1,
-    source: require("../../assets/images/coupon.png"),
+    source: require("../../assets/static/coupon.png"),
   },
   {
     id: 2,
-    source: require("../../assets/images/coupon.png"),
+    source: require("../../assets/static/coupon.png"),
   },
   {
     id: 3,
-    source: require("../../assets/images/coupon.png"),
+    source: require("../../assets/static/coupon.png"),
   },
 ];
 
