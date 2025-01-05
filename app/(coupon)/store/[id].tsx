@@ -1,4 +1,5 @@
 import * as Linking from "expo-linking";
+import { Route, router } from "expo-router";
 
 import { useState } from "react";
 
@@ -53,6 +54,10 @@ export default function StoreScreen() {
     });
   };
 
+  const onRouteDetail = (id: number) => {
+    router.push(`/(coupon)/${id}` as Route);
+  };
+
   return (
     <CommonDetail
       images={images}
@@ -70,7 +75,12 @@ export default function StoreScreen() {
         <Text size="xl">쿠폰 목록</Text>
         <Flex gap={15}>
           {couponList.map((coupon) => (
-            <Card key={coupon.id} type="coupon" {...coupon} />
+            <Card
+              key={coupon.id}
+              {...coupon}
+              type="coupon"
+              onPress={() => onRouteDetail(coupon.id)}
+            />
           ))}
         </Flex>
       </Flex>

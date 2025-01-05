@@ -6,18 +6,16 @@ import Text from "../text";
 
 import Button from ".";
 
-interface TextButtonProps extends TouchableOpacityProps {
-  children: string;
+interface SelectButtonProps extends TouchableOpacityProps {
   type?: "fill" | "outline";
 }
 
-export default function TextButton({ children, type = "fill", ...restProps }: TextButtonProps) {
+export default function SelectButton({ onPress, children, type = "fill" }: SelectButtonProps) {
   const { backgroundColor, color } = styles[type];
-  const { style, ...props } = restProps;
 
   return (
-    <Button style={[styles.container, { backgroundColor }, style]} {...props}>
-      <Text size="lg" weight={600} align="center" style={{ color }}>
+    <Button style={[styles.button, { backgroundColor }]} onPress={onPress}>
+      <Text size="lg" align="center" weight={600} style={{ color }}>
         {children}
       </Text>
     </Button>
@@ -25,11 +23,12 @@ export default function TextButton({ children, type = "fill", ...restProps }: Te
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 12,
-    borderColor: colors.primary300,
+  button: {
+    flex: 1,
+    borderRadius: 12,
+    paddingVertical: 4,
     borderWidth: 1,
-    borderRadius: 10,
+    borderColor: colors.gray300,
   },
   fill: {
     backgroundColor: colors.primary300,
@@ -37,6 +36,6 @@ const styles = StyleSheet.create({
   },
   outline: {
     backgroundColor: colors.gray100,
-    color: colors.primary300,
+    color: colors.black,
   },
 });

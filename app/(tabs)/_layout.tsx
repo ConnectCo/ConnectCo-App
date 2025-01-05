@@ -53,9 +53,9 @@ export default function TabNavigationLayout() {
           options={{
             title,
             tabBarIcon: ({ focused }) => (
-              <TabBarIcon fill={focused ? colors.primary200 : colors.gray400} />
+              <TabBarIcon fill={focused ? colors.primary300 : colors.gray400} />
             ),
-            tabBarActiveTintColor: colors.primary200,
+            tabBarActiveTintColor: colors.primary300,
             tabBarInactiveTintColor: colors.gray400,
             tabBarLabelStyle: {
               marginTop: 6,

@@ -29,7 +29,7 @@ export default function SearchHeader() {
             style={[styles.flex, styles.input]}
           />
           <Button>
-            <Icon.Search fill={colors.primary200} />
+            <Icon.Search fill={colors.primary300} />
           </Button>
         </Flex>
       </Flex>

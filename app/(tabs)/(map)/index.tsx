@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 
-import CustomBottomSheet from "@/components/map/bottom-sheet";
+import MapBottomSheet from "@/components/map/map-bottom-sheet";
 import { postMessageInstance } from "@/utils/webview";
 
 let interval: NodeJS.Timeout;
@@ -64,7 +64,7 @@ export default function MapScreen() {
         onMessage={onMessage}
         scrollEnabled={false}
       />
-      <CustomBottomSheet items={items} />
+      <MapBottomSheet items={items} />
     </View>
   );
 }

@@ -1,4 +1,5 @@
 import * as Linking from "expo-linking";
+import { Route, router } from "expo-router";
 
 import { StyleSheet } from "react-native";
 
@@ -49,6 +50,10 @@ export default function CollegeScreen() {
     });
   };
 
+  const onRouteDetail = (id: number) => {
+    router.push(`/(event)/${id}` as Route);
+  };
+
   return (
     <>
       <BackHeader title="한양대학교">
@@ -85,7 +90,7 @@ export default function CollegeScreen() {
           </Flex>
           <Flex gap={16}>
             {eventList.map((event) => (
-              <Card key={event.id} {...event} />
+              <Card key={event.id} {...event} onPress={() => onRouteDetail(event.id)} />
             ))}
           </Flex>
         </Flex>

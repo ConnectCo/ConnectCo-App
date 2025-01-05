@@ -12,7 +12,7 @@ import Header from ".";
 
 interface MainHeaderProps {
   title: string;
-  type?: "event" | "coupon" | "map";
+  type?: "event" | "coupon" | "map" | "mypage";
 }
 
 const screens = [
@@ -31,8 +31,8 @@ const screens = [
 ];
 
 export default function MainHeader({ title, type = "event" }: MainHeaderProps) {
-  const mapScreen = type === "map";
-  const iconByScreen = mapScreen ? screens.slice(2) : screens;
+  const onlyAlarm = type === "map" || type === "mypage";
+  const iconByScreen = onlyAlarm ? screens.slice(2) : screens;
 
   return (
     <Header>
@@ -41,7 +41,7 @@ export default function MainHeader({ title, type = "event" }: MainHeaderProps) {
       </Text>
       <Flex direction="row" align="center" gap={4}>
         {iconByScreen.map(({ href, ScreenIcon }, idx) => (
-          <Link key={idx === 0 ? `/(${type})/add/index` : href} href={href}>
+          <Link key={href} href={href === "/add" ? `/(${type})${href}` : href}>
             <ScreenIcon />
           </Link>
         ))}

@@ -1,3 +1,5 @@
+import { Route, router } from "expo-router";
+
 import { useRef } from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 
@@ -10,14 +12,18 @@ import Flex from "../common/flex";
 import Icon from "../common/icon";
 import Text from "../common/text";
 
-interface DrawerProps {
+interface MapBottomSheetProps {
   items: CardProps[];
 }
 
 const { height } = Dimensions.get("window");
 
-export default function CustomBottomSheet({ items }: DrawerProps) {
+export default function MapBottomSheet({ items }: MapBottomSheetProps) {
   const bottomSheetRef = useRef<BottomSheet>(null);
+
+  const onRouteDetail = (type: string, id: number) => {
+    router.push(`/(${type})/${id}` as Route);
+  };
 
   return (
     <BottomSheet ref={bottomSheetRef} index={0} snapPoints={["80%"]} style={styles.container}>
@@ -40,7 +46,14 @@ export default function CustomBottomSheet({ items }: DrawerProps) {
                 {items.length === 0 ? (
                   <Text align="center">주변에 아무것도 없어요 :(</Text>
                 ) : (
-                  items.map((item) => <Card key={item.id} {...item} />)
+                  items.map((item) => (
+                    <Card
+                      key={item.id}
+                      {...item}
+                      type={item.type}
+                      onPress={() => onRouteDetail(item.type!, item.id)}
+                    />
+                  ))
                 )}
               </Flex>
             </ScrollView>

@@ -5,3 +5,10 @@ export const formatDate = (date: Date) => {
 
   return `${year}.${month}.${day}`;
 };
+
+export const formatTime = (time: Date) => {
+  const hours = time.getHours().toString().padStart(2, "0");
+  const minutes = time.getMinutes().toString().padStart(2, "0");
+
+  return `${hours}:${minutes}`;
+};
