@@ -14,8 +14,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   slug: "connectco",
   version: "1.0.0",
   orientation: "portrait",
-  icon: "./assets/images/icon.png",
-  scheme: "myapp",
+  icon: "./src/assets/images/icon.png",
+  scheme: bundleIdentifier,
   userInterfaceStyle: "automatic",
   newArchEnabled: true,
   ios: {
@@ -32,7 +32,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: "./assets/images/adaptive-icon.png",
+      foregroundImage: "./src/assets/images/adaptive-icon.png",
       backgroundColor: "#ffffff",
     },
     package: bundleIdentifier,
@@ -40,7 +40,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   web: {
     bundler: "metro",
     output: "static",
-    favicon: "./assets/images/favicon.png",
+    favicon: "./src/assets/images/favicon.png",
   },
   plugins: [
     "expo-apple-authentication",
@@ -48,7 +48,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "expo-splash-screen",
       {
-        image: "./assets/images/splash-icon.png",
+        image: "./src/assets/images/splash-icon.png",
         imageWidth: 200,
         resizeMode: "contain",
         backgroundColor: "#ffffff",
@@ -63,7 +63,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "expo-asset",
       {
-        assets: ["./assets/static"],
+        assets: ["./src/assets/static"],
       },
     ],
     [
