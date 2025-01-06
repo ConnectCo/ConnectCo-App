@@ -32,7 +32,7 @@ export default function AuthButton({ onPress, type = "kakao" }: AuthButtonProps)
     <View style={[styles.container, { backgroundColor: colors[type] }]}>
       <Button style={styles.button} onPress={onPress}>
         {assets ? <Image source={assets[0]} style={styles.image} /> : null}
-        <Text weight={500} style={{ color: isKakao ? colors.black : colors.white }}>
+        <Text size="lg" weight={500} style={{ color: isKakao ? colors.black : colors.white }}>
           {logo.name}로 로그인
         </Text>
       </Button>

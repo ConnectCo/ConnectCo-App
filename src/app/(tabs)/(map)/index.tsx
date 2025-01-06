@@ -10,7 +10,6 @@ import { postMessageInstance } from "@/src/utils/webview";
 
 let interval: NodeJS.Timeout;
 const uri = "http://localhost:5173/";
-const isAuthorized = true;
 
 export default function MapScreen() {
   const [items, setItems] = useState([]);
@@ -56,7 +55,7 @@ export default function MapScreen() {
     }, 5000);
   }
 
-  return isAuthorized ? (
+  return (
     <View style={styles.container}>
       <WebView
         ref={webviewRef}
@@ -68,8 +67,6 @@ export default function MapScreen() {
       />
       <MapBottomSheet items={items} />
     </View>
-  ) : (
-    <AuthScreen />
   );
 }
 
