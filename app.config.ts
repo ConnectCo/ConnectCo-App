@@ -1,9 +1,5 @@
 import { ConfigContext, ExpoConfig } from "@expo/config";
 
-import * as dotenv from "dotenv";
-
-dotenv.config();
-
 const kakaoNativeAppKey = process.env.EXPO_PUBLIC_NATIVE_APP_KEY;
 const bundleIdentifier = process.env.EXPO_PUBLIC_APP_BUNDLE_IDENTIFIER;
 const iosUrlScheme = process.env.EXPO_PUBLIC_IOS_URL_SCHEME;
