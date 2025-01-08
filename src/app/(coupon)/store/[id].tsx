@@ -1,13 +1,16 @@
 import * as Linking from "expo-linking";
 import { Route, router } from "expo-router";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { StyleSheet } from "react-native";
+import WebView from "react-native-webview";
 
 import Card from "@/src/components/common/card";
 import CommonDetail from "@/src/components/common/detail";
 import Flex from "@/src/components/common/flex";
 import Text from "@/src/components/common/text";
 import Content from "@/src/components/common/text/content";
+import { postMessageInstance } from "@/src/utils/webview";
 
 const images = [
   {
@@ -41,8 +44,13 @@ const couponList = [
   },
 ];
 
+const uri = "http://localhost:5173/detail";
+
 export default function StoreScreen() {
   const [selected, setSelected] = useState(false);
+  const webviewRef = useRef<WebView>(null);
+
+  const postMessage = postMessageInstance(webviewRef);
 
   const onSelect = () => {
     setSelected((prev) => !prev);
@@ -57,6 +65,10 @@ export default function StoreScreen() {
   const onRouteDetail = (id: number) => {
     router.push(`/(coupon)/${id}` as Route);
   };
+
+  async function onLoad() {
+    postMessage("location", "서울 성동구 마조로 15-16");
+  }
 
   return (
     <CommonDetail
@@ -87,10 +99,17 @@ export default function StoreScreen() {
       <Flex gap={20}>
         <Text size="xl">가게 정보</Text>
         <Content title="가게 위치" content="서울 성동구 마조로 15-16 1층" />
-        {/* 지도 넣기 */}
+        <WebView ref={webviewRef} style={styles.webview} source={{ uri }} onLoad={onLoad} />
         <Content title="가게 연락처" content="070-8671-4208" />
         <Content title="운영시간" content={"월~토 12:00~23:00\n일 12:00~21:30"} />
       </Flex>
     </CommonDetail>
   );
 }
+
+const styles = StyleSheet.create({
+  webview: {
+    width: "100%",
+    height: 236,
+  },
+});
