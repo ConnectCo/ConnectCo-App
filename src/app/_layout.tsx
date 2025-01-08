@@ -67,6 +67,7 @@ export default function RootLayout() {
             {couponStacks()}
             <Stack.Screen name="search" options={{ header: () => <SearchHeader /> }} />
             <Stack.Screen name="alarm" options={{ header: () => <BackHeader title="알림" /> }} />
+            <Stack.Screen name="address" options={{ headerShown: false }} />
           </Stack>
         </GestureHandlerRootView>
       </QueryClientProvider>
