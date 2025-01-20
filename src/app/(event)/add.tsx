@@ -10,14 +10,14 @@ import Icon from "@/src/components/common/icon";
 import Input from "@/src/components/common/input";
 import InputWithTitle from "@/src/components/common/input/input-with-title";
 import { colors } from "@/src/constants/color";
+import { useAddressStore } from "@/src/lib/zustand/address";
 import { ImagePickerProps } from "@/src/types/image";
 import { formatDate } from "@/src/utils/date";
 
 interface InitialDataProps {
   images: ImagePickerProps[];
   event: string;
-  place: string;
-  detailPlace: string;
+  detailAddress: string;
   college: string;
   startDate: string;
   endDate: string;
@@ -30,8 +30,7 @@ interface InitialDataProps {
 const INITIAL_DATA: InitialDataProps = {
   images: [],
   event: "",
-  place: "",
-  detailPlace: "",
+  detailAddress: "",
   college: "",
   startDate: "",
   endDate: "",
@@ -42,6 +41,7 @@ const INITIAL_DATA: InitialDataProps = {
 };
 
 export default function AddScreen() {
+  const address = useAddressStore((state) => state.event);
   const router = useRouter();
   const [data, setData] = useState(INITIAL_DATA);
   const [calendar, setCalendar] = useState({ open: false, target: "" });
@@ -70,6 +70,10 @@ export default function AddScreen() {
 
   const onChangeText = (key: string, value: string) => {
     setData((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const onSearchAddress = () => {
+    router.push({ pathname: "/address", params: { type: "event" } });
   };
 
   const onOpenCalendar = (target: string) => {
@@ -116,12 +120,13 @@ export default function AddScreen() {
           placeholder="지번, 도로명, 건물명으로 검색"
           type="button"
           left={<Icon.Search fill={colors.black} />}
-          value={data.place}
+          value={address}
+          onPress={onSearchAddress}
         />
         <Input
           placeholder="상세주소를 입력해주세요 (선택)"
-          value={data.detailPlace}
-          onChangeText={(e) => onChangeText("detailPlace", e)}
+          value={data.detailAddress}
+          onChangeText={(e) => onChangeText("detailAddress", e)}
         />
       </Flex>
       <InputWithTitle
