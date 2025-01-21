@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 
-import { StyleSheet, View } from "react-native";
+import { Linking, StyleSheet, View } from "react-native";
 
 import { colors } from "@/src/constants/color";
 
@@ -14,15 +14,22 @@ import Header from ".";
 interface BackHeaderProps {
   children?: React.ReactNode;
   title: string;
+  call?: string;
   type?: "primary" | "gray";
 }
 
-export default function BackHeader({ children, title, type = "gray" }: BackHeaderProps) {
+export default function BackHeader({ children, title, call, type = "gray" }: BackHeaderProps) {
   const router = useRouter();
   const { color } = styles[type];
 
   const onPressBack = () => {
     router.back();
+  };
+
+  const onPressCall = () => {
+    Linking.openURL(`tel:${call}`).catch((err) => {
+      console.error("Failed to open URL:", err);
+    });
   };
 
   return (
@@ -35,7 +42,13 @@ export default function BackHeader({ children, title, type = "gray" }: BackHeade
           <Text size="xxl" weight={700} align="center" style={[styles.title, { color }]}>
             {title}
           </Text>
-          <View style={styles.section} />
+          <View style={styles.section}>
+            {call && (
+              <Button style={styles.button} onPress={onPressCall}>
+                <Icon.Phone fill={color} />
+              </Button>
+            )}
+          </View>
         </Flex>
         {children}
       </Flex>
@@ -49,6 +62,9 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 2,
+  },
+  button: {
+    alignSelf: "flex-end",
   },
   gray: {
     color: colors.black,
