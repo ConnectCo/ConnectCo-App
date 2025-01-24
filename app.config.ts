@@ -31,7 +31,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   runtimeVersion: "1.0.0",
   ios: {
     supportsTablet: true,
-    googleServicesFile: "./GoogleService-Info.plist",
+    googleServicesFile: process.env.GOOGLE_SERVICES_PLIST ?? "./GoogleService-Info.plist",
     bundleIdentifier: bundleIdentifier,
     usesAppleSignIn: true,
     entitlements: {
@@ -51,7 +51,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: "#ffffff",
     },
     package: bundleIdentifier,
-    googleServicesFile: "./google-services.json",
+    googleServicesFile: process.env.GOOGLE_SERVICES_JSON ?? "./google-services.json",
   },
   web: {
     bundler: "metro",
