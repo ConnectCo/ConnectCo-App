@@ -1,4 +1,5 @@
 import { useFonts } from "expo-font";
+import * as Notifications from "expo-notifications";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
@@ -6,6 +7,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import messaging from "@react-native-firebase/messaging";
 // import NaverLogin from "@react-native-seoul/naver-login";
 // import { GoogleSignin } from "@react-native-google-signin/google-signin";
 // import { initializeKakaoSDK } from "@react-native-kakao/core";
@@ -15,6 +17,16 @@ import BackHeader from "@/src/components/common/header/back-header";
 import SearchHeader from "@/src/components/search/header";
 import { couponStacks } from "@/src/components/stacks/coupon";
 import { eventStacks } from "@/src/components/stacks/event";
+
+import { requestUserPermission, sendFCMv1Notification } from "../utils/fcm";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 
 SplashScreen.preventAutoHideAsync();
 
@@ -50,6 +62,34 @@ export default function RootLayout() {
       //   iosClientId,
       // });
       // initializeKakaoSDK(kakaoNativeAppKey);
+      // Foreground 알림 리스너
+      const foregroundSubscription = Notifications.addNotificationReceivedListener(
+        (notification) => {
+          console.log("Foreground 알림 수신:", notification);
+        }
+      );
+
+      // Background 알림 리스너
+      const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
+        (response) => {
+          console.log("백그라운드 알림 응답:", response);
+        }
+      );
+
+      const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+        console.log("FCM Notification Received:", remoteMessage);
+      });
+
+      (async () => {
+        await requestUserPermission();
+        await sendFCMv1Notification();
+      })();
+
+      return () => {
+        unsubscribe();
+        foregroundSubscription.remove();
+        backgroundSubscription.remove();
+      };
     }
   }, [loaded]);
 

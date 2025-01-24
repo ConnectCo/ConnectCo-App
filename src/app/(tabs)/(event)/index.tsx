@@ -1,3 +1,6 @@
+import axios from "axios";
+
+import TextButton from "@/src/components/common/button/text-button";
 import MainScreen from "@/src/components/common/main";
 
 const eventList = [
@@ -32,5 +35,14 @@ const eventList = [
 ];
 
 export default function EventScreen() {
-  return <MainScreen items={eventList} />;
+  const onSend = async () => {
+    const res = await axios.post("http://localhost:8000/send-notification");
+    console.log(res.data);
+  };
+  return (
+    <>
+      <TextButton onPress={onSend}>Send</TextButton>
+      <MainScreen items={eventList} />
+    </>
+  );
 }
