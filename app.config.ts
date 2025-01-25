@@ -9,8 +9,6 @@ const kakaoNativeAppKey = process.env.EXPO_PUBLIC_NATIVE_APP_KEY;
 const bundleIdentifier = process.env.EXPO_PUBLIC_APP_BUNDLE_IDENTIFIER;
 const iosUrlScheme = process.env.EXPO_PUBLIC_IOS_URL_SCHEME;
 
-const isProduction = process.env.NODE_ENV === "production";
-
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   owner: "gwangsoo",
@@ -33,9 +31,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   runtimeVersion: "1.0.0",
   ios: {
     supportsTablet: true,
-    googleServicesFile: isProduction
-      ? process.env.GOOGLE_SERVICES_PLIST
-      : "./GoogleService-Info.plist",
+    googleServicesFile: process.env.GOOGLE_SERVICES_PLIST ?? "./GoogleService-Info.plist",
     bundleIdentifier: bundleIdentifier,
     usesAppleSignIn: true,
     entitlements: {
@@ -55,7 +51,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: "#ffffff",
     },
     package: bundleIdentifier,
-    googleServicesFile: isProduction ? process.env.GOOGLE_SERVICES_JSON : "./google-services.json",
+    googleServicesFile: process.env.GOOGLE_SERVICES_JSON ?? "./google-services.json",
   },
   web: {
     bundler: "metro",
