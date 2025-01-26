@@ -1,5 +1,4 @@
 import { useFonts } from "expo-font";
-import * as Notifications from "expo-notifications";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
@@ -19,14 +18,6 @@ import { couponStacks } from "@/src/components/stacks/coupon";
 import { eventStacks } from "@/src/components/stacks/event";
 
 import { requestUserPermission } from "../utils/fcm";
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
-});
 
 SplashScreen.preventAutoHideAsync();
 
@@ -62,19 +53,6 @@ export default function RootLayout() {
       //   iosClientId,
       // });
       // initializeKakaoSDK(kakaoNativeAppKey);
-      // Foreground 알림 리스너
-      const foregroundSubscription = Notifications.addNotificationReceivedListener(
-        (notification) => {
-          console.log("Foreground 알림 수신:", notification);
-        }
-      );
-
-      // Background 알림 리스너
-      const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(
-        (response) => {
-          console.log("백그라운드 알림 응답:", response);
-        }
-      );
 
       const unsubscribe = messaging().onMessage(async (remoteMessage) => {
         console.log("FCM Notification Received:", remoteMessage);
@@ -86,8 +64,6 @@ export default function RootLayout() {
 
       return () => {
         unsubscribe();
-        foregroundSubscription.remove();
-        backgroundSubscription.remove();
       };
     }
   }, [loaded]);
