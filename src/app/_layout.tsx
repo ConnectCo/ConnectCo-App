@@ -18,7 +18,7 @@ import SearchHeader from "@/src/components/search/header";
 import { couponStacks } from "@/src/components/stacks/coupon";
 import { eventStacks } from "@/src/components/stacks/event";
 
-import { requestUserPermission, sendFCMv1Notification } from "../utils/fcm";
+import { requestUserPermission } from "../utils/fcm";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -82,7 +82,6 @@ export default function RootLayout() {
 
       (async () => {
         await requestUserPermission();
-        await sendFCMv1Notification();
       })();
 
       return () => {

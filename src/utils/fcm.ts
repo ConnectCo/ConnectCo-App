@@ -8,17 +8,18 @@ export const getToken = async () => {
 
 export const requestUserPermission = async () => {
   if (Platform.OS === "android") {
-    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+    const hasPermission = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+    );
+    if (!hasPermission) {
+      await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+    }
   }
 
   if (Platform.OS === "ios") {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-    if (enabled) {
-      console.log("Authorization status:", authStatus);
+    const authStatus = await messaging().hasPermission();
+    if (authStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
+      await messaging().requestPermission();
     }
   }
 };
