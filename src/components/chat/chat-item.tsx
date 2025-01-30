@@ -1,5 +1,5 @@
 import { Image } from "expo-image";
-import { Route, router } from "expo-router";
+import { router } from "expo-router";
 
 import { Dimensions, StyleSheet, View } from "react-native";
 

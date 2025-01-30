@@ -31,3 +31,22 @@ export const formatDateTime = (date: string) => {
   }
   return formatDate(new Date(date));
 };
+
+export const formatChatDate = (date: string) => {
+  const time = new Date(date);
+  const year = time.getFullYear();
+  const month = time.getMonth() + 1;
+  const day = time.getDate();
+
+  return `${year}년 ${month}월 ${day}일`;
+};
+
+export const formatChatTime = (date: string) => {
+  const time = new Date(date);
+  let hour = time.getHours();
+  const minute = time.getMinutes();
+  const prefix = hour < 12 ? "오전" : "오후";
+  hour = hour % 12 || 12;
+
+  return `${prefix} ${hour}:${minute.toString().padStart(2, "0")}`;
+};
