@@ -1,7 +1,15 @@
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 
-import { ScrollView, StyleSheet, View } from "react-native";
+import { useState } from "react";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import MyChat from "@/src/components/chat/my-chat";
@@ -99,6 +107,8 @@ const dummyMessages = [
 ];
 
 export default function ChatScreen() {
+  const [message, setMessage] = useState("");
+
   const params = useLocalSearchParams();
   const { bottom } = useSafeAreaInsets();
 
@@ -106,8 +116,20 @@ export default function ChatScreen() {
 
   const groupedMessages = groupingMessages(dummyMessages);
 
+  const onChangeText = (e: string) => {
+    setMessage(e);
+  };
+
+  const onSubmitEditing = () => {
+    setMessage("");
+  };
+
   return (
-    <>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0} // 필요에 따라 조정
+    >
       <BackHeader title={name as string} call="010-3708-0438" />
       <View style={styles.card}>
         <Image source={require("@/src/assets/static/homeal.png")} style={styles.image} />
@@ -121,7 +143,7 @@ export default function ChatScreen() {
           <Text size="sm">~2023.10.29 까지 사용</Text>
         </View>
       </View>
-      <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: bottom }}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainerStyle}>
         {groupedMessages.map((group) =>
           group.senderId === -1 ? (
             <Text size="sm" align="center" key={group.items[0].time} style={styles.chatDate}>
@@ -134,7 +156,18 @@ export default function ChatScreen() {
           )
         )}
       </ScrollView>
-    </>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={[styles.textInput, { marginBottom: bottom }]}
+          placeholder="메시지를 입력하세요"
+          placeholderTextColor={colors.gray500}
+          value={message}
+          onChangeText={onChangeText}
+          returnKeyType="send"
+          onSubmitEditing={onSubmitEditing}
+        />
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -142,6 +175,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+  },
+  contentContainerStyle: {
+    paddingBottom: 20,
     paddingHorizontal: 8,
   },
   card: {
@@ -170,5 +206,18 @@ const styles = StyleSheet.create({
   chatDate: {
     color: colors.gray500,
     marginTop: 20,
+  },
+  inputContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderTopWidth: 1,
+    borderColor: colors.gray300,
+    backgroundColor: colors.white,
+  },
+  textInput: {
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.gray300,
   },
 });
