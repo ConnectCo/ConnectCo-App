@@ -1,15 +1,17 @@
 import { ConfigContext, ExpoConfig } from "@expo/config";
 
-import * as dotenv from "dotenv";
+import { config } from "dotenv";
 
-dotenv.config();
+config();
 
+const projectId = process.env.EXPO_PUBLIC_PROJECT_ID;
 const kakaoNativeAppKey = process.env.EXPO_PUBLIC_NATIVE_APP_KEY;
 const bundleIdentifier = process.env.EXPO_PUBLIC_APP_BUNDLE_IDENTIFIER;
 const iosUrlScheme = process.env.EXPO_PUBLIC_IOS_URL_SCHEME;
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
+  owner: "gwangsoo",
   name: "connectco",
   slug: "connectco",
   version: "1.0.0",
@@ -18,10 +20,23 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   scheme: bundleIdentifier,
   userInterfaceStyle: "automatic",
   newArchEnabled: true,
+  extra: {
+    eas: {
+      projectId,
+    },
+  },
+  updates: {
+    url: `https://u.expo.dev/${projectId}`,
+  },
+  runtimeVersion: "1.0.0",
   ios: {
     supportsTablet: true,
+    googleServicesFile: process.env.GOOGLE_SERVICES_PLIST ?? "./GoogleService-Info.plist",
     bundleIdentifier: bundleIdentifier,
     usesAppleSignIn: true,
+    entitlements: {
+      "aps-environment": "production",
+    },
     infoPlist: {
       CFBundleURLTypes: [
         {
@@ -36,6 +51,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: "#ffffff",
     },
     package: bundleIdentifier,
+    googleServicesFile: process.env.GOOGLE_SERVICES_JSON ?? "./google-services.json",
   },
   web: {
     bundler: "metro",
@@ -106,6 +122,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       "@react-native-seoul/naver-login",
       {
         urlScheme: bundleIdentifier,
+      },
+    ],
+    "@react-native-firebase/app",
+    "@react-native-firebase/messaging",
+    [
+      "expo-build-properties",
+      {
+        ios: {
+          useFrameworks: "static",
+        },
       },
     ],
   ],

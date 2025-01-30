@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import messaging from "@react-native-firebase/messaging";
 // import NaverLogin from "@react-native-seoul/naver-login";
 // import { GoogleSignin } from "@react-native-google-signin/google-signin";
 // import { initializeKakaoSDK } from "@react-native-kakao/core";
@@ -15,6 +16,8 @@ import BackHeader from "@/src/components/common/header/back-header";
 import SearchHeader from "@/src/components/search/header";
 import { couponStacks } from "@/src/components/stacks/coupon";
 import { eventStacks } from "@/src/components/stacks/event";
+
+import { requestUserPermission } from "../utils/fcm";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -50,6 +53,18 @@ export default function RootLayout() {
       //   iosClientId,
       // });
       // initializeKakaoSDK(kakaoNativeAppKey);
+
+      const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+        console.log("FCM Notification Received:", remoteMessage);
+      });
+
+      (async () => {
+        await requestUserPermission();
+      })();
+
+      return () => {
+        unsubscribe();
+      };
     }
   }, [loaded]);
 

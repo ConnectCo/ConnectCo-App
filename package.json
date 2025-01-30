@@ -9,7 +9,9 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "npx eslint . --fix",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "build:dev": "eas build --profile development --platform all",
+    "build:prod": "eas build --platform all"
   },
   "jest": {
     "preset": "jest-expo"
@@ -19,6 +21,8 @@
     "@expo/vector-icons": "^14.0.2",
     "@gorhom/bottom-sheet": "^5.0.6",
     "@react-native-community/datetimepicker": "8.2.0",
+    "@react-native-firebase/app": "^21.7.1",
+    "@react-native-firebase/messaging": "^21.7.1",
     "@react-native-google-signin/google-signin": "^13.1.0",
     "@react-native-kakao/core": "^2.2.6",
     "@react-native-kakao/user": "^2.2.6",
@@ -35,6 +39,7 @@
     "expo-blur": "~14.0.1",
     "expo-build-properties": "~0.13.1",
     "expo-constants": "~17.0.3",
+    "expo-dev-client": "~5.0.10",
     "expo-font": "~13.0.2",
     "expo-haptics": "~14.0.0",
     "expo-image": "~2.0.3",
@@ -46,6 +51,7 @@
     "expo-status-bar": "~2.0.0",
     "expo-symbols": "~0.2.0",
     "expo-system-ui": "~4.0.6",
+    "expo-updates": "~0.26.13",
     "expo-web-browser": "~14.0.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
