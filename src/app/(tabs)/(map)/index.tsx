@@ -7,8 +7,7 @@ import WebView, { WebViewMessageEvent } from "react-native-webview";
 import MapBottomSheet from "@/src/components/map/map-bottom-sheet";
 import { postMessageInstance } from "@/src/utils/webview";
 
-let interval: NodeJS.Timeout;
-const uri = "http://localhost:5173/";
+const uri = process.env.EXPO_PUBLIC_MAP_URL!;
 
 export default function MapScreen() {
   const [items, setItems] = useState([]);
@@ -21,7 +20,6 @@ export default function MapScreen() {
 
     switch (type) {
       case "init":
-        clearInterval(interval);
         sendRealtimLocation();
         break;
       case "filter":
@@ -36,15 +34,12 @@ export default function MapScreen() {
   async function onLoad() {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
-      Alert.alert("Permission to access location was denied");
-      return;
+      return Alert.alert("Permission to access location was denied");
     }
 
     const location = await Location.getCurrentPositionAsync({});
 
-    interval = setInterval(() => {
-      postMessage("init", location.coords);
-    }, 100);
+    postMessage("init", location.coords);
   }
 
   async function sendRealtimLocation() {

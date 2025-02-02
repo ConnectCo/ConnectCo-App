@@ -12,7 +12,7 @@ import Header from ".";
 
 interface MainHeaderProps {
   title: string;
-  type?: "event" | "coupon" | "map" | "mypage";
+  type?: "event" | "coupon" | "map" | "mypage" | "chat";
 }
 
 const screens = [
@@ -32,7 +32,8 @@ const screens = [
 
 export default function MainHeader({ title, type = "event" }: MainHeaderProps) {
   const onlyAlarm = type === "map" || type === "mypage";
-  const iconByScreen = onlyAlarm ? screens.slice(2) : screens;
+  const withoutPlus = type === "chat";
+  const iconByScreen = onlyAlarm ? screens.slice(2) : withoutPlus ? screens.slice(1) : screens;
 
   return (
     <Header>

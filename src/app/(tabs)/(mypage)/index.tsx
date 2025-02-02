@@ -58,9 +58,10 @@ const eventList = [
   },
 ];
 
+const isAuthorized = true;
+
 export default function MypageScreen() {
   const router = useRouter();
-  const isAuthorized = false;
 
   const onRouteAdd = (path: Route) => {
     router.push(path);

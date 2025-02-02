@@ -44,7 +44,7 @@ const couponList = [
   },
 ];
 
-const uri = "http://localhost:5173/detail";
+const uri = process.env.EXPO_PUBLIC_DETAIL_MAP_URL!;
 
 export default function StoreScreen() {
   const [selected, setSelected] = useState(false);

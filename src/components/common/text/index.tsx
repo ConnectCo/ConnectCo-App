@@ -3,7 +3,7 @@ import { StyleSheet, Text as DefaultText, TextProps as DefaultTextProps } from "
 import { colors } from "@/src/constants/color";
 
 interface TextProps extends DefaultTextProps {
-  size?: "sm" | "md" | "lg" | "xl" | "xxl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   weight?: 400 | 500 | 600 | 700;
   align?: "auto" | "justify" | "left" | "center" | "right";
 }
@@ -30,6 +30,10 @@ export default function Text({
 const styles = StyleSheet.create({
   text: {
     color: colors.black,
+  },
+  xs: {
+    fontSize: 10,
+    lineHeight: 16,
   },
   sm: {
     fontSize: 12,
