@@ -14,7 +14,13 @@ import { requestUserPermission } from "@/src/utils/fcm";
 
 SplashScreen.preventAutoHideAsync();
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+    },
+  },
+});
 
 const consumerKey = process.env.EXPO_PUBLIC_NAVER_CLIEND_ID || "";
 const consumerSecret = process.env.EXPO_PUBLIC_NAVER_CLIEND_SECRET || "";
