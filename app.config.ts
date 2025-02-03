@@ -44,6 +44,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         },
       ],
     },
+    config: {
+      usesNonExemptEncryption: false,
+    },
   },
   android: {
     adaptiveIcon: {
@@ -132,6 +135,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         ios: {
           useFrameworks: "static",
         },
+      },
+    ],
+    [
+      "expo-secure-store",
+      {
+        configureAndroidBackup: true,
+        faceIDPermission: "Allow $(PRODUCT_NAME) to access your Face ID biometric data.",
       },
     ],
   ],
