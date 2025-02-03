@@ -9,6 +9,8 @@ interface GroupedMessagesProps {
 }
 
 export const groupingMessages = (messages: ChatMessageDTO[]) => {
+  if (messages.length === 0) return [];
+
   const groupedMessages: GroupedMessagesProps[] = [];
   let prevSenderId = -1;
   let prevDate = "";

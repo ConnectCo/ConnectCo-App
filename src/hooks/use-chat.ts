@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react";
 
 import { Client, IFrame, IMessage, StompConfig } from "@stomp/stompjs";
 
+import { ChatMessageDTO } from "../models/chat";
+
 const socketEndpoint = process.env.EXPO_PUBLIC_CHAT_URL;
 
 export const useChat = (
   chatRoomId: number,
   receiverId: number,
-  setMessageList: (message: React.SetStateAction<string[]>) => void
+  setMessageList: (message: React.SetStateAction<ChatMessageDTO[]>) => void
 ) => {
   const [message, setMessage] = useState("");
   const [hasConnection, setConnection] = useState(false);
@@ -43,7 +45,7 @@ export const useChat = (
   const callback = function (message: IMessage) {
     if (message.body) {
       const msg = JSON.parse(message.body);
-      setMessageList((prev) => [...prev, msg.result.message]);
+      setMessageList((prev) => [...prev, msg.result]);
     }
   };
 
