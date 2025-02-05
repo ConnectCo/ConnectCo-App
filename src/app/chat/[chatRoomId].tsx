@@ -24,12 +24,16 @@ import { groupingMessages } from "@/src/utils/message";
 export default function ChatScreen() {
   const [messageList, setMessageList] = useState<ChatMessageDTO[]>([]);
 
-  const { message, onChangeText, sendMessage, hasConnection } = useChat(1, 2, setMessageList);
-
   const params = useLocalSearchParams();
   const { bottom } = useSafeAreaInsets();
 
-  const { name, id } = params;
+  const { chatRoomId, otherMemberName } = params;
+
+  const { message, onChangeText, sendMessage, hasConnection } = useChat(
+    +chatRoomId,
+    2,
+    setMessageList
+  );
 
   const groupedMessages = groupingMessages(messageList);
 
@@ -43,7 +47,7 @@ export default function ChatScreen() {
       style={styles.container}
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
     >
-      <BackHeader title={name as string} call="010-3708-0438" />
+      <BackHeader title={otherMemberName as string} call="010-3708-0438" />
       <View style={styles.card}>
         <Image source={require("@/src/assets/static/homeal.png")} style={styles.image} />
         <View style={styles.text}>
@@ -67,7 +71,7 @@ export default function ChatScreen() {
               <Text size="sm" align="center" key={group.items[0].time} style={styles.chatDate}>
                 {group.items[0].time}
               </Text>
-            ) : group.senderId === +id ? (
+            ) : group.senderId === +chatRoomId ? (
               <OppositeChat nickname="호말 커피" key={group.groupId} items={group.items} />
             ) : (
               <MyChat key={group.groupId} items={group.items} />
