@@ -9,5 +9,5 @@ const useCommonChat = <T>(queryKey: QueryKey, url: string) => {
 };
 
 export const useGetChatList = <T>() => {
-  return useCommonChat<T>([CHAT.LIST], "rooms?memberId=3");
+  return useCommonChat<T>([CHAT.LIST], "rooms");
 };
