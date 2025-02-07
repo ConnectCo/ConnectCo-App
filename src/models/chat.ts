@@ -4,3 +4,13 @@ export interface ChatMessageDTO {
   message: string;
   createdAt: string;
 }
+
+export interface ChatListDTO {
+  chatRoomId: number;
+  otherMemberId: number;
+  otherMemberName: string;
+  recentMessage: string;
+  recentMessageTime: string;
+  profileImage: string;
+  unreadCount: number;
+}

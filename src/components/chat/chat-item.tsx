@@ -4,47 +4,47 @@ import { router } from "expo-router";
 import { Dimensions, StyleSheet, View } from "react-native";
 
 import { colors } from "@/src/constants/color";
+import { ChatListDTO } from "@/src/models/chat";
+import { formatDateTime } from "@/src/utils/date";
 
 import Button from "../common/button";
 import Text from "../common/text";
 
-interface ChatItemProps {
-  id: number;
-  profile: string;
-  name: string;
-  time: string;
-  message: string;
-  unread: number;
-}
-
 const width = Dimensions.get("window").width;
 
-export default function ChatItem({ id, profile, name, time, message, unread }: ChatItemProps) {
+export default function ChatItem({
+  chatRoomId,
+  otherMemberName,
+  recentMessage,
+  recentMessageTime,
+  profileImage,
+  unreadCount,
+}: ChatListDTO) {
   const onNavToChat = () => {
-    router.push({ pathname: "/chat/[id]", params: { id, name } });
+    router.push({ pathname: "/chat/[chatRoomId]", params: { chatRoomId, otherMemberName } });
   };
 
   return (
     <Button onPress={onNavToChat} style={[styles.container, styles.row]}>
       <View style={[styles.row, styles.profile]}>
-        <Image source={profile} alt="유저 프로필" style={styles.image} contentFit="cover" />
+        <Image source={profileImage} alt="유저 프로필" style={styles.image} contentFit="cover" />
         <View style={styles.profileBox}>
           <View style={[styles.row, styles.profileNameTime]}>
             <Text size="lg" weight={600}>
-              {name}
+              {otherMemberName}
             </Text>
             <Text size="sm" style={{ color: colors.gray500 }}>
-              {time}
+              {formatDateTime(recentMessageTime)}
             </Text>
           </View>
           <Text numberOfLines={1} weight={500}>
-            {message}
+            {recentMessage}
           </Text>
         </View>
       </View>
-      {unread > 0 && (
+      {unreadCount > 0 && (
         <View style={styles.unreadCount}>
-          <Text style={styles.unreadCountText}>{unread}</Text>
+          <Text style={styles.unreadCountText}>{unreadCount}</Text>
         </View>
       )}
     </Button>

@@ -42,7 +42,7 @@ export const formatChatDate = (date: string) => {
 };
 
 export const formatChatTime = (date: string) => {
-  const time = new Date(date);
+  const time = new Date(new Date(date).getTime() + 1000 * 60 * 60 * 9);
   let hour = time.getHours();
   const minute = time.getMinutes();
   const prefix = hour < 12 ? "오전" : "오후";
