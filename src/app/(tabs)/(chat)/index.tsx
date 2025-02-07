@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 import Error from "@/src/components/common/error";
 import Loading from "@/src/components/common/loading";
-import ChatScreen from "@/src/screens/tabs/chat";
+import ChatListScreen from "@/src/screens/tabs/chat";
 
 export function ErrorBoundary(props: ErrorBoundaryProps) {
   return <Error {...props} />;
@@ -13,7 +13,7 @@ export function ErrorBoundary(props: ErrorBoundaryProps) {
 export default function ChatList() {
   return (
     <Suspense fallback={<Loading />}>
-      <ChatScreen />
+      <ChatListScreen />
     </Suspense>
   );
 }

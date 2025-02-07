@@ -8,19 +8,12 @@ import messaging from "@react-native-firebase/messaging";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { initializeKakaoSDK } from "@react-native-kakao/core";
 import NaverLogin from "@react-native-seoul/naver-login";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 
+import { queryClient } from "@/src/lib/tanstack/quries";
 import { requestUserPermission } from "@/src/utils/fcm";
 
 SplashScreen.preventAutoHideAsync();
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60 * 1000,
-    },
-  },
-});
 
 const consumerKey = process.env.EXPO_PUBLIC_NAVER_CLIEND_ID || "";
 const consumerSecret = process.env.EXPO_PUBLIC_NAVER_CLIEND_SECRET || "";

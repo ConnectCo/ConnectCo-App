@@ -8,7 +8,6 @@ const socketEndpoint = process.env.EXPO_PUBLIC_CHAT_URL;
 
 export const useChat = (
   chatRoomId: number,
-  receiverId: number,
   setMessageList: (message: React.SetStateAction<ChatMessageDTO[]>) => void
 ) => {
   const [message, setMessage] = useState("");
@@ -24,8 +23,7 @@ export const useChat = (
       body: JSON.stringify({
         chatRoomId,
         senderId: 1,
-        receiverId,
-        message: message,
+        message,
       }),
     });
 

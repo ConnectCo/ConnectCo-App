@@ -5,7 +5,7 @@ import { colors } from "@/src/constants/color";
 import { useGetChatList } from "@/src/lib/tanstack/quries/chat";
 import { ChatListDTO } from "@/src/models/chat";
 
-export default function ChatScreen() {
+export default function ChatListScreen() {
   const { data } = useGetChatList<ChatListDTO[]>();
 
   return (
