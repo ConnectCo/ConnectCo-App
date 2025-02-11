@@ -10,6 +10,7 @@ import Icon from "@/src/components/common/icon";
 import Input from "@/src/components/common/input";
 import InputWithTitle from "@/src/components/common/input/input-with-title";
 import { colors } from "@/src/constants/color";
+import { SCREEN } from "@/src/constants/screen";
 import { useAddressStore } from "@/src/lib/zustand/address";
 import { ImagePickerProps } from "@/src/types/image";
 import { formatDate } from "@/src/utils/date";
@@ -73,7 +74,7 @@ export default function AddScreen() {
   };
 
   const onSearchAddress = () => {
-    router.push({ pathname: "/address", params: { type: "event" } });
+    router.push({ pathname: "/address", params: { type: SCREEN.EVENT } });
   };
 
   const onOpenCalendar = (target: string) => {

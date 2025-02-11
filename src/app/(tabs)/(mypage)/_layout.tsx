@@ -2,13 +2,14 @@ import { Stack } from "expo-router";
 
 import BackHeader from "@/src/components/common/header/back-header";
 import MainHeader from "@/src/components/common/header/main-header";
+import { SCREEN } from "@/src/constants/screen";
 
 export default function MypageLayout() {
   return (
     <Stack>
       <Stack.Screen
         name="index"
-        options={{ header: () => <MainHeader title="마이페이지" type="mypage" /> }}
+        options={{ header: () => <MainHeader title="마이페이지" type={SCREEN.MYPAGE} /> }}
       />
       <Stack.Screen
         name="add"

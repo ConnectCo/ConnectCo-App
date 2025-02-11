@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 
 import { colors } from "@/src/constants/color";
+import { SCREEN } from "@/src/constants/screen";
 
 import ChipButton from "../common/button/chip-button";
 import Card, { CardProps } from "../common/card";
@@ -10,13 +11,13 @@ import Icon from "../common/icon";
 import Text from "../common/text";
 
 interface MyItemsProps {
-  type: "event" | "store" | "coupon";
+  type: SCREEN;
   items: Omit<CardProps, "onPress">[];
   onPressAdd: () => void;
 }
 
-export default function MyItems({ type = "event", items, onPressAdd }: MyItemsProps) {
-  const name = type === "event" ? "이벤트" : type === "store" ? "가게" : "쿠폰";
+export default function MyItems({ type = SCREEN.EVENT, items, onPressAdd }: MyItemsProps) {
+  const name = type === SCREEN.EVENT ? "이벤트" : type === SCREEN.STORE ? "가게" : "쿠폰";
 
   const onRoute = () => {
     // 디자인 바뀌면 라우팅 설정하기

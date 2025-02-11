@@ -8,14 +8,15 @@ import Container from "@/src/components/common/container";
 import Flex from "@/src/components/common/flex";
 import Icon from "@/src/components/common/icon";
 import Text from "@/src/components/common/text";
+import { SCREEN } from "@/src/constants/screen";
 
 interface MainScreenProps {
   items: CardProps[];
-  type?: "event" | "coupon";
+  type?: SCREEN;
 }
 
-export default function MainScreen({ items, type = "event" }: MainScreenProps) {
-  const eventScreen = type === "event" ? "이벤트" : "쿠폰";
+export default function MainScreen({ items, type = SCREEN.EVENT }: MainScreenProps) {
+  const eventScreen = type === SCREEN.EVENT ? "이벤트" : "쿠폰";
 
   const onRouteDetail = (id: number) => {
     router.push(`/(${type})/${id}` as Route);
@@ -33,7 +34,7 @@ export default function MainScreen({ items, type = "event" }: MainScreenProps) {
               <Icon.Reset />
             </Button>
           </Flex>
-          <Flex gap={16}>
+          <Flex gap={15}>
             {items.slice(0, 2).map((item) => (
               <Card key={item.id} type={type} {...item} onPress={() => onRouteDetail(item.id)} />
             ))}
@@ -51,7 +52,7 @@ export default function MainScreen({ items, type = "event" }: MainScreenProps) {
               </Flex>
             </Button>
           </Flex>
-          <Flex gap={16}>
+          <Flex gap={15}>
             {items.map((item) => (
               <Card key={item.id} type={type} {...item} onPress={() => onRouteDetail(item.id)} />
             ))}

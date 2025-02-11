@@ -16,13 +16,6 @@ export const couponStacks = () => [
     options={{ header: () => <BackHeader title="쿠폰 상세보기" /> }}
   />,
   <Stack.Screen
-    key="coupon-store"
-    name="(coupon)/store/[id]"
-    options={{
-      header: () => <BackHeader title="가게 상세보기" />,
-    }}
-  />,
-  <Stack.Screen
     key="coupon-suggest"
     name="(coupon)/suggest/[id]"
     options={{

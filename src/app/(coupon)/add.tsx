@@ -6,6 +6,7 @@ import { useState } from "react";
 import CommonAddScreen from "@/src/components/common/add";
 import Icon from "@/src/components/common/icon";
 import InputWithTitle from "@/src/components/common/input/input-with-title";
+import { SCREEN } from "@/src/constants/screen";
 import { ImagePickerProps } from "@/src/types/image";
 import { formatDate } from "@/src/utils/date";
 
@@ -85,7 +86,7 @@ export default function AddScreen() {
       prioritryTarget={data.prioritryTarget}
       caution={data.caution}
       isVisible={showCalendar}
-      type="coupon"
+      type={SCREEN.COUPON}
       onPickImage={onPickImage}
       onDelete={onDelete}
       onChangeText={onChangeText}

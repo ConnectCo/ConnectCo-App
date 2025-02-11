@@ -1,7 +1,7 @@
 import * as Linking from "expo-linking";
-import { Route, router } from "expo-router";
+import { Route, router, useLocalSearchParams } from "expo-router";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 
@@ -10,20 +10,21 @@ import CommonDetail from "@/src/components/common/detail";
 import Flex from "@/src/components/common/flex";
 import Text from "@/src/components/common/text";
 import Content from "@/src/components/common/text/content";
+import { SCREEN } from "@/src/constants/screen";
 import { postMessageInstance } from "@/src/utils/webview";
 
 const images = [
   {
     id: 1,
-    source: require("../../../assets/static/store.png"),
+    source: require("../../assets/static/store.png"),
   },
   {
     id: 2,
-    source: require("../../../assets/static/store.png"),
+    source: require("../../assets/static/store.png"),
   },
   {
     id: 3,
-    source: require("../../../assets/static/store.png"),
+    source: require("../../assets/static/store.png"),
   },
 ];
 
@@ -33,28 +34,26 @@ const couponList = [
     host: "호말",
     title: "쿠키 무료 제공 쿠폰",
     duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/static/homeal.png"),
+    source: require("../../assets/static/homeal.png"),
   },
   {
     id: 2,
     host: "호말",
     title: "전 음료 10%할인 쿠폰",
     duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/static/homeal.png"),
+    source: require("../../assets/static/homeal.png"),
   },
 ];
 
 const uri = process.env.EXPO_PUBLIC_DETAIL_MAP_URL!;
 
 export default function StoreScreen() {
-  const [selected, setSelected] = useState(false);
+  const { id } = useLocalSearchParams();
+  // id를 이용해서 이벤트 상세 내용 불러오기
+
   const webviewRef = useRef<WebView>(null);
 
   const postMessage = postMessageInstance(webviewRef);
-
-  const onSelect = () => {
-    setSelected((prev) => !prev);
-  };
 
   const onPressCall = () => {
     Linking.openURL("tel:010-3708-0438").catch((err) => {
@@ -73,15 +72,15 @@ export default function StoreScreen() {
   return (
     <CommonDetail
       images={images}
-      type="store"
-      title="호말 커피"
+      type={SCREEN.STORE}
+      name="호말 커피"
       description={
         "90년대 사무실 분위기에서 느끼는 힙스러움!\n매장에서 직접 만드는 맛있는 음료와 제과를 맛보실 수 \n있습니다."
       }
-      selected={selected}
-      onPressFavorite={onSelect}
-      onRouteSwag={onPressCall}
-      onRouteChat={() => {}}
+      isLike={false}
+      isMine={false}
+      appliedCount={0}
+      onPressRight={onPressCall}
     >
       <Flex gap={10}>
         <Text size="xl">쿠폰 목록</Text>
@@ -90,7 +89,7 @@ export default function StoreScreen() {
             <Card
               key={coupon.id}
               {...coupon}
-              type="coupon"
+              type={SCREEN.COUPON}
               onPress={() => onRouteDetail(coupon.id)}
             />
           ))}

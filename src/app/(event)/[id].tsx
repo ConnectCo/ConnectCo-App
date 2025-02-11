@@ -1,6 +1,4 @@
-import { useLocalSearchParams, useRouter } from "expo-router";
-
-import { useState } from "react";
+import { router, useLocalSearchParams } from "expo-router";
 
 import CommonDetail from "@/src/components/common/detail";
 import Content from "@/src/components/common/text/content";
@@ -21,11 +19,8 @@ const images = [
 ];
 
 export default function DetailScreen() {
-  const router = useRouter();
   const { id } = useLocalSearchParams();
   // id를 이용해서 이벤트 상세 내용 불러오기
-
-  const [selected, setSelected] = useState(false);
 
   const onRouteCollegeProfile = () => {
     router.push(`/(event)/college/${id}`);
@@ -35,10 +30,6 @@ export default function DetailScreen() {
     router.push(`/(event)/suggest/${id}`);
   };
 
-  const onSelect = () => {
-    setSelected((prev) => !prev);
-  };
-
   return (
     <CommonDetail
       images={images}
@@ -46,14 +37,14 @@ export default function DetailScreen() {
         name: "한양대학교",
         id: "hanyang",
       }}
-      title="한양패스 이벤트"
-      endDate="2023.12.29"
+      name="한양패스 이벤트"
+      expiredAt="2023.12.29"
       description="오직 한양인을 위한 상권 제휴, HANYANG PASS 한양대학교 서울캠퍼스 재학생 및 휴학생에게 제공되는 협찬권입니다."
-      selected={selected}
-      onPressFavorite={onSelect}
+      isLike={false}
+      isMine={false}
+      appliedCount={0}
       onRouteProfile={onRouteCollegeProfile}
-      onRouteSwag={onRouteSuggest}
-      onRouteChat={() => {}}
+      onPressRight={onRouteSuggest}
     >
       <Content title="기간" content="2023.10.17~2023.12.31" />
       <Content title="혜택 대상" content="한양대학교 서울캠퍼스 소속 재학생 및 휴학생" />

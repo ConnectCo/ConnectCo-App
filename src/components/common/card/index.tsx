@@ -3,6 +3,7 @@ import { Image } from "expo-image";
 import { Dimensions, StyleSheet, View } from "react-native";
 
 import { colors } from "@/src/constants/color";
+import { SCREEN } from "@/src/constants/screen";
 
 import Button from "../button";
 import Flex from "../flex";
@@ -17,7 +18,7 @@ export interface CardProps {
   source: string;
   duration?: string;
   coupon?: number;
-  type?: "event" | "coupon" | "store";
+  type?: SCREEN;
   children?: React.ReactNode;
   status?: "new" | "completed" | "none";
   onPress: () => void;
@@ -30,12 +31,12 @@ export default function Card({
   duration,
   source,
   coupon,
-  type = "event",
+  type = SCREEN.EVENT,
   children,
   status = "none",
   onPress,
 }: CardProps) {
-  const isCouponNeeded = type === "store";
+  const isCouponNeeded = type === SCREEN.STORE;
   const isSuggestionScreen = status !== "none";
   const isNew = status === "new";
   const isCompleted = status === "completed";
@@ -46,7 +47,7 @@ export default function Card({
       ? "신청 일자"
       : isCouponNeeded
         ? "신청 가능 쿠폰 갯수"
-        : type === "event"
+        : type === SCREEN.EVENT
           ? "이벤트 기간"
           : "신청 마감일";
   const backgroundColor = !isSuggestionScreen

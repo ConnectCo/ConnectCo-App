@@ -13,6 +13,7 @@ import Icon from "@/src/components/common/icon";
 import Text from "@/src/components/common/text";
 import MyItems from "@/src/components/mypage/my-items";
 import { colors } from "@/src/constants/color";
+import { SCREEN } from "@/src/constants/screen";
 
 const storeList = [
   {
@@ -114,13 +115,21 @@ export default function MypageScreen() {
       <View style={styles.divider} />
       <MyItems
         items={storeList}
-        type="store"
+        type={SCREEN.STORE}
         onPressAdd={() => onRouteAdd("/(tabs)/(mypage)/add")}
       />
       <View style={styles.divider} />
-      <MyItems items={couponList} type="coupon" onPressAdd={() => onRouteAdd("/(coupon)/add")} />
+      <MyItems
+        items={couponList}
+        type={SCREEN.COUPON}
+        onPressAdd={() => onRouteAdd("/(coupon)/add")}
+      />
       <View style={styles.divider} />
-      <MyItems items={eventList} type="event" onPressAdd={() => onRouteAdd("/(event)/add")} />
+      <MyItems
+        items={eventList}
+        type={SCREEN.EVENT}
+        onPressAdd={() => onRouteAdd("/(event)/add")}
+      />
     </ScrollView>
   ) : (
     <AuthScreen />

@@ -23,6 +23,12 @@ export default function RootLayout() {
         <Stack.Screen name="alarm" options={{ header: () => <BackHeader title="알림" /> }} />
         <Stack.Screen name="address" options={{ headerShown: false }} />
         <Stack.Screen name="chat/[chatRoomId]" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="store/[id]"
+          options={{
+            header: () => <BackHeader title="가게 상세보기" />,
+          }}
+        />
       </Stack>
       <StatusBar style="auto" />
     </RootProvider>
