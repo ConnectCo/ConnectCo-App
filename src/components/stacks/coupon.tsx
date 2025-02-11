@@ -22,4 +22,11 @@ export const couponStacks = () => [
       header: () => <BackHeader type="primary" title="협찬 신청 정보" />,
     }}
   />,
+  <Stack.Screen
+    key="coupon-suggestion-list"
+    name="(coupon)/suggest/list"
+    options={{
+      header: () => <BackHeader type="primary" title="쿠폰 불러오기" />,
+    }}
+  />,
 ];

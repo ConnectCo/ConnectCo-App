@@ -27,7 +27,7 @@ export default function DetailScreen() {
   };
 
   const onRouteSuggest = () => {
-    router.push(`/(event)/suggest/${id}`);
+    router.push(`/(coupon)/suggest/${id}`);
   };
 
   return (

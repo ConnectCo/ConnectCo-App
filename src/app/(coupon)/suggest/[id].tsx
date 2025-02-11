@@ -1,106 +1,68 @@
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
-import { useState } from "react";
 import { StyleSheet } from "react-native";
 
 import TextButton from "@/src/components/common/button/text-button";
-import Calendar from "@/src/components/common/calendar";
 import Container from "@/src/components/common/container";
 import Flex from "@/src/components/common/flex";
 import Icon from "@/src/components/common/icon";
 import InputWithTitle from "@/src/components/common/input/input-with-title";
 import { colors } from "@/src/constants/color";
-import { formatDate } from "@/src/utils/date";
-
-const INITIAL_SUGGESTION = {
-  event: "",
-  eventName: "",
-  organize: "",
-  endDate: "",
-  target: "",
-  priorityTarget: "",
-};
+import { useCouponSuggestionStore } from "@/src/lib/zustand/suggestion";
 
 export default function SuggestScreen() {
-  const router = useRouter();
+  // 협찬 제안 API 호출 시 사용
   const { id } = useLocalSearchParams();
-  const [showCalendar, setShowCalendar] = useState(false);
+  const { suggestion, setSuggestions } = useCouponSuggestionStore();
 
-  const [suggestion, setSuggestion] = useState(INITIAL_SUGGESTION);
-
-  const onChangeText = (key: string, value: string) => {
-    setSuggestion((prev) => ({ ...prev, [key]: value }));
-  };
-
+  // TODO: 협찬 제안 API 호출
   const onSuggestion = () => {
-    // TODO: 협찬 제안 API 호출
+    setSuggestions({
+      name: "",
+      description: "",
+      priorityTarget: "",
+    });
     router.back();
   };
 
-  const onOpenCalendar = () => {
-    setShowCalendar(true);
-  };
-
-  const onCloseCalendar = () => {
-    setShowCalendar(false);
-  };
-
-  const onSelectDate = (date: Date) => {
-    onChangeText("endDate", formatDate(date));
-    onCloseCalendar();
+  const onRouteSuggestionList = () => {
+    router.push("/(coupon)/suggest/list");
   };
 
   return (
     <Container as="ScrollView" contentContainerStyle={styles.container}>
       <Flex gap={20}>
         <InputWithTitle
-          left={<Icon.Search fill={colors.gray300} />}
-          right={<Icon.Dropdown />}
-          title="이벤트 불러오기"
-          placeholder="어떤 이벤트를 불러올까요?"
-          description="이벤트 정보 등록, 수정은 마이페이지에서 가능합니다."
+          right={<Icon.Search fill={colors.gray300} />}
+          title="쿠폰 불러오기"
+          placeholder="어떤 쿠폰을 불러올까요?"
+          description="쿠폰 정보 등록, 수정은 마이페이지에서 가능합니다."
           type="button"
-          onPress={() => {}}
+          onPress={onRouteSuggestionList}
         />
         <InputWithTitle
-          title="이벤트 이름"
+          title="쿠폰 이름"
           placeholder="예시) 커넥코대학교 방송국 퀴즈 경품, 커넥코 패스"
-          value={suggestion.eventName}
-          onChangeText={(value) => onChangeText("eventName", value)}
+          value={suggestion.name}
+          readOnly
         />
         <InputWithTitle
-          type="button"
-          title="단체"
-          placeholder="단체명을 검색하세요. 예시) 커넥코 대학교"
-          left={<Icon.Search fill={colors.gray300} />}
-          value={suggestion.organize}
-        />
-        <InputWithTitle
-          type="button"
-          title="협찬 기간"
-          placeholder="언제부터 언제까지 협찬을 원하시나요?"
-          right={<Icon.Calendar />}
-          onPress={onOpenCalendar}
-          value={suggestion.endDate}
-        />
-        <InputWithTitle
-          title="혜택 대상"
-          placeholder="이벤트 혜택을 받는 대상이 누구인지 입력해주세요."
-          value={suggestion.target}
-          onChangeText={(value) => onChangeText("target", value)}
+          title="쿠폰 상세 정보"
+          placeholder="설명이 자세할수록 더 많은 협찬 신청이 들어와요!"
+          value={suggestion.description}
+          readOnly
         />
         <InputWithTitle
           multiline
           title="우선 협찬 대상"
           placeholder={
-            "우선적으로 협찬을 받고 싶은 대상을 입력해주세요.\n대상에 해당하는 가게에서 연락이 올거에요 :)"
+            "이벤트 운영자에게 하고 싶은 말을 자유롭게 입력해주세요.\n정성들여 작성할수록 협찬 제안을 수락할 확률이 높아져요!"
           }
           value={suggestion.priorityTarget}
-          onChangeText={(value) => onChangeText("priorityTarget", value)}
+          readOnly
         />
       </Flex>
       <TextButton onPress={onSuggestion}>협찬제안</TextButton>
-      <Calendar isVisible={showCalendar} onConfirm={onSelectDate} onCancel={onCloseCalendar} />
     </Container>
   );
 }

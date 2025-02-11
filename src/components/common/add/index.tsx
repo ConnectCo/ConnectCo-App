@@ -8,21 +8,16 @@ import SelectImage from "@/src/components/common/select-image";
 import { SCREEN } from "@/src/constants/screen";
 import { ImagePickerProps } from "@/src/types/image";
 
-import Calendar from "../calendar";
-
 interface CommonAddScreenProps {
   children: React.ReactNode;
   images: ImagePickerProps[];
   description: string;
   prioritryTarget: string;
   caution: string;
-  isVisible: boolean;
   type?: SCREEN;
   onPickImage: () => void;
   onDelete: (id: string | null | undefined) => void;
   onChangeText: (key: string, value: string) => void;
-  onConfirm: (date: Date) => void;
-  onCancel: () => void;
   onComplete: () => void;
 }
 
@@ -32,13 +27,10 @@ export default function CommonAddScreen({
   description,
   prioritryTarget,
   caution,
-  isVisible,
   type = SCREEN.EVENT,
   onPickImage,
   onDelete,
   onChangeText,
-  onConfirm,
-  onCancel,
   onComplete,
 }: CommonAddScreenProps) {
   const target = type === SCREEN.EVENT ? "단체" : "가게";
@@ -74,7 +66,6 @@ export default function CommonAddScreen({
       <TextButton onPress={onComplete} style={styles.completeButton}>
         작성완료
       </TextButton>
-      <Calendar isVisible={isVisible} onConfirm={onConfirm} onCancel={onCancel} />
     </Container>
   );
 }

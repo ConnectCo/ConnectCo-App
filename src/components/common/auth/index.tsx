@@ -3,9 +3,10 @@ import { Image } from "expo-image";
 
 import { StyleSheet } from "react-native";
 
-// import NaverLogin from "@react-native-seoul/naver-login";
-// import { GoogleSignin } from "@react-native-google-signin/google-signin";
-// import { login } from "@react-native-kakao/user";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { login } from "@react-native-kakao/user";
+import NaverLogin from "@react-native-seoul/naver-login";
+
 import { colors } from "@/src/constants/color";
 
 import AppleAuth from "./apple-auth";
@@ -19,20 +20,20 @@ export default function AuthScreen() {
 
   const onKakaoLogin = async () => {
     try {
-      // const res = await login();
+      const res = await login();
     } catch (error) {
       console.error(error);
     }
   };
 
   const onNaverLogin = async () => {
-    // const { failureResponse, successResponse } = await NaverLogin.login();
+    const { failureResponse, successResponse } = await NaverLogin.login();
   };
 
   const onGoogleLogin = async () => {
     try {
-      // await GoogleSignin.hasPlayServices();
-      // const response = await GoogleSignin.signIn();
+      await GoogleSignin.hasPlayServices();
+      const response = await GoogleSignin.signIn();
     } catch (error) {
       console.error(error);
     }

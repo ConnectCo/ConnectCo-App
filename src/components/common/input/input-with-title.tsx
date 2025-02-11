@@ -32,8 +32,8 @@ export default function InputWithTitle({
   const isReadOnly = type === "button";
 
   return (
-    <Flex gap={8}>
-      <Flex gap={4}>
+    <Flex gap={10}>
+      <Flex gap={5}>
         <Flex direction="row" align="center">
           <Text size="lg" weight={600}>
             {title}{" "}

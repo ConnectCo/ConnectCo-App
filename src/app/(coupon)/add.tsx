@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 
 import CommonAddScreen from "@/src/components/common/add";
-import Icon from "@/src/components/common/icon";
+import ButtonCalendar from "@/src/components/common/calendar/button-calendar";
 import InputWithTitle from "@/src/components/common/input/input-with-title";
 import { SCREEN } from "@/src/constants/screen";
 import { ImagePickerProps } from "@/src/types/image";
@@ -13,7 +13,6 @@ import { formatDate } from "@/src/utils/date";
 interface InitialDataProps {
   images: ImagePickerProps[];
   coupon: string;
-  store: string;
   endDate: string;
   description: string;
   prioritryTarget: string;
@@ -23,8 +22,7 @@ interface InitialDataProps {
 const INITIAL_DATA: InitialDataProps = {
   images: [],
   coupon: "",
-  store: "",
-  endDate: "",
+  endDate: formatDate(new Date()),
   description: "",
   prioritryTarget: "",
   caution: "",
@@ -33,7 +31,6 @@ const INITIAL_DATA: InitialDataProps = {
 export default function AddScreen() {
   const router = useRouter();
   const [data, setData] = useState(INITIAL_DATA);
-  const [showCalendar, setShowCalendar] = useState(false);
 
   const onPickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -61,17 +58,8 @@ export default function AddScreen() {
     setData((prev) => ({ ...prev, [key]: value }));
   };
 
-  const onOpenCalendar = () => {
-    setShowCalendar(true);
-  };
-
-  const onCloseCalendar = () => {
-    setShowCalendar(false);
-  };
-
   const onSelectDate = (date: Date) => {
     onChangeText("endDate", formatDate(date));
-    onCloseCalendar();
   };
 
   const onComplete = () => {
@@ -85,13 +73,10 @@ export default function AddScreen() {
       description={data.description}
       prioritryTarget={data.prioritryTarget}
       caution={data.caution}
-      isVisible={showCalendar}
       type={SCREEN.COUPON}
       onPickImage={onPickImage}
       onDelete={onDelete}
       onChangeText={onChangeText}
-      onConfirm={onSelectDate}
-      onCancel={onCloseCalendar}
       onComplete={onComplete}
     >
       <InputWithTitle
@@ -100,21 +85,7 @@ export default function AddScreen() {
         value={data.coupon}
         onChangeText={(e) => onChangeText("coupon", e)}
       />
-      <InputWithTitle
-        title="가게"
-        placeholder="가게 프로필을 선택해주세요!"
-        type="button"
-        right={<Icon.Dropdown />}
-        value={data.store}
-      />
-      <InputWithTitle
-        title="신청 마감일"
-        placeholder="신청 마감일을 입력해주세요!"
-        type="button"
-        right={<Icon.Calendar />}
-        value={data.endDate}
-        onPress={onOpenCalendar}
-      />
+      <ButtonCalendar title="신청 마감일" date={data.endDate} onConfirm={onSelectDate} />
     </CommonAddScreen>
   );
 }
