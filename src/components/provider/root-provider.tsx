@@ -22,19 +22,19 @@ const serviceUrlSchemeIOS = process.env.EXPO_PUBLIC_APP_BUNDLE_IDENTIFIER || "";
 const kakaoNativeAppKey = process.env.EXPO_PUBLIC_NATIVE_APP_KEY || "";
 const iosClientId = process.env.EXPO_PUBLIC_GOOGLE_CLIEND_ID || "";
 
-async function enableMocking() {
-  if (!__DEV__) {
-    return;
-  }
+// async function enableMocking() {
+//   if (!__DEV__) {
+//     return;
+//   }
 
-  await import("../../../msw.polyfills");
-  const { server } = await import("../../mocks/server");
-  server.listen();
-}
+//   await import("../../../msw.polyfills");
+//   const { server } = await import("../../mocks/server");
+//   server.listen();
+// }
 
-enableMocking().then(() => {
-  console.log("enableMocking");
-});
+// enableMocking().then(() => {
+//   console.log("enableMocking");
+// });
 
 export default function RootProvider({ children }: { children: React.ReactNode }) {
   const [loaded] = useFonts({

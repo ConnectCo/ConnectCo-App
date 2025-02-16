@@ -28,6 +28,14 @@ export default function RootLayout() {
             header: () => <BackHeader title="가게 상세보기" />,
           }}
         />
+        <Stack.Screen
+          name="(add)/organization"
+          options={{ header: () => <BackHeader title="단체 등록하기" type="primary" /> }}
+        />
+        <Stack.Screen
+          name="(add)/store"
+          options={{ header: () => <BackHeader title="가게 등록하기" type="primary" /> }}
+        />
       </Stack>
       <StatusBar style="auto" />
     </RootProvider>

@@ -176,6 +176,32 @@ const Icon = {
       />
     </Svg>
   ),
+  Document: () => (
+    <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <Path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M18 8.41421L14.5858 5H6V19H18V8.41421ZM15 4L19 8V20H5V4H15Z"
+        fill="#179EFF"
+      />
+      <Path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M13.5 5H14.5V8.5H18V9.5H13.5V5Z"
+        fill="#179EFF"
+      />
+      <Path
+        d="M21 18C21 20.2091 19.2091 22 17 22C14.7909 22 13 20.2091 13 18C13 15.7909 14.7909 14 17 14C19.2091 14 21 15.7909 21 18Z"
+        fill="#179EFF"
+      />
+      <Path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M17 15.5C17.2761 15.5 17.5 15.7239 17.5 16V17.5H19C19.2761 17.5 19.5 17.7239 19.5 18C19.5 18.2761 19.2761 18.5 19 18.5H17.5V20C17.5 20.2761 17.2761 20.5 17 20.5C16.7239 20.5 16.5 20.2761 16.5 20V18.5H15C14.7239 18.5 14.5 18.2761 14.5 18C14.5 17.7239 14.7239 17.5 15 17.5H16.5V16C16.5 15.7239 16.7239 15.5 17 15.5Z"
+        fill="white"
+      />
+    </Svg>
+  ),
 };
 
 export default Icon;

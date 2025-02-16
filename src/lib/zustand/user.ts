@@ -1,13 +1,11 @@
 import { create } from "zustand";
 import { persist, StorageValue } from "zustand/middleware";
 
+import type { ProfileProps } from "@/src/types/user";
 import { getItem, removeItem, setItem } from "@/src/utils/secure-store";
 
-interface UserStoreProps {
-  profileId: number;
-  profileType: string;
-  profileName: string;
-  profileImageUrl: string;
+interface UserStoreProps extends ProfileProps {
+  status: "annonymous" | "select-profile" | "authenticated";
   accessToken: string;
   refreshToken: string;
   setUser: (key: keyof UserStoreProps, value: UserStoreProps) => void;
@@ -32,6 +30,7 @@ const options = {
 export const useUserStore = create(
   persist<UserStoreProps>(
     (set) => ({
+      status: "select-profile",
       profileId: -1,
       profileType: "",
       profileName: "",

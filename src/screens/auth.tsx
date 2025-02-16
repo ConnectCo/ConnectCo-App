@@ -7,14 +7,13 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { login } from "@react-native-kakao/user";
 import NaverLogin from "@react-native-seoul/naver-login";
 
+import AppleAuth from "@/src/components/common/auth/apple-auth";
+import AuthButton from "@/src/components/common/auth/auth-button";
+import Flex from "@/src/components/common/flex";
 import { colors } from "@/src/constants/color";
 
-import AppleAuth from "./apple-auth";
-import AuthButton from "./auth-button";
-import Flex from "../flex";
-
 export default function AuthScreen() {
-  const [assets, error] = useAssets([require("../../../assets/static/logo.png")]);
+  const [assets, error] = useAssets([require("../assets/static/logo.png")]);
 
   if (error) console.error(`Error when loading image: ${error}`);
 

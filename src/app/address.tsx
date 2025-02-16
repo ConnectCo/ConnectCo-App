@@ -1,22 +1,17 @@
 import { router } from "expo-router";
-import { useLocalSearchParams } from "expo-router/build/hooks";
 
 import { SafeAreaView, StyleSheet } from "react-native";
 
 import PostCode from "@actbase/react-daum-postcode";
 import { OnCompleteParams } from "@actbase/react-daum-postcode/lib/types";
 
-import { SCREEN } from "../constants/screen";
 import { useAddressStore } from "../lib/zustand/address";
 
 export default function AddressScreen() {
-  const params = useLocalSearchParams();
-  const store = useAddressStore();
-
-  const setState = params.type === SCREEN.EVENT ? store.setEvent : store.setStore;
+  const setAddress = useAddressStore((state) => state.setAddress);
 
   const onSelected = (data: OnCompleteParams) => {
-    setState(data.address);
+    setAddress(data.address);
     router.back();
   };
 

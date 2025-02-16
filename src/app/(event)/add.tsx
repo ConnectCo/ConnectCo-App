@@ -1,7 +1,7 @@
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import CommonAddScreen from "@/src/components/common/add";
 import ButtonCalendar from "@/src/components/common/calendar/button-calendar";
@@ -10,7 +10,6 @@ import Icon from "@/src/components/common/icon";
 import Input from "@/src/components/common/input";
 import InputWithTitle from "@/src/components/common/input/input-with-title";
 import { colors } from "@/src/constants/color";
-import { SCREEN } from "@/src/constants/screen";
 import { useAddressStore } from "@/src/lib/zustand/address";
 import { ImagePickerProps } from "@/src/types/image";
 import { formatDate } from "@/src/utils/date";
@@ -42,7 +41,7 @@ const INITIAL_DATA: InitialDataProps = {
 };
 
 export default function AddScreen() {
-  const address = useAddressStore((state) => state.event);
+  const { address, setAddress } = useAddressStore();
   const router = useRouter();
   const [data, setData] = useState(INITIAL_DATA);
 
@@ -73,7 +72,7 @@ export default function AddScreen() {
   };
 
   const onSearchAddress = () => {
-    router.push({ pathname: "/address", params: { type: SCREEN.EVENT } });
+    router.push("/address");
   };
 
   const onSelectDate = (target: "startDate" | "endDate", date: Date) => {
@@ -84,6 +83,12 @@ export default function AddScreen() {
     // API 요청 로직
     router.back();
   };
+
+  useEffect(() => {
+    if (address) {
+      setAddress("");
+    }
+  }, []);
 
   return (
     <CommonAddScreen
