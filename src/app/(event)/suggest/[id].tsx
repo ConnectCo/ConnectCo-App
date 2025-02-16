@@ -48,7 +48,7 @@ export default function SuggestScreen() {
           readOnly
         />
         <ButtonCalendar
-          title="협찬 기간"
+          title="이벤트 기간"
           date={suggestion.duration || "이벤트를 선택해주세요."}
           onConfirm={() => {}}
           disabled
