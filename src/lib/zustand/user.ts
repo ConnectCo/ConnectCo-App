@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, StorageValue } from "zustand/middleware";
 
-import { getItem, removeItem, setItem } from "@/src/utils/store";
+import { getItem, removeItem, setItem } from "@/src/utils/secure-store";
 
 interface UserStoreProps {
   profileId: number;

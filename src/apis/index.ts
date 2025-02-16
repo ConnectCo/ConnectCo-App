@@ -2,7 +2,7 @@ import { router } from "expo-router";
 
 import axios from "axios";
 
-import { getItem, removeTokens } from "../utils/store";
+import { getItem, removeTokens } from "../utils/secure-store";
 
 const baseURL = process.env.EXPO_PUBLIC_BASE_URL;
 
