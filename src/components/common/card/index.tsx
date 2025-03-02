@@ -4,6 +4,7 @@ import { Dimensions, StyleSheet, View } from "react-native";
 
 import { colors } from "@/src/constants/color";
 import { SCREEN } from "@/src/constants/screen";
+import { CardProps } from "@/src/types/card";
 
 import Button from "../button";
 import Flex from "../flex";
@@ -11,32 +12,17 @@ import Text from "../text";
 
 const { width } = Dimensions.get("screen");
 
-export interface CardProps {
-  id: number;
-  title: string;
-  host: string;
-  source: string;
-  duration?: string;
-  coupon?: number;
-  type?: SCREEN;
-  children?: React.ReactNode;
-  status?: "new" | "completed" | "none";
-  onPress: () => void;
-}
-
 export default function Card({
   id,
-  title,
+  name,
   host,
-  duration,
-  source,
-  coupon,
+  expiredAt,
+  thumbnail,
   type = SCREEN.EVENT,
   children,
   status = "none",
   onPress,
 }: CardProps) {
-  const isCouponNeeded = type === SCREEN.STORE;
   const isSuggestionScreen = status !== "none";
   const isNew = status === "new";
   const isCompleted = status === "completed";
@@ -45,33 +31,29 @@ export default function Card({
     ? "수락 일자"
     : isNew
       ? "신청 일자"
-      : isCouponNeeded
-        ? "신청 가능 쿠폰 갯수"
-        : type === SCREEN.EVENT
-          ? "이벤트 기간"
-          : "신청 마감일";
+      : type === SCREEN.EVENT
+        ? "이벤트 기간"
+        : "신청 마감일";
   const backgroundColor = !isSuggestionScreen
     ? colors.white
     : isNew
       ? colors.primary100
       : colors.gray100;
 
-  const additionalInfo = isCouponNeeded ? coupon : duration;
-
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <Button onPress={onPress}>
         <Flex direction="row" align="center" gap={24}>
-          <Image source={source} style={styles.image} />
+          <Image source={thumbnail} style={styles.image} />
           <Flex>
             <Text size="sm" weight={700} style={styles.host}>
               {host}
             </Text>
-            <Text size="lg" weight={600} style={[styles.title, styles.duration]} numberOfLines={1}>
-              {title}
+            <Text size="lg" weight={600} style={[styles.name, styles.expiredAt]} numberOfLines={1}>
+              {name}
             </Text>
-            <Text size="sm" numberOfLines={1} style={styles.duration}>
-              {descriptionByType} - {additionalInfo}
+            <Text size="sm" numberOfLines={1} style={styles.expiredAt}>
+              {descriptionByType} - {expiredAt}
             </Text>
           </Flex>
         </Flex>
@@ -97,11 +79,11 @@ const styles = StyleSheet.create({
   host: {
     color: colors.gray500,
   },
-  title: {
+  name: {
     marginTop: 4,
     marginBottom: 8,
   },
-  duration: {
+  expiredAt: {
     width: width - 148,
   },
 });

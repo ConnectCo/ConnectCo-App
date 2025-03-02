@@ -15,30 +15,20 @@ import { colors } from "@/src/constants/color";
 import { SCREEN } from "@/src/constants/screen";
 import AuthScreen from "@/src/screens/auth";
 
-const storeList = [
-  {
-    id: 1,
-    host: "호말 커피",
-    title: "90년대 사무실 분위기에서 느끼는 힙스러움!",
-    coupon: 3,
-    source: require("../../../assets/static/homeal.png"),
-  },
-];
-
 const couponList = [
   {
     id: 1,
     host: "호말",
-    title: "쿠키 무료 제공 쿠폰",
-    duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/static/homeal.png"),
+    name: "쿠키 무료 제공 쿠폰",
+    expiredAt: "2023.10.17 ~ 2023.10.29",
+    thumbnail: require("../../../assets/static/homeal.png"),
   },
   {
     id: 2,
     host: "호말",
-    title: "전 음료 10%할인 쿠폰",
-    duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/static/homeal.png"),
+    name: "전 음료 10%할인 쿠폰",
+    expiredAt: "2023.10.17 ~ 2023.10.29",
+    thumbnail: require("../../../assets/static/homeal.png"),
   },
 ];
 
@@ -46,16 +36,16 @@ const eventList = [
   {
     id: 1,
     host: "한양대학교",
-    title: "한양대학교 행사",
-    duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/static/hanyang.png"),
+    name: "한양대학교 행사",
+    expiredAt: "2023.10.17 ~ 2023.10.29",
+    thumbnail: require("../../../assets/static/hanyang.png"),
   },
   {
     id: 2,
     host: "건국대학교",
-    title: "산업디자인과 전시회",
-    duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/static/hanyang.png"),
+    name: "산업디자인과 전시회",
+    expiredAt: "2023.10.17 ~ 2023.10.29",
+    thumbnail: require("../../../assets/static/hanyang.png"),
   },
 ];
 
@@ -113,11 +103,6 @@ export default function MypageScreen() {
         </Flex>
       </Container>
       <View style={styles.divider} />
-      <MyItems
-        items={storeList}
-        type={SCREEN.STORE}
-        onPressAdd={() => onRouteAdd("/(tabs)/(mypage)/add")}
-      />
       <View style={styles.divider} />
       <MyItems
         items={couponList}

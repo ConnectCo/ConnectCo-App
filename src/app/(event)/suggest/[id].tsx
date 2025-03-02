@@ -19,7 +19,7 @@ export default function SuggestScreen() {
     // TODO: 협찬 제안 API 호출
     setSuggestions({
       name: "",
-      duration: "",
+      expiredAt: "",
       description: "",
       priorityTarget: "",
     });
@@ -49,7 +49,7 @@ export default function SuggestScreen() {
         />
         <ButtonCalendar
           title="이벤트 기간"
-          date={suggestion.duration || "이벤트를 선택해주세요."}
+          date={suggestion.expiredAt || "이벤트를 선택해주세요."}
           onConfirm={() => {}}
           disabled
         />

@@ -5,8 +5,10 @@ import { Dimensions, ScrollView, StyleSheet } from "react-native";
 
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 
+import type { CardProps } from "@/src/types/card";
+
 import Button from "../common/button";
-import Card, { CardProps } from "../common/card";
+import Card from "../common/card";
 import Container from "../common/container";
 import Flex from "../common/flex";
 import Icon from "../common/icon";

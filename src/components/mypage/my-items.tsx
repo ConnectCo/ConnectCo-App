@@ -2,9 +2,10 @@ import { StyleSheet } from "react-native";
 
 import { colors } from "@/src/constants/color";
 import { SCREEN } from "@/src/constants/screen";
+import { CardContentProps } from "@/src/types/card";
 
 import ChipButton from "../common/button/chip-button";
-import Card, { CardProps } from "../common/card";
+import Card from "../common/card";
 import Container from "../common/container";
 import Flex from "../common/flex";
 import Icon from "../common/icon";
@@ -12,7 +13,7 @@ import Text from "../common/text";
 
 interface MyItemsProps {
   type: SCREEN;
-  items: Omit<CardProps, "onPress">[];
+  items: CardContentProps[];
   onPressAdd: () => void;
 }
 

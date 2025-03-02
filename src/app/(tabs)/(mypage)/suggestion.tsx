@@ -5,12 +5,13 @@ import { FlatList, StyleSheet, View } from "react-native";
 
 import Button from "@/src/components/common/button";
 import SelectButton from "@/src/components/common/button/select-button";
-import Card, { CardProps } from "@/src/components/common/card";
+import Card from "@/src/components/common/card";
 import Flex from "@/src/components/common/flex";
 import BackHeader from "@/src/components/common/header/back-header";
 import Text from "@/src/components/common/text";
 import { colors } from "@/src/constants/color";
 import { SCREEN } from "@/src/constants/screen";
+import { CardContentProps } from "@/src/types/card";
 
 type Category = "new" | "completed";
 
@@ -29,30 +30,30 @@ const eventList = [
   {
     id: 1,
     host: "한양대학교",
-    title: "한양대학교 행사",
-    duration: "2023.10.17",
-    source: require("../../../assets/static/hanyang.png"),
+    name: "한양대학교 행사",
+    expiredAt: "2023.10.17",
+    thumbnail: require("../../../assets/static/hanyang.png"),
   },
   {
     id: 2,
     host: "건국대학교",
-    title: "산업디자인과 전시회",
-    duration: "2023.10.17",
-    source: require("../../../assets/static/hanyang.png"),
+    name: "산업디자인과 전시회",
+    expiredAt: "2023.10.17",
+    thumbnail: require("../../../assets/static/hanyang.png"),
   },
   {
     id: 3,
     host: "서울대학교",
-    title: "서울대학교 축제",
-    duration: "2023.11.01",
-    source: require("../../../assets/static/hanyang.png"),
+    name: "서울대학교 축제",
+    expiredAt: "2023.11.01",
+    thumbnail: require("../../../assets/static/hanyang.png"),
   },
   {
     id: 4,
     host: "연세대학교",
-    title: "연세대학교 음악회",
-    duration: "2023.11.10",
-    source: require("../../../assets/static/hanyang.png"),
+    name: "연세대학교 음악회",
+    expiredAt: "2023.11.10",
+    thumbnail: require("../../../assets/static/hanyang.png"),
   },
 ];
 
@@ -74,7 +75,7 @@ export default function SuggestionScreen() {
     // 수락 API 호출
   };
 
-  const renderItem = ({ item }: { item: Omit<CardProps, "onPress"> }) => {
+  const renderItem = ({ item }: { item: CardContentProps }) => {
     return (
       <Card {...item} onPress={() => onRouteDetail(item.id)} status={selected}>
         <Flex direction="row" gap={15}>

@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
 
 import { Suspense } from "react";
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, Platform, StyleSheet } from "react-native";
 
 import ChatMessage from "@/src/components/chat/chat-message";
 import BackHeader from "@/src/components/common/header/back-header";
