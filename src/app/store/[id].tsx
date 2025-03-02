@@ -14,18 +14,9 @@ import { SCREEN } from "@/src/constants/screen";
 import { postMessageInstance } from "@/src/utils/webview";
 
 const images = [
-  {
-    id: 1,
-    thumbnail: require("../../assets/static/store.png"),
-  },
-  {
-    id: 2,
-    thumbnail: require("../../assets/static/store.png"),
-  },
-  {
-    id: 3,
-    thumbnail: require("../../assets/static/store.png"),
-  },
+  require("../../assets/static/store.png"),
+  require("../../assets/static/store.png"),
+  require("../../assets/static/store.png"),
 ];
 
 const couponList = [

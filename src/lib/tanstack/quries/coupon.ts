@@ -1,10 +1,17 @@
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { type QueryKey, useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import { api } from "@/src/apis";
+import { mockApi } from "@/src/apis/mock";
 // import { mockApi } from "@/src/apis/mock";
 import { COUPON } from "@/src/constants/coupon";
-import { BaseResponseDTO } from "@/src/models";
-import { CouponListDTO } from "@/src/models/coupon";
+import type { BaseResponseDTO } from "@/src/models";
+import type { CouponListDTO } from "@/src/models/coupon";
+
+import { useCommonSuspenseQuery } from ".";
+
+const useCommonCoupon = <T>(queryKey: QueryKey, url: string) => {
+  return useCommonSuspenseQuery<T>({ prefix: "coupons", queryKey, url });
+};
 
 export const useGetCouponList = <T extends CouponListDTO>() => {
   return useSuspenseInfiniteQuery({
@@ -30,4 +37,8 @@ export const useGetCouponList = <T extends CouponListDTO>() => {
       };
     },
   });
+};
+
+export const useGetCouponDetail = <T>(id: number) => {
+  return useCommonCoupon<T>([COUPON.DETAIL, id], `${id}/detail`);
 };

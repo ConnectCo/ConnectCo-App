@@ -176,4 +176,24 @@ export const couponHandlers = [
       })
     );
   }),
+  http.get(`${baseUrl}/coupons/1/detail`, () => {
+    return HttpResponse.json(
+      generateMock({
+        id: 1,
+        store: {
+          storeId: 2,
+          name: "광마카세",
+        },
+        name: "하루 이용권",
+        description: "하루 무료 이용권",
+        priorityTarget: "커넥코 구성원",
+        notification: "유의사항입니다.",
+        expiredAt: "2025-03-26",
+        createdAt: "2025-03-02",
+        images: [require("../../assets/static/coupon.png")],
+        isLike: false,
+        isMine: false,
+      })
+    );
+  }),
 ];

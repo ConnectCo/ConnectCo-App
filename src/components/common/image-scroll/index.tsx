@@ -1,47 +1,43 @@
 import { Image } from "expo-image";
 
 import { useState } from "react";
-import { Dimensions, FlatList, StyleSheet, View, ViewToken } from "react-native";
-
-import { ImageProps } from "@/src/types/image";
+import {
+  Dimensions,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 
 import Text from "../text";
 
-interface ViewableItemsProps {
-  viewableItems: ViewToken<ImageProps>[];
-}
-
-interface ImageScrollProps {
-  images: ImageProps[];
-}
-
 const { width } = Dimensions.get("screen");
 
-export default function ImageScroll({ images }: ImageScrollProps) {
+export default function ImageScroll({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(1);
 
-  const onChangeIndex = ({ viewableItems }: ViewableItemsProps) => {
-    if (viewableItems.length === 1) {
-      const { index } = viewableItems[0];
-      setCurrentIndex(index! + 1);
-    }
+  const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const index = Math.round(offsetX / width);
+    setCurrentIndex(index + 1);
   };
 
   return (
     <View style={styles.imageWrap}>
-      <FlatList
+      <ScrollView
         horizontal
-        data={images}
-        keyExtractor={({ id }) => id.toString()}
-        renderItem={({ item }) => (
-          <Image source={item.source} style={styles.image} contentFit="cover" />
-        )}
-        showsHorizontalScrollIndicator={false}
         pagingEnabled
-        onViewableItemsChanged={onChangeIndex}
-      />
+        showsHorizontalScrollIndicator={false}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
+      >
+        {images.map((item, idx) => (
+          <Image key={`image-${idx}`} source={item} style={styles.image} contentFit="cover" />
+        ))}
+      </ScrollView>
       <Text size="sm" style={styles.indexIndicator}>
-        {currentIndex}/3
+        {currentIndex}/{images.length}
       </Text>
     </View>
   );

@@ -4,18 +4,9 @@ import CommonDetail from "@/src/components/common/detail";
 import Content from "@/src/components/common/text/content";
 
 const images = [
-  {
-    id: 1,
-    thumbnail: require("../../assets/static/event.png"),
-  },
-  {
-    id: 2,
-    thumbnail: require("../../assets/static/event.png"),
-  },
-  {
-    id: 3,
-    thumbnail: require("../../assets/static/event.png"),
-  },
+  require("../../assets/static/event.png"),
+  require("../../assets/static/event.png"),
+  require("../../assets/static/event.png"),
 ];
 
 export default function DetailScreen() {
@@ -35,7 +26,7 @@ export default function DetailScreen() {
       images={images}
       profile={{
         name: "한양대학교",
-        id: "hanyang",
+        id: 10,
       }}
       name="한양패스 이벤트"
       expiredAt="2023.12.29"

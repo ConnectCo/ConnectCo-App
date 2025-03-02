@@ -5,7 +5,6 @@ import { colors } from "@/src/constants/color";
 import { SCREEN } from "@/src/constants/screen";
 import { PROFILE } from "@/src/constants/user";
 import { useUserStore } from "@/src/lib/zustand/user";
-import { ImageProps } from "@/src/types/image";
 
 import Button from "../button";
 import TextButton from "../button/text-button";
@@ -18,9 +17,9 @@ import Text from "../text";
 interface CommonDetailProps {
   profile?: {
     name: string;
-    id: string;
+    id: number;
   };
-  images: ImageProps[];
+  images: string[];
   name: string;
   description: string;
   expiredAt?: string;
