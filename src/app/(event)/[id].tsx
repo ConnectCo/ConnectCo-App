@@ -6,15 +6,15 @@ import Content from "@/src/components/common/text/content";
 const images = [
   {
     id: 1,
-    source: require("../../assets/static/event.png"),
+    thumbnail: require("../../assets/static/event.png"),
   },
   {
     id: 2,
-    source: require("../../assets/static/event.png"),
+    thumbnail: require("../../assets/static/event.png"),
   },
   {
     id: 3,
-    source: require("../../assets/static/event.png"),
+    thumbnail: require("../../assets/static/event.png"),
   },
 ];
 

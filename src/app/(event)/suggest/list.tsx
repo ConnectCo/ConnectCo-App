@@ -14,30 +14,30 @@ const eventList = [
   {
     id: 1,
     host: "한양대학교",
-    title: "한양대학교 행사",
-    duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/static/hanyang.png"),
+    name: "한양대학교 행사",
+    expiredAt: "2023.10.17 ~ 2023.10.29",
+    thumbnail: require("../../../assets/static/hanyang.png"),
   },
   {
     id: 2,
     host: "건국대학교",
-    title: "산업디자인과 전시회",
-    duration: "2023.10.17 ~ 2023.10.29",
-    source: require("../../../assets/static/hanyang.png"),
+    name: "산업디자인과 전시회",
+    expiredAt: "2023.10.17 ~ 2023.10.29",
+    thumbnail: require("../../../assets/static/hanyang.png"),
   },
   {
     id: 3,
     host: "서울대학교",
-    title: "서울대학교 축제",
-    duration: "2023.11.01 ~ 2023.11.05",
-    source: require("../../../assets/static/hanyang.png"),
+    name: "서울대학교 축제",
+    expiredAt: "2023.11.01 ~ 2023.11.05",
+    thumbnail: require("../../../assets/static/hanyang.png"),
   },
   {
     id: 4,
     host: "연세대학교",
-    title: "연세대학교 음악회",
-    duration: "2023.11.10 ~ 2023.11.12",
-    source: require("../../../assets/static/hanyang.png"),
+    name: "연세대학교 음악회",
+    expiredAt: "2023.11.10 ~ 2023.11.12",
+    thumbnail: require("../../../assets/static/hanyang.png"),
   },
 ];
 
@@ -52,7 +52,7 @@ export default function SuggestionListScreen() {
   const onSelectEvent = (event: unknown) => {
     setSuggestions({
       name: "한양패스 이벤트",
-      duration: "2023.12.29",
+      expiredAt: "2023.12.29",
       description:
         "오직 한양인을 위한 상권 제휴, HANYANG PASS 한양대학교 서울캠퍼스 재학생 및 휴학생에게 제공되는 협찬권입니다.",
       priorityTarget: "한양대학교 근처 음식점",

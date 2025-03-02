@@ -1,6 +1,6 @@
 export interface ImageProps {
   id: number;
-  source: any;
+  thumbnail: any;
 }
 
 export interface ImagePickerProps {

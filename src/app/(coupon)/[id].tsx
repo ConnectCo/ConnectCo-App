@@ -7,15 +7,15 @@ import { SCREEN } from "@/src/constants/screen";
 const images = [
   {
     id: 1,
-    source: require("../../assets/static/coupon.png"),
+    thumbnail: require("../../assets/static/coupon.png"),
   },
   {
     id: 2,
-    source: require("../../assets/static/coupon.png"),
+    thumbnail: require("../../assets/static/coupon.png"),
   },
   {
     id: 3,
-    source: require("../../assets/static/coupon.png"),
+    thumbnail: require("../../assets/static/coupon.png"),
   },
 ];
 

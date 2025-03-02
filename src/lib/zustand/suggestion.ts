@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 interface EventSuggestionsProps {
   name: string;
-  duration: string;
+  expiredAt: string;
   description: string;
   priorityTarget: string;
 }
@@ -15,7 +15,7 @@ interface EventSuggestionStoreProps {
 export const useEventSuggestionStore = create<EventSuggestionStoreProps>((set) => ({
   suggestion: {
     name: "",
-    duration: "",
+    expiredAt: "",
     description: "",
     priorityTarget: "",
   },

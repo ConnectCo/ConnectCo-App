@@ -1,3 +1,4 @@
 import { chatHandlers } from "./chat";
+import { couponHandlers } from "./coupon";
 
-export const handlers = [...chatHandlers];
+export const handlers = [...chatHandlers, ...couponHandlers];

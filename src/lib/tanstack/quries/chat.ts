@@ -5,7 +5,7 @@ import { CHAT } from "@/src/constants/chat";
 import { useCommonSuspenseQuery } from ".";
 
 const useCommonChat = <T>(queryKey: QueryKey, url: string) => {
-  return useCommonSuspenseQuery<T>("chat", queryKey, url);
+  return useCommonSuspenseQuery<T>({ prefix: "chat", queryKey, url });
 };
 
 export const useGetChatList = <T>() => {

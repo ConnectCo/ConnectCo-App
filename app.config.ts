@@ -43,6 +43,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           CFBundleURLSchemes: [iosUrlScheme],
         },
       ],
+      NSAppTransportSecurity: {
+        NSAllowsArbitraryLoads: true,
+      },
     },
     config: {
       usesNonExemptEncryption: false,
