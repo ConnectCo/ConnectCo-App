@@ -3,36 +3,36 @@ import { Image } from "expo-image";
 
 import { StyleSheet } from "react-native";
 
-// import NaverLogin from "@react-native-seoul/naver-login";
-// import { GoogleSignin } from "@react-native-google-signin/google-signin";
-// import { login } from "@react-native-kakao/user";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { login } from "@react-native-kakao/user";
+import NaverLogin from "@react-native-seoul/naver-login";
+
+import AppleAuth from "@/src/components/common/auth/apple-auth";
+import AuthButton from "@/src/components/common/auth/auth-button";
+import Flex from "@/src/components/common/flex";
 import { colors } from "@/src/constants/color";
 
-import AppleAuth from "./apple-auth";
-import AuthButton from "./auth-button";
-import Flex from "../flex";
-
 export default function AuthScreen() {
-  const [assets, error] = useAssets([require("../../../assets/static/logo.png")]);
+  const [assets, error] = useAssets([require("../assets/static/logo.png")]);
 
   if (error) console.error(`Error when loading image: ${error}`);
 
   const onKakaoLogin = async () => {
     try {
-      // const res = await login();
+      const res = await login();
     } catch (error) {
       console.error(error);
     }
   };
 
   const onNaverLogin = async () => {
-    // const { failureResponse, successResponse } = await NaverLogin.login();
+    const { failureResponse, successResponse } = await NaverLogin.login();
   };
 
   const onGoogleLogin = async () => {
     try {
-      // await GoogleSignin.hasPlayServices();
-      // const response = await GoogleSignin.signIn();
+      await GoogleSignin.hasPlayServices();
+      const response = await GoogleSignin.signIn();
     } catch (error) {
       console.error(error);
     }

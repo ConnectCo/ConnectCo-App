@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { StyleSheet } from "react-native";
 
 import { colors } from "@/src/constants/color";
+import { SCREEN } from "@/src/constants/screen";
 
 import Flex from "../flex";
 import Icon from "../icon";
@@ -12,7 +13,7 @@ import Header from ".";
 
 interface MainHeaderProps {
   title: string;
-  type?: "event" | "coupon" | "map" | "mypage" | "chat";
+  type?: SCREEN;
 }
 
 const screens = [
@@ -30,9 +31,9 @@ const screens = [
   },
 ];
 
-export default function MainHeader({ title, type = "event" }: MainHeaderProps) {
-  const onlyAlarm = type === "map" || type === "mypage";
-  const withoutPlus = type === "chat";
+export default function MainHeader({ title, type = SCREEN.EVENT }: MainHeaderProps) {
+  const onlyAlarm = type === SCREEN.MAP || type === SCREEN.MYPAGE;
+  const withoutPlus = type === SCREEN.CHAT;
   const iconByScreen = onlyAlarm ? screens.slice(2) : withoutPlus ? screens.slice(1) : screens;
 
   return (

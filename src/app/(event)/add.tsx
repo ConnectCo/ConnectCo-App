@@ -1,10 +1,10 @@
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import CommonAddScreen from "@/src/components/common/add";
-import Calendar from "@/src/components/common/calendar";
+import ButtonCalendar from "@/src/components/common/calendar/button-calendar";
 import Flex from "@/src/components/common/flex";
 import Icon from "@/src/components/common/icon";
 import Input from "@/src/components/common/input";
@@ -32,8 +32,8 @@ const INITIAL_DATA: InitialDataProps = {
   event: "",
   detailAddress: "",
   college: "",
-  startDate: "",
-  endDate: "",
+  startDate: formatDate(new Date()),
+  endDate: formatDate(new Date()),
   target: "",
   description: "",
   prioritryTarget: "",
@@ -41,10 +41,9 @@ const INITIAL_DATA: InitialDataProps = {
 };
 
 export default function AddScreen() {
-  const address = useAddressStore((state) => state.event);
+  const { address, setAddress } = useAddressStore();
   const router = useRouter();
   const [data, setData] = useState(INITIAL_DATA);
-  const [calendar, setCalendar] = useState({ open: false, target: "" });
 
   const onPickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -73,20 +72,11 @@ export default function AddScreen() {
   };
 
   const onSearchAddress = () => {
-    router.push({ pathname: "/address", params: { type: "event" } });
+    router.push("/address");
   };
 
-  const onOpenCalendar = (target: string) => {
-    setCalendar({ open: true, target });
-  };
-
-  const onCloseCalendar = () => {
-    setCalendar({ open: false, target: "" });
-  };
-
-  const onSelectDate = (date: Date) => {
-    onChangeText(calendar.target, formatDate(date));
-    onCloseCalendar();
+  const onSelectDate = (target: "startDate" | "endDate", date: Date) => {
+    onChangeText(target, formatDate(date));
   };
 
   const onComplete = () => {
@@ -94,18 +84,21 @@ export default function AddScreen() {
     router.back();
   };
 
+  useEffect(() => {
+    if (address) {
+      setAddress("");
+    }
+  }, []);
+
   return (
     <CommonAddScreen
       images={data.images}
       description={data.description}
       prioritryTarget={data.prioritryTarget}
       caution={data.caution}
-      isVisible={calendar.open}
       onPickImage={onPickImage}
       onDelete={onDelete}
       onChangeText={onChangeText}
-      onConfirm={onSelectDate}
-      onCancel={onCloseCalendar}
       onComplete={onComplete}
     >
       <InputWithTitle
@@ -129,30 +122,15 @@ export default function AddScreen() {
           onChangeText={(e) => onChangeText("detailAddress", e)}
         />
       </Flex>
-      <InputWithTitle
-        title="학교"
-        placeholder="학교명을 검색하세요. 예시) 커넥코 대학교"
-        type="button"
-        left={<Icon.Search fill={colors.black} />}
-        description="학교 등록 시 학교 주변 가게의 사장님께 알람이 가요!"
-        optional
-        value={data.college}
-      />
-      <InputWithTitle
+      <ButtonCalendar
         title="협찬 기간"
-        placeholder="언제부터 언제까지 협찬을 원하시나요?"
-        type="button"
-        right={<Icon.Calendar />}
-        value={data.startDate}
-        onPress={() => onOpenCalendar("startDate")}
+        date={data.startDate}
+        onConfirm={(date) => onSelectDate("startDate", date)}
       />
-      <InputWithTitle
+      <ButtonCalendar
         title="협찬 제안 마감일"
-        placeholder="언제까지 협찬을 제안 받으실건가요?"
-        type="button"
-        right={<Icon.Calendar />}
-        value={data.endDate}
-        onPress={() => onOpenCalendar("endDate")}
+        date={data.endDate}
+        onConfirm={(date) => onSelectDate("endDate", date)}
       />
       <InputWithTitle
         title="혜택 대상"
@@ -160,7 +138,6 @@ export default function AddScreen() {
         value={data.target}
         onChangeText={(e) => onChangeText("target", e)}
       />
-      <Calendar isVisible={calendar.open} onConfirm={onSelectDate} onCancel={onCloseCalendar} />
     </CommonAddScreen>
   );
 }

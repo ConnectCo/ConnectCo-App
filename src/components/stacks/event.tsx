@@ -31,4 +31,11 @@ export const eventStacks = () => [
       header: () => <BackHeader type="primary" title="협찬 제안 정보" />,
     }}
   />,
+  <Stack.Screen
+    key="event-suggestion-list"
+    name="(event)/suggest/list"
+    options={{
+      header: () => <BackHeader type="primary" title="이벤트 불러오기" />,
+    }}
+  />,
 ];

@@ -10,6 +10,7 @@ import Flex from "@/src/components/common/flex";
 import BackHeader from "@/src/components/common/header/back-header";
 import Text from "@/src/components/common/text";
 import { colors } from "@/src/constants/color";
+import { SCREEN } from "@/src/constants/screen";
 
 type Category = "new" | "completed";
 
@@ -58,7 +59,7 @@ const eventList = [
 export default function SuggestionScreen() {
   const [selected, setSelected] = useState<Category>("new");
   const { type } = useLocalSearchParams();
-  const title = type === "event" ? "이벤트" : "쿠폰";
+  const title = type === SCREEN.EVENT ? "이벤트" : "쿠폰";
 
   const onRouteDetail = (id: number) => {
     // 프로필에 따라 event, counpon 결정

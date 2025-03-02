@@ -1,0 +1,4 @@
+export enum PROFILE {
+  STORE = "STORE",
+  ORGANIZATION = "ORGANIZATION",
+}

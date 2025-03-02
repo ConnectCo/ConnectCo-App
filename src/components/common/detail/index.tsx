@@ -2,6 +2,9 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { colors } from "@/src/constants/color";
+import { SCREEN } from "@/src/constants/screen";
+import { PROFILE } from "@/src/constants/user";
+import { useUserStore } from "@/src/lib/zustand/user";
 import { ImageProps } from "@/src/types/image";
 
 import Button from "../button";
@@ -18,35 +21,62 @@ interface CommonDetailProps {
     id: string;
   };
   images: ImageProps[];
-  title: string;
-  endDate?: string;
+  name: string;
   description: string;
-  selected: boolean;
+  expiredAt?: string;
   children: React.ReactNode;
-  type?: "event" | "coupon" | "store";
-  onPressFavorite: () => void;
+  isLike: boolean;
+  isMine: boolean;
+  appliedCount: number;
+  type?: SCREEN;
   onRouteProfile?: () => void;
-  onRouteSwag: () => void;
-  onRouteChat: () => void;
+  onPressRight: () => void;
 }
 
 export default function CommonDetail({
   profile,
   images,
-  title,
-  endDate,
+  name,
+  expiredAt,
   description,
-  selected,
+  isLike,
+  isMine,
+  appliedCount,
   children,
-  type = "event",
-  onPressFavorite,
+  type = SCREEN.EVENT,
   onRouteProfile,
-  onRouteSwag,
-  onRouteChat,
+  onPressRight,
 }: CommonDetailProps) {
+  const { profileType } = useUserStore();
   const { bottom } = useSafeAreaInsets();
-  const isStore = type === "store";
-  const button = isStore ? "전화걸기" : `협찬 ${type === "event" ? "제안" : "신청"}`;
+
+  const isStore = type === SCREEN.STORE;
+
+  const leftButton = isMine ? "수정하기" : "1:1 채팅";
+  const rightButton = isStore
+    ? isMine
+      ? "신청 이벤트"
+      : "전화걸기"
+    : isMine
+      ? `신청 ${type === SCREEN.EVENT ? "쿠폰" : "이벤트"}`
+      : `협찬 ${type === SCREEN.EVENT ? "제안" : "신청"}`;
+
+  const isOrganizationMode =
+    profileType === PROFILE.ORGANIZATION && type === SCREEN.EVENT && !isMine;
+  const isStoreMode = profileType === PROFILE.STORE && type === SCREEN.COUPON && !isMine;
+
+  const onPressLeft = () => {
+    if (isMine) {
+      // 수정하기 라우팅
+    } else {
+      // API 요청에서 받아온 1:1 채팅 방 ID를 이용하여 라우팅
+      // 채팅 방 ID가 없다면 채팅방 생성하는 API 요청
+    }
+  };
+
+  const onPressFavorite = () => {
+    // 즐겨찾기 API 요청
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -65,15 +95,15 @@ export default function CommonDetail({
         <Flex gap={10}>
           <Flex direction="row" justify="between" align="center">
             <Text size="xxl" weight={600}>
-              {title}
+              {name}
             </Text>
             <Button onPress={onPressFavorite}>
-              <Icon.Favorite selected={selected} />
+              <Icon.Favorite selected={isLike} />
             </Button>
           </Flex>
-          {endDate && (
-            <Text weight={600} style={styles.endDate}>
-              신청마감일 : {endDate}
+          {expiredAt && (
+            <Text weight={600} style={styles.expiredAt}>
+              신청마감일 : {expiredAt}
             </Text>
           )}
           <Text>{description}</Text>
@@ -82,12 +112,23 @@ export default function CommonDetail({
         <Flex gap={50}>
           <Flex gap={25}>{children}</Flex>
           <Flex direction="row" gap={12}>
-            <TextButton onPress={onRouteChat} style={styles.button} type="outline">
-              1:1 채팅
+            <TextButton onPress={onPressLeft} style={styles.button} type="outline">
+              {leftButton}
             </TextButton>
-            <TextButton onPress={onRouteSwag} style={styles.button}>
-              {button}
-            </TextButton>
+            {isOrganizationMode || isStoreMode ? null : (
+              <View style={{ flex: 1 }}>
+                <TextButton onPress={onPressRight} style={styles.button}>
+                  {rightButton}
+                </TextButton>
+                {appliedCount ? (
+                  <Flex justify="center" align="center" style={styles.appliedCountWrap}>
+                    <Text size="sm" weight={600} style={styles.appliedCount}>
+                      {appliedCount}
+                    </Text>
+                  </Flex>
+                ) : null}
+              </View>
+            )}
           </Flex>
         </Flex>
       </Container>
@@ -107,7 +148,7 @@ const styles = StyleSheet.create({
   profile: {
     color: colors.gray500,
   },
-  endDate: {
+  expiredAt: {
     color: colors.gray500,
   },
   divider: {
@@ -118,5 +159,19 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
+  },
+  appliedCountWrap: {
+    position: "absolute",
+    right: -14,
+    top: -14,
+    borderWidth: 1,
+    borderColor: colors.primary300,
+    backgroundColor: colors.gray100,
+    borderRadius: 14,
+    width: 28,
+    height: 28,
+  },
+  appliedCount: {
+    color: colors.primary300,
   },
 });

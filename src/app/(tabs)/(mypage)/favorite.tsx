@@ -7,19 +7,20 @@ import SelectButton from "@/src/components/common/button/select-button";
 import Card from "@/src/components/common/card";
 import Flex from "@/src/components/common/flex";
 import { colors } from "@/src/constants/color";
+import { SCREEN } from "@/src/constants/screen";
 
 const categories = [
   {
     ko: "이벤트",
-    en: "event",
+    en: SCREEN.EVENT,
   },
   {
     ko: "쿠폰",
-    en: "coupon",
+    en: SCREEN.COUPON,
   },
   {
     ko: "가게",
-    en: "store",
+    en: SCREEN.STORE,
   },
 ];
 
@@ -55,15 +56,15 @@ const eventList = [
 ];
 
 export default function FavoriteScreen() {
-  const [selectedCategory, setSelectedCategory] = useState("event");
+  const [selectedCategory, setSelectedCategory] = useState(SCREEN.EVENT);
 
-  const onSelectCategory = (category: string) => {
+  const onSelectCategory = (category: SCREEN) => {
     setSelectedCategory(category);
   };
 
   const onRouteDetail = (id: number) => {
     const path =
-      selectedCategory === "store" ? `/(coupon)/store/${id}` : `/(${selectedCategory})/${id}`;
+      selectedCategory === SCREEN.STORE ? `/store/${id}` : `/(${selectedCategory})/${id}`;
     router.push(path as Route);
   };
 

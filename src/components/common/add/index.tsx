@@ -5,9 +5,8 @@ import Container from "@/src/components/common/container";
 import Flex from "@/src/components/common/flex";
 import InputWithTitle from "@/src/components/common/input/input-with-title";
 import SelectImage from "@/src/components/common/select-image";
+import { SCREEN } from "@/src/constants/screen";
 import { ImagePickerProps } from "@/src/types/image";
-
-import Calendar from "../calendar";
 
 interface CommonAddScreenProps {
   children: React.ReactNode;
@@ -15,13 +14,10 @@ interface CommonAddScreenProps {
   description: string;
   prioritryTarget: string;
   caution: string;
-  isVisible: boolean;
-  type?: "event" | "coupon";
+  type?: SCREEN;
   onPickImage: () => void;
   onDelete: (id: string | null | undefined) => void;
   onChangeText: (key: string, value: string) => void;
-  onConfirm: (date: Date) => void;
-  onCancel: () => void;
   onComplete: () => void;
 }
 
@@ -31,16 +27,13 @@ export default function CommonAddScreen({
   description,
   prioritryTarget,
   caution,
-  isVisible,
-  type = "event",
+  type = SCREEN.EVENT,
   onPickImage,
   onDelete,
   onChangeText,
-  onConfirm,
-  onCancel,
   onComplete,
 }: CommonAddScreenProps) {
-  const target = type === "event" ? "단체" : "가게";
+  const target = type === SCREEN.EVENT ? "단체" : "가게";
 
   return (
     <Container as="ScrollView">
@@ -73,7 +66,6 @@ export default function CommonAddScreen({
       <TextButton onPress={onComplete} style={styles.completeButton}>
         작성완료
       </TextButton>
-      <Calendar isVisible={isVisible} onConfirm={onConfirm} onCancel={onCancel} />
     </Container>
   );
 }

@@ -1,4 +1,5 @@
 import MainScreen from "@/src/components/common/main";
+import { SCREEN } from "@/src/constants/screen";
 
 const couponList = [
   {
@@ -32,5 +33,5 @@ const couponList = [
 ];
 
 export default function CouponScreen() {
-  return <MainScreen items={couponList} type="coupon" />;
+  return <MainScreen items={couponList} type={SCREEN.COUPON} />;
 }
