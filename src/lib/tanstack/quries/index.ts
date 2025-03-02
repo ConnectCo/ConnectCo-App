@@ -2,7 +2,7 @@ import type { QueryKey, UseQueryOptions } from "@tanstack/react-query";
 import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 
 import { api } from "@/src/apis";
-// import { mockApi } from "@/src/apis/mock";
+import { mockApi } from "@/src/apis/mock";
 import type { BaseResponseDTO } from "@/src/models";
 
 interface CommonOptions {

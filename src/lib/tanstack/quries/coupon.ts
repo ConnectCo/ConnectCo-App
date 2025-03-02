@@ -2,7 +2,6 @@ import { type QueryKey, useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 import { api } from "@/src/apis";
 import { mockApi } from "@/src/apis/mock";
-// import { mockApi } from "@/src/apis/mock";
 import { COUPON } from "@/src/constants/coupon";
 import type { BaseResponseDTO } from "@/src/models";
 import type { CouponListDTO } from "@/src/models/coupon";
