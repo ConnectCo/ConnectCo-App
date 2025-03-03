@@ -72,7 +72,7 @@ export default function MypageScreen() {
         <Flex direction="row" align="center" justify="between">
           <Flex direction="row" align="center" gap={5}>
             <Image
-              source={require("../../../assets/static/default-profile.png")}
+              source={require("../../../assets/static/profile.png")}
               style={{ width: 40, height: 40 }}
             />
             <Text size="xl" weight={700}>

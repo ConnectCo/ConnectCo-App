@@ -18,10 +18,10 @@ const { width } = Dimensions.get("window");
 export default function AuthButton({ onPress, type = "kakao" }: AuthButtonProps) {
   const logo =
     type === "google"
-      ? { asset: require("../../../assets/static/google-logo.png"), name: "Google" }
+      ? { asset: require("../../../assets/static/google.png"), name: "Google" }
       : type === "kakao"
-        ? { asset: require("../../../assets/static/kakao-logo.png"), name: "카카오" }
-        : { asset: require("../../../assets/static/naver-logo.png"), name: "네이버" };
+        ? { asset: require("../../../assets/static/kakao.png"), name: "카카오" }
+        : { asset: require("../../../assets/static/naver.png"), name: "네이버" };
   const isKakao = type === "kakao";
 
   const [assets, error] = useAssets([logo.asset]);
