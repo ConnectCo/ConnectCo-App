@@ -1,10 +1,16 @@
 import * as AppleAuthentication from "expo-apple-authentication";
 
-import { Dimensions, Platform, StyleSheet } from "react-native";
+import { Alert, Dimensions, Platform, StyleSheet } from "react-native";
+
+import { OAUTH2 } from "@/src/constants/oauth";
 
 const { width } = Dimensions.get("window");
 
-export default function AppleAuth() {
+interface AppleAuthProps {
+  mutate: ({ accessToken, provider }: { accessToken: string; provider: OAUTH2 }) => void;
+}
+
+export default function AppleAuth({ mutate }: AppleAuthProps) {
   const platform = Platform.OS;
   const isIOS = platform === "ios";
 
@@ -22,13 +28,12 @@ export default function AppleAuth() {
               AppleAuthentication.AppleAuthenticationScope.EMAIL,
             ],
           });
-          console.log(credential);
-          // signed in
+          mutate({ accessToken: credential.identityToken!, provider: OAUTH2.APPLE });
         } catch (e: any) {
           if (e.code === "ERR_REQUEST_CANCELED") {
-            // handle that the user canceled the sign-in flow
+            Alert.alert("애플 로그인 취소");
           } else {
-            // handle other errors
+            Alert.alert("애플 로그인 실패");
           }
         }
       }}

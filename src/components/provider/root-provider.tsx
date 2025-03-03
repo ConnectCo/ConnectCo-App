@@ -20,7 +20,8 @@ const consumerSecret = process.env.EXPO_PUBLIC_NAVER_CLIEND_SECRET || "";
 const appName = process.env.EXPO_PUBLIC_NAVER_APP_NAME || "";
 const serviceUrlSchemeIOS = process.env.EXPO_PUBLIC_APP_BUNDLE_IDENTIFIER || "";
 const kakaoNativeAppKey = process.env.EXPO_PUBLIC_NATIVE_APP_KEY || "";
-const iosClientId = process.env.EXPO_PUBLIC_GOOGLE_CLIEND_ID || "";
+const iosClientId = process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIEND_ID || "";
+const webClientId = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIEND_ID || "";
 
 // async function enableMocking() {
 //   if (!__DEV__) {
@@ -52,6 +53,7 @@ export default function RootProvider({ children }: { children: React.ReactNode }
         disableNaverAppAuthIOS: true,
       });
       GoogleSignin.configure({
+        webClientId,
         iosClientId,
       });
       initializeKakaoSDK(kakaoNativeAppKey);
