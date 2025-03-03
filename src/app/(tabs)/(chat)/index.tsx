@@ -21,7 +21,9 @@ export default function ChatList() {
       <ChatListScreen />
     </Suspense>
   ) : status === "select-profile" ? (
-    <SelectProfileScreen />
+    <Suspense fallback={<Loading />}>
+      <SelectProfileScreen />
+    </Suspense>
   ) : (
     <AuthScreen />
   );

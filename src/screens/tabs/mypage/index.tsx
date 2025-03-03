@@ -13,7 +13,6 @@ import Text from "@/src/components/common/text";
 import MyItems from "@/src/components/mypage/my-items";
 import { colors } from "@/src/constants/color";
 import { SCREEN } from "@/src/constants/screen";
-import AuthScreen from "@/src/screens/auth";
 
 const couponList = [
   {
@@ -49,8 +48,6 @@ const eventList = [
   },
 ];
 
-const isAuthorized = true;
-
 export default function MypageScreen() {
   const router = useRouter();
 
@@ -66,7 +63,7 @@ export default function MypageScreen() {
     router.push("/(tabs)/(mypage)/history");
   };
 
-  return isAuthorized ? (
+  return (
     <ScrollView style={styles.container}>
       <Container as="View" style={styles.contentGap}>
         <Flex direction="row" align="center" justify="between">
@@ -116,8 +113,6 @@ export default function MypageScreen() {
         onPressAdd={() => onRouteAdd("/(event)/add")}
       />
     </ScrollView>
-  ) : (
-    <AuthScreen />
   );
 }
 

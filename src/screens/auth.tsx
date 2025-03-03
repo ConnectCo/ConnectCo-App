@@ -12,7 +12,7 @@ import AuthButton from "@/src/components/common/auth/auth-button";
 import Flex from "@/src/components/common/flex";
 import { colors } from "@/src/constants/color";
 
-import { OAUTH2 } from "../constants/oauth";
+import { OAUTH2 } from "../constants/auth";
 import { useOauth2Mutation } from "../lib/tanstack/mutations/auth";
 
 export default function AuthScreen() {

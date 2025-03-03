@@ -6,6 +6,7 @@ import { getItem, removeItem, setItem } from "@/src/utils/secure-store";
 
 interface UserStoreProps extends ProfileProps {
   status: "annonymous" | "select-profile" | "authenticated";
+  memberId: number;
   setUser: (value: Partial<UserStoreProps>) => void;
 }
 
@@ -29,8 +30,9 @@ export const useUserStore = create(
   persist<UserStoreProps>(
     (set) => ({
       status: "annonymous",
+      memberId: -1,
       profileId: -1,
-      profileType: "",
+      profileType: null,
       profileName: "",
       profileImageUrl: "",
       setUser: (value) => set((state) => ({ ...state, ...value })),

@@ -35,9 +35,9 @@ api.interceptors.response.use(
           throw new Error("리프레시 토큰이 없습니다.");
         }
 
-        // const refreshResponse = await axios.post(`${baseURL}/refresh`, {
-        //   refresh_token: refreshToken,
-        // });
+        const refreshResponse = await axios.post(`${baseURL}/auth/refresh`, {
+          refresh_token: refreshToken,
+        });
 
         // const newAccessToken = refreshResponse.data.result.accessToken;
         // const newRefreshToken = refreshResponse.data.result.refreshToken;

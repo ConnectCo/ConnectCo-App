@@ -2,7 +2,7 @@ import * as AppleAuthentication from "expo-apple-authentication";
 
 import { Alert, Dimensions, Platform, StyleSheet } from "react-native";
 
-import { OAUTH2 } from "@/src/constants/oauth";
+import { OAUTH2 } from "@/src/constants/auth";
 
 const { width } = Dimensions.get("window");
 

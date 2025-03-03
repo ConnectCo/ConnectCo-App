@@ -4,3 +4,7 @@ export enum OAUTH2 {
   GOOGLE = "GOOGLE",
   APPLE = "APPLE",
 }
+
+export enum AUTH {
+  PROFILE_LIST = "profile-list",
+}

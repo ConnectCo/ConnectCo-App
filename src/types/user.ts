@@ -1,6 +1,8 @@
+import { PROFILE } from "../constants/user";
+
 export interface ProfileProps {
-  profileId: number;
-  profileType: string;
+  profileId: number | null;
+  profileType: PROFILE | null;
   profileName: string;
   profileImageUrl: string;
 }

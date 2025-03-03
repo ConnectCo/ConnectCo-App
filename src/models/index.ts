@@ -4,7 +4,3 @@ export interface BaseResponseDTO<T> {
   message: string;
   result: T;
 }
-
-export interface MutationResponseDTO<T> {
-  data: BaseResponseDTO<T>;
-}

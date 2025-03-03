@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { api } from "@/src/apis";
-import { OAUTH2 } from "@/src/constants/oauth";
-import { MutationResponseDTO } from "@/src/models";
+import { OAUTH2 } from "@/src/constants/auth";
+import { BaseResponseDTO } from "@/src/models";
 import { OAuthDTO } from "@/src/models/auth";
 import { setItem } from "@/src/utils/secure-store";
 
@@ -20,13 +20,22 @@ export const useOauth2Mutation = () => {
     mutationFn: async ({
       accessToken,
       provider,
-    }: AuthMutationProps): Promise<MutationResponseDTO<OAuthDTO>> =>
-      await api.post(`/auth/login?accessToken=${accessToken}&provider=${provider}`),
+    }: AuthMutationProps): Promise<BaseResponseDTO<OAuthDTO>> => {
+      const { data } = await api.post(
+        `/auth/login?accessToken=${accessToken}&provider=${provider}`
+      );
+      return data;
+    },
     onSuccess: async (response) => {
-      const { accessToken, refreshToken, ...restResults } = response.data.result;
-      await setItem("accessToken", response.data.result.accessToken);
-      await setItem("refreshToken", response.data.result.refreshToken);
-      setUser({ ...restResults, status: "select-profile" });
+      const { result } = response;
+      await setItem("accessToken", result.accessToken);
+      await setItem("refreshToken", result.refreshToken);
+      setUser({
+        memberId: result.memberId,
+        profileId: result.profile.profileId,
+        profileType: result.profile.profileType,
+        status: "select-profile",
+      });
     },
   });
 };
