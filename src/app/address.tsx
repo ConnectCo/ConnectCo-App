@@ -1,3 +1,4 @@
+import * as Location from "expo-location";
 import { router } from "expo-router";
 
 import { SafeAreaView, StyleSheet } from "react-native";
@@ -10,8 +11,12 @@ import { useAddressStore } from "../lib/zustand/address";
 export default function AddressScreen() {
   const setAddress = useAddressStore((state) => state.setAddress);
 
-  const onSelected = (data: OnCompleteParams) => {
-    setAddress(data.address);
+  const onSelected = async (data: OnCompleteParams) => {
+    const location = await Location.geocodeAsync(data.address);
+
+    const { latitude, longitude } = location[0];
+    setAddress({ address: data.address, latitude, longitude });
+
     router.back();
   };
 

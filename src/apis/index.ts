@@ -25,6 +25,7 @@ api.interceptors.request.use(async (config) => {
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
+    console.log(error.response);
     const originalRequest = error.config;
     if (error.response?.status === 403 && !originalRequest._retry) {
       if (userStore.status === "select-profile") {

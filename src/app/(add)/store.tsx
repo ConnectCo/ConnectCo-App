@@ -89,7 +89,7 @@ export default function StoreAdd() {
 
   useEffect(() => {
     if (detailAddress) {
-      setAddress("");
+      setAddress({ address: "", latitude: 0, longitude: 0 });
     }
     Location.geocodeAsync(detailAddress).then((result) => {
       const { latitude, longitude } = result[0];

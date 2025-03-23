@@ -37,13 +37,13 @@ export default function MapScreen() {
       return Alert.alert("Permission to access location was denied");
     }
 
-    const location = await Location.getCurrentPositionAsync({});
+    const location = await Location.getCurrentPositionAsync();
 
     postMessage("init", location.coords);
   }
 
   async function sendRealtimLocation() {
-    const location = await Location.getCurrentPositionAsync({});
+    const location = await Location.getCurrentPositionAsync();
     setInterval(() => {
       postMessage("realtime", location.coords);
     }, 5000);

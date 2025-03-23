@@ -2,17 +2,16 @@ import { router, useLocalSearchParams } from "expo-router";
 
 import CommonDetail from "@/src/components/common/detail";
 import Content from "@/src/components/common/text/content";
-import { SCREEN } from "@/src/constants/screen";
-import { useGetCouponDetail } from "@/src/lib/tanstack/quries/coupon";
-import { CouponDetailDTO } from "@/src/models/coupon";
+import { useGetEventDetail } from "@/src/lib/tanstack/quries/event";
+import { EventDetailDTO } from "@/src/models/event";
 
-export default function DetailScreen() {
+export default function EventDetailScreen() {
   const { id } = useLocalSearchParams();
 
-  const { data } = useGetCouponDetail<CouponDetailDTO>(+id);
+  const { data } = useGetEventDetail<EventDetailDTO>(+id);
 
   const onRouteStoreProfile = () => {
-    router.push(`/store/${data.result.store.storeId}`);
+    router.push(`/store/${data.result.organization.organizationId}`);
   };
 
   const onRouteSuggest = () => {
@@ -22,22 +21,23 @@ export default function DetailScreen() {
   return (
     <CommonDetail
       images={data.result.images}
-      type={SCREEN.COUPON}
       profile={{
-        name: data.result.store.name,
-        id: data.result.store.storeId,
+        name: data.result.organization.name,
+        id: data.result.organization.organizationId,
       }}
       name={data.result.name}
       expiredAt={data.result.expiredAt}
       description={data.result.description}
       isLike={data.result.isLike}
       isMine={data.result.isMine}
-      appliedCount={data.result.eventCount}
+      appliedCount={data.result.couponCount}
       onRouteProfile={onRouteStoreProfile}
       onPressRight={onRouteSuggest}
     >
-      <Content title="쿠폰 등록일" content={data.result.createdAt} />
+      <Content title="기간" content={`${data.result.startAt}~${data.result.endAt}`} />
+      <Content title="혜택 대상" content={data.result.benefitTarget} />
       <Content title="우선 협찬 대상" content={data.result.priorityTarget} />
+      <Content title="이벤트 장소" content={data.result.address.detailAddress} />
       <Content title="유의사항" content={data.result.notification} />
     </CommonDetail>
   );

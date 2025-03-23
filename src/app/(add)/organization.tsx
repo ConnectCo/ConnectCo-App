@@ -11,28 +11,35 @@ import Icon from "@/src/components/common/icon";
 import InputWithTitle from "@/src/components/common/input/input-with-title";
 import SelectImage from "@/src/components/common/select-image";
 import { colors } from "@/src/constants/color";
+import { useCreateOrganization } from "@/src/lib/tanstack/mutations/organization";
 import { useAddressStore } from "@/src/lib/zustand/address";
 import { ImagePickerProps } from "@/src/types/image";
 
 interface InitialDataProps {
   images: ImagePickerProps[];
   name: string;
-  location: string;
+  organization: string;
   phone: string;
   description: string;
+  email: string;
 }
 
 const INITIAL_DATA: InitialDataProps = {
   images: [],
   name: "",
-  location: "",
+  organization: "",
   phone: "",
   description: "",
+  email: "",
 };
 
 export default function OrganizationAdd() {
   const [data, setData] = useState(INITIAL_DATA);
-  const { address, setAddress } = useAddressStore();
+  const { address, latitude, longitude, setAddress } = useAddressStore();
+
+  const { mutateAsync, isPending } = useCreateOrganization();
+
+  const submitDisabled = !data.name || !data.email || !data.phone || !data.description || !address;
 
   const onPickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -64,13 +71,25 @@ export default function OrganizationAdd() {
     router.push("/address");
   };
 
-  const onComplete = () => {
-    router.back();
+  const onComplete = async () => {
+    const formData = new FormData();
+    const request = {
+      name: data.name,
+      description: data.description,
+      detailAddress: address,
+      latitude: latitude,
+      longitude: longitude,
+      phoneNumber: data.phone,
+      email: data.email,
+    };
+    formData.append("profileImage", data?.images[0]?.uri || "");
+    formData.append("request", JSON.stringify(request));
+    await mutateAsync(formData);
   };
 
   useEffect(() => {
     if (address) {
-      setAddress("");
+      setAddress({ address: "", latitude: 0, longitude: 0 });
     }
   }, []);
 
@@ -86,9 +105,15 @@ export default function OrganizationAdd() {
         />
         <InputWithTitle
           title="소속 학교/회사"
-          value={data.name}
-          onChangeText={(e) => onChangeText("name", e)}
+          value={data.organization}
+          onChangeText={(e) => onChangeText("organization", e)}
           placeholder="단체가 소속된 학교 or 회사명을 입력해주세요!"
+        />
+        <InputWithTitle
+          title="소속 학교/회사 이메일"
+          value={data.email}
+          onChangeText={(e) => onChangeText("email", e)}
+          placeholder="단체가 소속된 학교/회사 이메일을 입력해주세요!"
         />
         <InputWithTitle
           title="위치 정보"
@@ -115,7 +140,13 @@ export default function OrganizationAdd() {
           multiline
         />
       </Flex>
-      <TextButton onPress={onComplete}>작성완료</TextButton>
+      <TextButton
+        onPress={onComplete}
+        disabled={submitDisabled || isPending}
+        type={submitDisabled || isPending ? "disabled" : "fill"}
+      >
+        작성완료
+      </TextButton>
     </Container>
   );
 }

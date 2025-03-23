@@ -1,36 +1,19 @@
-import MainScreen from "@/src/components/common/main";
+import type { ErrorBoundaryProps } from "expo-router";
 
-const eventList = [
-  {
-    id: 1,
-    name: "한양대학교",
-    title: "한양대학교 행사",
-    expiredAt: "2023.10.17 ~ 2023.10.29",
-    thumbnail: require("../../../assets/static/hanyang.png"),
-  },
-  {
-    id: 2,
-    name: "건국대학교",
-    title: "산업디자인과 전시회",
-    expiredAt: "2023.10.17 ~ 2023.10.29",
-    thumbnail: require("../../../assets/static/hanyang.png"),
-  },
-  {
-    id: 3,
-    name: "서울대학교",
-    title: "서울대학교 축제",
-    expiredAt: "2023.11.01 ~ 2023.11.05",
-    thumbnail: require("../../../assets/static/hanyang.png"),
-  },
-  {
-    id: 4,
-    name: "연세대학교",
-    title: "연세대학교 음악회",
-    expiredAt: "2023.11.10 ~ 2023.11.12",
-    thumbnail: require("../../../assets/static/hanyang.png"),
-  },
-];
+import { Suspense } from "react";
 
-export default function EventScreen() {
-  return <MainScreen items={eventList} />;
+import Error from "@/src/components/common/error";
+import Loading from "@/src/components/common/loading";
+import EventScreen from "@/src/screens/tabs/event";
+
+export function ErrorBoundary(props: ErrorBoundaryProps) {
+  return <Error {...props} />;
+}
+
+export default function Event() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <EventScreen />
+    </Suspense>
+  );
 }

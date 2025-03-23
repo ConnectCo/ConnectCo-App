@@ -1,20 +1,14 @@
-import { type QueryKey, useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query";
 
 import { api } from "@/src/apis";
 import { FILTER } from "@/src/constants/common";
-import { COUPON } from "@/src/constants/coupon";
-import type { BaseResponseDTO } from "@/src/models";
-import type { CouponListDTO } from "@/src/models/coupon";
+import { EVENT } from "@/src/constants/event";
+import { BaseResponseDTO } from "@/src/models";
+import { EventDetailDTO, EventListDTO } from "@/src/models/event";
 
 import { useUserStore } from "../../zustand/user";
 
-import { useCommonSuspenseQuery } from ".";
-
-const useCommonCoupon = <T>(queryKey: QueryKey, url: string) => {
-  return useCommonSuspenseQuery<T>({ prefix: "coupons", queryKey, url });
-};
-
-export const useGetCouponList = <T extends CouponListDTO>(type: FILTER) => {
+export const useGetEventList = <T extends EventListDTO>(type: FILTER) => {
   const userStore = useUserStore((state) => state);
   const paramsByStatus =
     userStore.status !== "authenticated"
@@ -27,10 +21,10 @@ export const useGetCouponList = <T extends CouponListDTO>(type: FILTER) => {
   };
 
   return useSuspenseInfiniteQuery({
-    queryKey: [COUPON.LIST, type],
+    queryKey: [EVENT.LIST, type],
     queryFn: async ({ pageParam }) => {
       const { data } = await api.get<BaseResponseDTO<T>>(
-        `/coupons?page=${pageParam}&size=10&${Object.entries(params)
+        `/events?page=${pageParam}&size=10&${Object.entries(params)
           .map(([key, value]) => `${key}=${value}`)
           .join("&")}`
       );
@@ -44,7 +38,7 @@ export const useGetCouponList = <T extends CouponListDTO>(type: FILTER) => {
       return lastPage?.result?.page + 1;
     },
     select: (data) => {
-      const result = data.pages.map((page) => page.result.coupons).flat();
+      const result = data.pages.map((page) => page.result.events).flat();
       return {
         result,
       };
@@ -52,6 +46,12 @@ export const useGetCouponList = <T extends CouponListDTO>(type: FILTER) => {
   });
 };
 
-export const useGetCouponDetail = <T>(id: number) => {
-  return useCommonCoupon<T>([COUPON.DETAIL, id], `${id}/detail`);
+export const useGetEventDetail = <T extends EventDetailDTO>(id: number) => {
+  return useSuspenseQuery({
+    queryKey: [EVENT.DETAIL, id],
+    queryFn: async () => {
+      const { data } = await api.get<BaseResponseDTO<T>>(`/events/${id}/detail`);
+      return data;
+    },
+  });
 };

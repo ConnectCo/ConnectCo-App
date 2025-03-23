@@ -1,6 +1,7 @@
 import type { QueryKey } from "@tanstack/react-query";
 
 import { CHAT } from "@/src/constants/chat";
+import { useUserStore } from "@/src/lib/zustand/user";
 
 import { useCommonSuspenseQuery } from ".";
 
@@ -9,7 +10,8 @@ const useCommonChat = <T>(queryKey: QueryKey, url: string) => {
 };
 
 export const useGetChatList = <T>() => {
-  return useCommonChat<T>([CHAT.LIST], "rooms");
+  const { profileId } = useUserStore((state) => state);
+  return useCommonChat<T>([CHAT.LIST], `rooms?profileId=${profileId}`);
 };
 
 export const useGetChat = <T>(chatRoomId: number) => {

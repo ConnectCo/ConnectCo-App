@@ -1,11 +1,18 @@
 import { create } from "zustand";
 
-interface AddressStoreProps {
+interface Address {
   address: string;
-  setAddress: (address: string) => void;
+  latitude: number;
+  longitude: number;
+}
+
+interface AddressStoreProps extends Address {
+  setAddress: (address: Address) => void;
 }
 
 export const useAddressStore = create<AddressStoreProps>((set) => ({
   address: "",
-  setAddress: (address: string) => set({ address }),
+  latitude: 0,
+  longitude: 0,
+  setAddress: (address: Address) => set(address),
 }));

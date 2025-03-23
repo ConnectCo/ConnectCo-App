@@ -3,13 +3,13 @@ import { useState } from "react";
 import MainScreen from "@/src/components/common/main";
 import { FILTER } from "@/src/constants/common";
 import { SCREEN } from "@/src/constants/screen";
-import { useGetCouponList } from "@/src/lib/tanstack/quries/coupon";
-import { CouponListDTO } from "@/src/models/coupon";
+import { useGetEventList } from "@/src/lib/tanstack/quries/event";
+import { EventListDTO } from "@/src/models/event";
 
-export default function CouponScreen() {
+export default function EventScreen() {
   const [filter, setFilter] = useState<FILTER>(FILTER.DEADLINE);
 
-  const { data, fetchNextPage, isFetchingNextPage } = useGetCouponList<CouponListDTO>(filter);
+  const { data, fetchNextPage, isFetchingNextPage } = useGetEventList<EventListDTO>(filter);
 
   const onLoadMore = () => {
     !isFetchingNextPage && fetchNextPage();
@@ -18,7 +18,7 @@ export default function CouponScreen() {
   return (
     <MainScreen
       items={data?.result || []}
-      type={SCREEN.COUPON}
+      type={SCREEN.EVENT}
       onLoadMore={onLoadMore}
       filter={filter}
       onChangeFilter={setFilter}

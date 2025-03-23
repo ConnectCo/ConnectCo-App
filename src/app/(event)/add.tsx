@@ -86,7 +86,7 @@ export default function AddScreen() {
 
   useEffect(() => {
     if (address) {
-      setAddress("");
+      setAddress({ address: "", latitude: 0, longitude: 0 });
     }
   }, []);
 

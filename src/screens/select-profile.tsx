@@ -10,6 +10,7 @@ import { useGetProfileList } from "../lib/tanstack/quries/auth";
 
 export default function SelectProfileScreen() {
   const { data } = useGetProfileList();
+  console.log(data);
 
   return (
     <Container as="View" style={styles.container}>

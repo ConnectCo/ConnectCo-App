@@ -1,10 +1,11 @@
 import { Image } from "expo-image";
 import { router } from "expo-router";
 
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 import { colors } from "@/src/constants/color";
 import { PROFILE } from "@/src/constants/user";
+import { useSelectProfileMutation } from "@/src/lib/tanstack/mutations/auth";
 import type { ProfileProps } from "@/src/types/user";
 
 import Button from "../common/button";
@@ -18,9 +19,10 @@ interface ProfileListProps {
 
 export default function ProfileList({ profiles, type = PROFILE.STORE }: ProfileListProps) {
   const title = type === PROFILE.STORE ? "가게" : "단체";
+  const { mutateAsync, isPending } = useSelectProfileMutation();
 
-  const onProfileSelect = () => {
-    // TODO: profileId와 profileType을 이용하여 프로필 선택 API 호출
+  const onProfileSelect = async (profileId: number) => {
+    await mutateAsync({ profileId, profileType: type });
   };
 
   const onAddProfile = () => {
@@ -41,9 +43,18 @@ export default function ProfileList({ profiles, type = PROFILE.STORE }: ProfileL
           contentContainerStyle={styles.contentContainerStyle}
         >
           {profiles.map((item) => (
-            <Button key={item.profileId} style={styles.button} onPress={onProfileSelect}>
+            <Button
+              key={item.profileId}
+              style={styles.button}
+              disabled={isPending}
+              onPress={() => onProfileSelect(item.profileId as number)}
+            >
               <Flex gap={4}>
-                <Image source={item.profileImageUrl} style={styles.image} />
+                {item.profileImageUrl ? (
+                  <Image source={item.profileImageUrl} style={styles.image} />
+                ) : (
+                  <View style={styles.imagePlaceholder} />
+                )}
                 <Text numberOfLines={2} align="center" size="lg" weight={600}>
                   {item.profileName}
                 </Text>
@@ -87,5 +98,11 @@ const styles = StyleSheet.create({
   },
   add: {
     color: colors.gray300,
+  },
+  imagePlaceholder: {
+    width: 112,
+    height: 92,
+    borderRadius: 8,
+    backgroundColor: colors.gray300,
   },
 });
