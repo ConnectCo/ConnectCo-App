@@ -1,15 +1,19 @@
+import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
+import * as Location from "expo-location";
 import { router } from "expo-router";
 
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
+import Button from "@/src/components/common/button";
 import TextButton from "@/src/components/common/button/text-button";
 import Container from "@/src/components/common/container";
 import Flex from "@/src/components/common/flex";
 import Icon from "@/src/components/common/icon";
 import InputWithTitle from "@/src/components/common/input/input-with-title";
 import SelectImage from "@/src/components/common/select-image";
+import Text from "@/src/components/common/text";
 import { colors } from "@/src/constants/color";
 import { useAddressStore } from "@/src/lib/zustand/address";
 import { ImagePickerProps } from "@/src/types/image";
@@ -17,24 +21,28 @@ import { ImagePickerProps } from "@/src/types/image";
 interface InitialDataProps {
   images: ImagePickerProps[];
   name: string;
-  location: string;
-  phone: string;
-  operatingHours: string;
+  detailAddress: string;
+  latitude: number;
+  longitude: number;
+  storeNumber: string;
+  operatingTime: string;
   description: string;
 }
 
 const INITIAL_DATA: InitialDataProps = {
   images: [],
   name: "",
-  location: "",
-  phone: "",
-  operatingHours: "",
+  detailAddress: "",
+  latitude: 0,
+  longitude: 0,
+  storeNumber: "",
+  operatingTime: "",
   description: "",
 };
 
 export default function StoreAdd() {
   const [data, setData] = useState(INITIAL_DATA);
-  const { address, setAddress } = useAddressStore();
+  const { address: detailAddress, setAddress } = useAddressStore();
 
   const onPickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -70,11 +78,24 @@ export default function StoreAdd() {
     router.back();
   };
 
+  const onAttachFile = async () => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: ["application/pdf", "image/jpeg", "image/png", "image/tiff"],
+    });
+    if (result.assets) {
+      console.log(typeof result.assets[0].uri);
+    }
+  };
+
   useEffect(() => {
-    if (address) {
+    if (detailAddress) {
       setAddress("");
     }
-  }, []);
+    Location.geocodeAsync(detailAddress).then((result) => {
+      const { latitude, longitude } = result[0];
+      setData((prev) => ({ ...prev, detailAddress, latitude, longitude }));
+    });
+  }, [detailAddress]);
 
   return (
     <Container as="ScrollView" contentContainerStyle={styles.container}>
@@ -86,25 +107,48 @@ export default function StoreAdd() {
           onChangeText={(e) => onChangeText("name", e)}
           placeholder="가게의 이름을 입력해주세요!"
         />
+        <Flex gap={12}>
+          <Text size="lg" weight={600}>
+            증빙 자료
+          </Text>
+          <Flex gap={8}>
+            <Flex style={styles.businessLicense} direction="row" justify="between" align="center">
+              <Text weight={500} style={styles.businessLicenseName}>
+                증빙 자료를 첨부해주세요!
+              </Text>
+              <Button>
+                <Icon.Close fill={colors.gray300} />
+              </Button>
+            </Flex>
+            <Button style={styles.button} onPress={onAttachFile}>
+              <Flex gap={8} direction="row" justify="center" align="center">
+                <Icon.Document />
+                <Text weight={600} style={styles.file}>
+                  파일 첨부하기
+                </Text>
+              </Flex>
+            </Button>
+          </Flex>
+        </Flex>
         <InputWithTitle
           title="위치 정보"
           placeholder="지번, 도로명, 건물명으로 검색"
           type="button"
           left={<Icon.Search fill={colors.black} />}
-          value={address}
+          value={data.detailAddress}
           onPress={onSearchAddress}
         />
         <InputWithTitle
           title="가게 연락처"
-          value={data.phone}
+          value={data.storeNumber}
           onChangeText={(e) => onChangeText("phone", e.replace(/\D/g, ""))}
           placeholder="가게 연락처를 입력해주세요!"
           keyboardType="phone-pad"
         />
         <InputWithTitle
           title="운영시간"
-          value={data.operatingHours}
-          onChangeText={(e) => onChangeText("operatingHours", e)}
+          value={data.operatingTime}
+          onChangeText={(e) => onChangeText("operatingTime", e)}
           placeholder="가게의 운영시간을 입력해주세요!"
         />
         <InputWithTitle
@@ -133,6 +177,18 @@ const styles = StyleSheet.create({
     borderColor: colors.primary300,
   },
   add: {
+    color: colors.primary300,
+  },
+  businessLicense: {
+    padding: 8,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: colors.gray300,
+  },
+  businessLicenseName: {
+    color: colors.gray300,
+  },
+  file: {
     color: colors.primary300,
   },
 });

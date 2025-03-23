@@ -12,7 +12,7 @@ export default function DetailScreen() {
   const { data } = useGetCouponDetail<CouponDetailDTO>(+id);
 
   const onRouteStoreProfile = () => {
-    router.push(`/store/${id}`);
+    router.push(`/store/${data.result.store.storeId}`);
   };
 
   const onRouteSuggest = () => {
@@ -32,8 +32,7 @@ export default function DetailScreen() {
       description={data.result.description}
       isLike={data.result.isLike}
       isMine={data.result.isMine}
-      // appliedCount에 data.result.couponCount 넣기
-      appliedCount={0}
+      appliedCount={data.result.eventCount}
       onRouteProfile={onRouteStoreProfile}
       onPressRight={onRouteSuggest}
     >

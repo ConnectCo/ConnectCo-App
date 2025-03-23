@@ -161,7 +161,7 @@ const Icon = {
   ),
   Close: ({ size = 24, fill = colors.gray500 }: IconProps) => (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <Circle cx={size / 2} cy={size / 2} r="9" fill="#666666" />
+      <Circle cx={size / 2} cy={size / 2} r="9" fill={fill} />
       <Path
         d="M8.22749 16.8365L7.16406 15.7731L10.9372 12L7.16406 8.2519L8.22749 7.18848L12.0006 10.9616L15.7487 7.18848L16.8121 8.2519L13.039 12L16.8121 15.7731L15.7487 16.8365L12.0006 13.0634L8.22749 16.8365Z"
         fill="white"

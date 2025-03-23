@@ -12,24 +12,29 @@ import Text from "@/src/components/common/text";
 import Content from "@/src/components/common/text/content";
 import { SCREEN } from "@/src/constants/screen";
 import { useGetStoreDetail } from "@/src/lib/tanstack/quries/store";
-import { CouponListDTO } from "@/src/models/coupon";
 import { StoreInformationDTO } from "@/src/models/store";
-import { CardContentProps } from "@/src/types/card";
 import { postMessageInstance } from "@/src/utils/webview";
 
 const uri = process.env.EXPO_PUBLIC_DETAIL_MAP_URL!;
 
 export default function StoreScreen() {
   const { id } = useLocalSearchParams();
+  const { data } = useGetStoreDetail<StoreInformationDTO>(+id);
 
-  const [storeCoupons, storeDetail] = useGetStoreDetail<CouponListDTO, StoreInformationDTO>(+id);
+  const coupons = data.result.coupons.map((coupon) => ({
+    id: coupon.couponId,
+    title: coupon.name,
+    name: data.result.name,
+    thumbnail: coupon.couponThumbnail ?? "",
+    expiredAt: coupon.expiredAt,
+  }));
 
   const webviewRef = useRef<WebView>(null);
 
   const postMessage = postMessageInstance(webviewRef);
 
   const onPressCall = () => {
-    Linking.openURL(`tel:${storeDetail.data.result.phoneNumber}`).catch((err) => {
+    Linking.openURL(`tel:${data.result.phoneNumber}`).catch((err) => {
       console.error("Failed to open URL:", err);
     });
   };
@@ -39,24 +44,24 @@ export default function StoreScreen() {
   };
 
   function onLoad() {
-    postMessage("location", storeDetail.data.result.address);
+    postMessage("location", data.result.address);
   }
 
   return (
     <CommonDetail
-      images={storeDetail.data.result.images}
+      images={data.result.images}
       type={SCREEN.STORE}
-      name={storeDetail.data.result.name}
-      description={storeDetail.data.result.description}
-      isLike={storeDetail.data.result.isLike}
-      isMine={storeDetail.data.result.isMine}
+      name={data.result.name}
+      description={data.result.description}
+      isLike={data.result.isLike}
+      isMine={data.result.isMine}
       appliedCount={0}
       onPressRight={onPressCall}
     >
       <Flex gap={10}>
         <Text size="xl">쿠폰 목록</Text>
         <Flex gap={15}>
-          {storeCoupons.data.result.coupons.map((coupon: CardContentProps) => (
+          {coupons.map((coupon) => (
             <Card
               key={coupon.id}
               {...coupon}
@@ -68,10 +73,10 @@ export default function StoreScreen() {
       </Flex>
       <Flex gap={20}>
         <Text size="xl">가게 정보</Text>
-        <Content title="가게 위치" content={storeDetail.data.result.address.detailAddress} />
+        <Content title="가게 위치" content={data.result.address.detailAddress} />
         <WebView ref={webviewRef} style={styles.webview} source={{ uri }} onLoad={onLoad} />
-        <Content title="가게 연락처" content={storeDetail.data.result.phoneNumber} />
-        <Content title="운영시간" content={storeDetail.data.result.operatingTime} />
+        <Content title="가게 연락처" content={data.result.phoneNumber} />
+        <Content title="운영시간" content={data.result.operatingTime} />
       </Flex>
     </CommonDetail>
   );

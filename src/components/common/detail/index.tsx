@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { colors } from "@/src/constants/color";
@@ -46,7 +46,7 @@ export default function CommonDetail({
   onRouteProfile,
   onPressRight,
 }: CommonDetailProps) {
-  const { profileType } = useUserStore();
+  const userStore = useUserStore((state) => state);
   const { bottom } = useSafeAreaInsets();
 
   const isStore = type === SCREEN.STORE;
@@ -61,10 +61,15 @@ export default function CommonDetail({
       : `협찬 ${type === SCREEN.EVENT ? "제안" : "신청"}`;
 
   const isOrganizationMode =
-    profileType === PROFILE.ORGANIZATION && type === SCREEN.EVENT && !isMine;
-  const isStoreMode = profileType === PROFILE.STORE && type === SCREEN.COUPON && !isMine;
+    userStore.profileType === PROFILE.ORGANIZATION && type === SCREEN.EVENT && !isMine;
+  const isStoreMode = userStore.profileType === PROFILE.STORE && type === SCREEN.COUPON && !isMine;
+
+  const isAuthenticated = userStore.status === "authenticated";
 
   const onPressLeft = () => {
+    if (!isAuthenticated) {
+      return Alert.alert("로그인 후 이용해주세요.");
+    }
     if (isMine) {
       // 수정하기 라우팅
     } else {
@@ -74,12 +79,19 @@ export default function CommonDetail({
   };
 
   const onPressFavorite = () => {
+    if (!isAuthenticated) {
+      return Alert.alert("로그인 후 이용해주세요.");
+    }
     // 즐겨찾기 API 요청
   };
 
   return (
     <ScrollView style={styles.container}>
-      <ImageScroll images={images} />
+      {images.length > 0 ? (
+        <ImageScroll images={images} />
+      ) : (
+        <View style={styles.imagePlaceholder} />
+      )}
       {!isStore && (
         <Button onPress={onRouteProfile}>
           <Flex direction="row" align="center" justify="between" style={styles.wrap}>
@@ -172,5 +184,10 @@ const styles = StyleSheet.create({
   },
   appliedCount: {
     color: colors.primary300,
+  },
+  imagePlaceholder: {
+    width: "100%",
+    height: 200,
+    backgroundColor: colors.gray300,
   },
 });

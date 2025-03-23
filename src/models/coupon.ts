@@ -24,5 +24,5 @@ export interface CouponDetailDTO {
   images: string[];
   isLike: boolean;
   isMine: boolean;
-  couponCount: number;
+  eventCount: number;
 }

@@ -14,8 +14,8 @@ const { width } = Dimensions.get("screen");
 
 export default function Card({
   id,
+  title,
   name,
-  host,
   expiredAt,
   thumbnail,
   type = SCREEN.EVENT,
@@ -43,14 +43,18 @@ export default function Card({
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <Button onPress={onPress}>
-        <Flex direction="row" align="center" gap={24}>
-          <Image source={thumbnail} style={styles.image} />
+        <Flex direction="row" align="center" gap={20}>
+          {thumbnail ? (
+            <Image source={thumbnail} style={styles.image} />
+          ) : (
+            <View style={styles.imagePlaceholder} />
+          )}
           <Flex>
-            <Text size="sm" weight={700} style={styles.host}>
-              {host}
-            </Text>
-            <Text size="lg" weight={600} style={[styles.name, styles.expiredAt]} numberOfLines={1}>
+            <Text size="sm" weight={700} style={styles.name}>
               {name}
+            </Text>
+            <Text size="lg" weight={600} style={[styles.title, styles.expiredAt]} numberOfLines={1}>
+              {title}
             </Text>
             <Text size="sm" numberOfLines={1} style={styles.expiredAt}>
               {descriptionByType} - {expiredAt}
@@ -76,10 +80,16 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
   },
-  host: {
-    color: colors.gray500,
+  imagePlaceholder: {
+    width: 60,
+    height: 60,
+    backgroundColor: colors.gray300,
+    borderRadius: 10,
   },
   name: {
+    color: colors.gray500,
+  },
+  title: {
     marginTop: 4,
     marginBottom: 8,
   },

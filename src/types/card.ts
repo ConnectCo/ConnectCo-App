@@ -2,7 +2,7 @@ import { SCREEN } from "../constants/screen";
 
 export interface CardContentProps {
   id: number;
-  host: string;
+  title: string;
   name: string;
   thumbnail: string;
   expiredAt: string;

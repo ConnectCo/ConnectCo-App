@@ -5,8 +5,10 @@ import type { ProfileProps } from "@/src/types/user";
 import { getItem, removeItem, setItem } from "@/src/utils/secure-store";
 
 interface UserStoreProps extends ProfileProps {
-  status: "annonymous" | "select-profile" | "authenticated";
+  status: "anonymous" | "select-profile" | "authenticated";
   memberId: number;
+  latitude: number;
+  longitude: number;
   setUser: (value: Partial<UserStoreProps>) => void;
 }
 
@@ -29,12 +31,14 @@ const options = {
 export const useUserStore = create(
   persist<UserStoreProps>(
     (set) => ({
-      status: "annonymous",
+      status: "anonymous",
       memberId: -1,
       profileId: -1,
       profileType: null,
       profileName: "",
       profileImageUrl: "",
+      latitude: 0,
+      longitude: 0,
       setUser: (value) => set((state) => ({ ...state, ...value })),
     }),
     options

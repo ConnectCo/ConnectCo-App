@@ -17,15 +17,15 @@ import { SCREEN } from "@/src/constants/screen";
 const couponList = [
   {
     id: 1,
-    host: "호말",
-    name: "쿠키 무료 제공 쿠폰",
+    name: "호말",
+    title: "쿠키 무료 제공 쿠폰",
     expiredAt: "2023.10.17 ~ 2023.10.29",
     thumbnail: require("../../../assets/static/homeal.png"),
   },
   {
     id: 2,
-    host: "호말",
-    name: "전 음료 10%할인 쿠폰",
+    name: "호말",
+    title: "전 음료 10%할인 쿠폰",
     expiredAt: "2023.10.17 ~ 2023.10.29",
     thumbnail: require("../../../assets/static/homeal.png"),
   },
@@ -34,15 +34,15 @@ const couponList = [
 const eventList = [
   {
     id: 1,
-    host: "한양대학교",
-    name: "한양대학교 행사",
+    name: "한양대학교",
+    title: "한양대학교 행사",
     expiredAt: "2023.10.17 ~ 2023.10.29",
     thumbnail: require("../../../assets/static/hanyang.png"),
   },
   {
     id: 2,
-    host: "건국대학교",
-    name: "산업디자인과 전시회",
+    name: "건국대학교",
+    title: "산업디자인과 전시회",
     expiredAt: "2023.10.17 ~ 2023.10.29",
     thumbnail: require("../../../assets/static/hanyang.png"),
   },

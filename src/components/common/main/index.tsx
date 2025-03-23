@@ -1,5 +1,6 @@
 import { Route, router } from "expo-router";
 
+import { useEffect } from "react";
 import { FlatList, StyleSheet } from "react-native";
 
 import Button from "@/src/components/common/button";
@@ -9,6 +10,7 @@ import Icon from "@/src/components/common/icon";
 import Text from "@/src/components/common/text";
 import { colors } from "@/src/constants/color";
 import { SCREEN } from "@/src/constants/screen";
+// import { useUserStore } from "@/src/lib/zustand/user";
 import type { CardContentProps } from "@/src/types/card";
 
 interface MainScreenProps {
@@ -83,6 +85,10 @@ export default function MainScreen({ items, type = SCREEN.EVENT, onLoadMore }: M
       </Flex>
     </Flex>
   );
+
+  // useEffect(() => {
+  //   useUserStore.persist.clearStorage();
+  // }, []);
 
   return (
     <FlatList
