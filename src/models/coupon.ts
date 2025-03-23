@@ -1,12 +1,9 @@
 import { CardContentProps } from "../types/card";
 
-export interface CouponListDTO {
+import { PaiginationDTO } from ".";
+
+export interface CouponListDTO extends PaiginationDTO {
   coupons: CardContentProps[];
-  page: number;
-  totalPages: number;
-  totalElements: number;
-  isFirst: boolean;
-  isLast: boolean;
 }
 
 export interface CouponDetailDTO {

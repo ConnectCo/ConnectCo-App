@@ -1,12 +1,9 @@
 import { CardContentProps } from "../types/card";
 
-export interface EventListDTO {
+import { PaiginationDTO } from ".";
+
+export interface EventListDTO extends PaiginationDTO {
   events: CardContentProps[];
-  page: number;
-  totalPages: number;
-  totalElements: number;
-  isFirst: boolean;
-  isLast: boolean;
 }
 
 export interface EventDetailDTO {

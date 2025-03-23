@@ -25,10 +25,12 @@ api.interceptors.request.use(async (config) => {
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    console.log(error.response);
     const originalRequest = error.config;
-    if (error.response?.status === 403 && !originalRequest._retry) {
-      if (userStore.status === "select-profile") {
+    if (
+      (error.response?.status === 403 || error.response?.status === 401) &&
+      !originalRequest._retry
+    ) {
+      if (userStore.status === "select-profile" || userStore.status === "anonymous") {
         await removeTokens();
         userStore.setUser({
           profileType: null,
@@ -38,7 +40,7 @@ api.interceptors.response.use(
         });
 
         Alert.alert("처음부터 다시 로그인 해주세요.");
-        return api(originalRequest);
+        return Promise.reject(error);
       }
       originalRequest._retry = true;
 

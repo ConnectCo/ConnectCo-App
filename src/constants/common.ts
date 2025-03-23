@@ -3,3 +3,7 @@ export enum FILTER {
   DISTANCE = "DISTANCE",
   RECENCY = "RECENCY",
 }
+
+export enum LIST {
+  ALL = "ALL",
+}
