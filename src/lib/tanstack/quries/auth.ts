@@ -7,7 +7,7 @@ import { ProfileListDTO } from "@/src/models/auth";
 
 import { useUserStore } from "../../zustand/user";
 
-export const useGetProfileList = <T>() => {
+export const useGetProfileList = () => {
   const { memberId } = useUserStore();
 
   return useSuspenseQuery({

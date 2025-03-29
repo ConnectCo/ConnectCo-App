@@ -24,7 +24,7 @@ export const useGetEventList = <T extends EventListDTO>(type: FILTER) => {
     queryKey: [EVENT.LIST, type],
     queryFn: async ({ pageParam }) => {
       const { data } = await api.get<BaseResponseDTO<T>>(
-        `/events?page=${pageParam}&size=10&${Object.entries(params)
+        `/events/list?page=${pageParam}&size=10&${Object.entries(params)
           .map(([key, value]) => `${key}=${value}`)
           .join("&")}`
       );

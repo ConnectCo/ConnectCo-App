@@ -30,7 +30,7 @@ export const useGetCouponList = <T extends CouponListDTO>(type: FILTER) => {
     queryKey: [COUPON.LIST, type],
     queryFn: async ({ pageParam }) => {
       const { data } = await api.get<BaseResponseDTO<T>>(
-        `/coupons?page=${pageParam}&size=10&${Object.entries(params)
+        `/coupons/list?page=${pageParam}&size=10&${Object.entries(params)
           .map(([key, value]) => `${key}=${value}`)
           .join("&")}`
       );

@@ -1,6 +1,5 @@
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
-import * as Location from "expo-location";
 import { router } from "expo-router";
 
 import { useEffect, useState } from "react";
@@ -15,6 +14,7 @@ import InputWithTitle from "@/src/components/common/input/input-with-title";
 import SelectImage from "@/src/components/common/select-image";
 import Text from "@/src/components/common/text";
 import { colors } from "@/src/constants/color";
+import { useCreateStore } from "@/src/lib/tanstack/mutations/store";
 import { useAddressStore } from "@/src/lib/zustand/address";
 import { ImagePickerProps } from "@/src/types/image";
 
@@ -27,6 +27,7 @@ interface InitialDataProps {
   storeNumber: string;
   operatingTime: string;
   description: string;
+  businessLicense: { uri: string; name: string; type: string } | null;
 }
 
 const INITIAL_DATA: InitialDataProps = {
@@ -38,11 +39,16 @@ const INITIAL_DATA: InitialDataProps = {
   storeNumber: "",
   operatingTime: "",
   description: "",
+  businessLicense: null,
 };
 
 export default function StoreAdd() {
   const [data, setData] = useState(INITIAL_DATA);
-  const { address: detailAddress, setAddress } = useAddressStore();
+  const { address, latitude, longitude, setAddress } = useAddressStore();
+
+  const { mutateAsync, isPending } = useCreateStore();
+
+  const submitDisabled = !data.name || !data.description || !address || isPending;
 
   const onPickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -52,10 +58,10 @@ export default function StoreAdd() {
     });
 
     if (!result.canceled) {
-      const { uri, assetId } = result.assets[0];
+      const { uri, assetId, mimeType } = result.assets[0];
       const exist = data.images.find((image) => image.assetId === assetId);
       if (!exist) {
-        const newImages = [...data.images, { uri, assetId }];
+        const newImages = [...data.images, { uri, assetId, mimeType: mimeType || "" }];
         setData((prev) => ({ ...prev, images: newImages }));
       }
     }
@@ -74,8 +80,38 @@ export default function StoreAdd() {
     router.push("/address");
   };
 
-  const onComplete = () => {
-    router.back();
+  const onComplete = async () => {
+    const formData = new FormData();
+    const request = {
+      name: data.name,
+      description: data.description,
+      detailAddress: address,
+      latitude: latitude,
+      longitude: longitude,
+      storeNumber: data.storeNumber,
+      operatingTime: data.operatingTime,
+    };
+    data.images.forEach((image, index) => {
+      formData.append("storeImages", {
+        uri: image.uri,
+        name: image.uri,
+        type: image.mimeType,
+      } as any);
+    });
+
+    // 2. businessLicense (단일 파일)
+    if (data.businessLicense?.uri) {
+      formData.append("businessLicense", {
+        uri: data.businessLicense.uri,
+        name: data.businessLicense.name,
+        type: data.businessLicense.type, // 또는 image/jpeg, image/png 등 확장자에 맞게
+      } as any);
+    }
+    formData.append("request", JSON.stringify(request));
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value, "key, value");
+    }
+    await mutateAsync(formData);
   };
 
   const onAttachFile = async () => {
@@ -83,19 +119,23 @@ export default function StoreAdd() {
       type: ["application/pdf", "image/jpeg", "image/png", "image/tiff"],
     });
     if (result.assets) {
-      console.log(typeof result.assets[0].uri);
+      const file = result.assets[0];
+      setData((prev) => ({
+        ...prev,
+        businessLicense: {
+          uri: file.uri,
+          name: file.name,
+          type: file.mimeType || "",
+        },
+      }));
     }
   };
 
   useEffect(() => {
-    if (detailAddress) {
+    if (address) {
       setAddress({ address: "", latitude: 0, longitude: 0 });
     }
-    Location.geocodeAsync(detailAddress).then((result) => {
-      const { latitude, longitude } = result[0];
-      setData((prev) => ({ ...prev, detailAddress, latitude, longitude }));
-    });
-  }, [detailAddress]);
+  }, []);
 
   return (
     <Container as="ScrollView" contentContainerStyle={styles.container}>
@@ -114,7 +154,7 @@ export default function StoreAdd() {
           <Flex gap={8}>
             <Flex style={styles.businessLicense} direction="row" justify="between" align="center">
               <Text weight={500} style={styles.businessLicenseName}>
-                증빙 자료를 첨부해주세요!
+                {data.businessLicense?.name || "증빙 자료를 첨부해주세요!"}
               </Text>
               <Button>
                 <Icon.Close fill={colors.gray300} />
@@ -135,13 +175,13 @@ export default function StoreAdd() {
           placeholder="지번, 도로명, 건물명으로 검색"
           type="button"
           left={<Icon.Search fill={colors.black} />}
-          value={data.detailAddress}
+          value={address}
           onPress={onSearchAddress}
         />
         <InputWithTitle
           title="가게 연락처"
           value={data.storeNumber}
-          onChangeText={(e) => onChangeText("phone", e.replace(/\D/g, ""))}
+          onChangeText={(e) => onChangeText("storeNumber", e.replace(/\D/g, ""))}
           placeholder="가게 연락처를 입력해주세요!"
           keyboardType="phone-pad"
         />
@@ -161,7 +201,13 @@ export default function StoreAdd() {
           multiline
         />
       </Flex>
-      <TextButton onPress={onComplete}>작성완료</TextButton>
+      <TextButton
+        disabled={submitDisabled}
+        type={submitDisabled ? "disabled" : "fill"}
+        onPress={onComplete}
+      >
+        작성완료
+      </TextButton>
     </Container>
   );
 }

@@ -49,10 +49,10 @@ export default function OrganizationAdd() {
     });
 
     if (!result.canceled) {
-      const { uri, assetId } = result.assets[0];
+      const { uri, assetId, mimeType } = result.assets[0];
       const exist = data.images.find((image) => image.assetId === assetId);
       if (!exist) {
-        const newImages = [...data.images, { uri, assetId }];
+        const newImages = [...data.images, { uri, assetId, mimeType: mimeType || "" }];
         setData((prev) => ({ ...prev, images: newImages }));
       }
     }
