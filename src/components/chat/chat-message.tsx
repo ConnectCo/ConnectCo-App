@@ -9,7 +9,7 @@ import OppositeChat from "@/src/components/chat/opposite-chat";
 import Text from "@/src/components/common/text";
 import { colors } from "@/src/constants/color";
 import { useChat } from "@/src/hooks/use-chat";
-import { useGetChat } from "@/src/lib/tanstack/quries/chat";
+import { useGetChatMessage } from "@/src/lib/tanstack/quries/chat";
 import { ChatMessageDTO } from "@/src/models/chat";
 import { groupingMessages } from "@/src/utils/message";
 
@@ -17,7 +17,7 @@ export default function ChatMessage() {
   const params = useLocalSearchParams();
   const { chatRoomId } = params;
 
-  const { data } = useGetChat<ChatMessageDTO[]>(+chatRoomId);
+  const { data } = useGetChatMessage(+chatRoomId);
   const [messageList, setMessageList] = useState<ChatMessageDTO[]>(data.result);
 
   const { bottom } = useSafeAreaInsets();

@@ -3,12 +3,11 @@ import { router, useLocalSearchParams } from "expo-router";
 import CommonDetail from "@/src/components/common/detail";
 import Content from "@/src/components/common/text/content";
 import { useGetEventDetail } from "@/src/lib/tanstack/quries/event";
-import { EventDetailDTO } from "@/src/models/event";
 
 export default function EventDetailScreen() {
   const { id } = useLocalSearchParams();
 
-  const { data } = useGetEventDetail<EventDetailDTO>(+id);
+  const { data } = useGetEventDetail(+id);
 
   const onRouteStoreProfile = () => {
     router.push(`/store/${data.result.organization.organizationId}`);

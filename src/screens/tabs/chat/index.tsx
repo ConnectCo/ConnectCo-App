@@ -4,10 +4,9 @@ import ChatItem from "@/src/components/chat/chat-item";
 import Text from "@/src/components/common/text";
 import { colors } from "@/src/constants/color";
 import { useGetChatList } from "@/src/lib/tanstack/quries/chat";
-import { ChatListDTO } from "@/src/models/chat";
 
 export default function ChatListScreen() {
-  const { data } = useGetChatList<ChatListDTO[]>();
+  const { data } = useGetChatList();
 
   if (data.result.length === 0) {
     return (

@@ -2,33 +2,30 @@ import { Alert } from "react-native";
 
 import { useMutation } from "@tanstack/react-query";
 
-import { api } from "@/src/apis";
-import { OAUTH2 } from "@/src/constants/auth";
-import { PROFILE } from "@/src/constants/user";
-import { BaseResponseDTO } from "@/src/models";
-import { OAuthDTO } from "@/src/models/auth";
+import { AUTH } from "@/src/constants/auth";
+import { login, logout, removeProfile, selectProfile, withdraw } from "@/src/services/auth";
 import { setItem } from "@/src/utils/secure-store";
 
 import { useUserStore } from "../../zustand/user";
+import { queryClient } from "../quries";
 
-interface AuthMutationProps {
-  accessToken: string;
-  provider: OAUTH2;
-}
+export const useRemoveProfileMutation = () => {
+  return useMutation({
+    mutationFn: removeProfile,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [AUTH.PROFILE_LIST] });
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+};
 
 export const useOauth2Mutation = () => {
   const setUser = useUserStore((state) => state.setUser);
 
   return useMutation({
-    mutationFn: async ({
-      accessToken,
-      provider,
-    }: AuthMutationProps): Promise<BaseResponseDTO<OAuthDTO>> => {
-      const { data } = await api.post(
-        `/auth/login?accessToken=${accessToken}&provider=${provider}`
-      );
-      return data;
-    },
+    mutationFn: login,
     onSuccess: async (response) => {
       const { result } = response;
       await setItem("accessToken", result.accessToken);
@@ -43,22 +40,28 @@ export const useOauth2Mutation = () => {
   });
 };
 
+export const useLogoutMutation = () => {
+  const setUser = useUserStore((state) => state.setUser);
+
+  return useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      setItem("accessToken", "");
+      setItem("refreshToken", "");
+      setUser({
+        status: "anonymous",
+      });
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+};
 export const useSelectProfileMutation = () => {
   const setUser = useUserStore((state) => state.setUser);
 
   return useMutation({
-    mutationFn: async ({
-      profileId,
-      profileType,
-    }: {
-      profileId: number;
-      profileType: PROFILE;
-    }): Promise<BaseResponseDTO<OAuthDTO>> => {
-      const { data } = await api.post(
-        `/auth/select-profile?profileId=${profileId}&profileType=${profileType}`
-      );
-      return data;
-    },
+    mutationFn: selectProfile,
     onSuccess: async (response) => {
       const { result } = response;
       await setItem("accessToken", result.accessToken);
@@ -70,6 +73,18 @@ export const useSelectProfileMutation = () => {
         status: "authenticated",
       });
       Alert.alert("프로필 선택 완료");
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+};
+
+export const useWithdrawMutation = () => {
+  return useMutation({
+    mutationFn: withdraw,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [AUTH.PROFILE_LIST] });
     },
     onError: (error) => {
       console.error(error);

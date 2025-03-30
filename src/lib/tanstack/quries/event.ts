@@ -1,41 +1,31 @@
 import { useSuspenseInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query";
 
-import { api } from "@/src/apis";
-import { FILTER } from "@/src/constants/common";
 import { EVENT } from "@/src/constants/event";
-import { BaseResponseDTO } from "@/src/models";
-import { EventDetailDTO, EventListDTO } from "@/src/models/event";
+import {
+  getEventById,
+  getEventByOrganization,
+  getEventBySearch,
+  getMyEvent,
+  getMyLikeEvent,
+} from "@/src/services/event";
 
-import { useUserStore } from "../../zustand/user";
+export const useGetEventDetail = (id: number) => {
+  return useSuspenseQuery({
+    queryKey: [EVENT.DETAIL, id],
+    queryFn: async () => await getEventById(id),
+  });
+};
 
-export const useGetEventList = <T extends EventListDTO>(type: FILTER) => {
-  const userStore = useUserStore((state) => state);
-  const paramsByStatus =
-    userStore.status !== "authenticated"
-      ? { latitude: userStore.latitude, longitude: userStore.longitude }
-      : {};
-
-  const params = {
-    ...paramsByStatus,
-    type,
-  };
-
+export const useGetMyLikeEvent = () => {
   return useSuspenseInfiniteQuery({
-    queryKey: [EVENT.LIST, type],
-    queryFn: async ({ pageParam }) => {
-      const { data } = await api.get<BaseResponseDTO<T>>(
-        `/events/list?page=${pageParam}&size=10&${Object.entries(params)
-          .map(([key, value]) => `${key}=${value}`)
-          .join("&")}`
-      );
-      return data;
-    },
+    queryKey: [EVENT.MY_LIKE],
+    queryFn: async ({ pageParam }) => await getMyLikeEvent(pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
-      if (lastPage?.result?.isLast) {
+      if (lastPage.result.isLast) {
         return undefined;
       }
-      return lastPage?.result?.page + 1;
+      return lastPage.result.page + 1;
     },
     select: (data) => {
       const result = data.pages.map((page) => page.result.events).flat();
@@ -46,12 +36,63 @@ export const useGetEventList = <T extends EventListDTO>(type: FILTER) => {
   });
 };
 
-export const useGetEventDetail = <T extends EventDetailDTO>(id: number) => {
-  return useSuspenseQuery({
-    queryKey: [EVENT.DETAIL, id],
-    queryFn: async () => {
-      const { data } = await api.get<BaseResponseDTO<T>>(`/events/${id}/detail`);
-      return data;
+export const useGetMyEventList = () => {
+  return useSuspenseInfiniteQuery({
+    queryKey: [EVENT.MY_EVENT],
+    queryFn: async ({ pageParam }) => await getMyEvent(pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.result.isLast) {
+        return undefined;
+      }
+      return lastPage.result.page + 1;
+    },
+    select: (data) => {
+      const result = data.pages.map((page) => page.result.events).flat();
+      return {
+        result,
+      };
+    },
+  });
+};
+
+export const useGetEventByOrganization = (organizationId: number) => {
+  return useSuspenseInfiniteQuery({
+    queryKey: [EVENT.ORGANIZATION, organizationId],
+    queryFn: async ({ pageParam }) =>
+      await getEventByOrganization({ organizationId, page: pageParam }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.result.isLast) {
+        return undefined;
+      }
+      return lastPage.result.page + 1;
+    },
+    select: (data) => {
+      const result = data.pages.map((page) => page.result.events).flat();
+      return {
+        result,
+      };
+    },
+  });
+};
+
+export const useGetEventBySearch = (query: string) => {
+  return useSuspenseInfiniteQuery({
+    queryKey: [EVENT.SEARCH, query],
+    queryFn: async ({ pageParam }) => await getEventBySearch({ query, page: pageParam }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.result.isLast) {
+        return undefined;
+      }
+      return lastPage.result.page + 1;
+    },
+    select: (data) => {
+      const result = data.pages.map((page) => page.result.events).flat();
+      return {
+        result,
+      };
     },
   });
 };

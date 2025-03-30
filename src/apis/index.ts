@@ -29,6 +29,7 @@ api.interceptors.response.use(
       (error.response?.status === 403 || error.response?.status === 401) &&
       !originalRequest._retry
     ) {
+      console.log(error.response);
       if (userStore.status === "select-profile" || userStore.status === "anonymous") {
         await removeTokens();
         userStore.setUser({

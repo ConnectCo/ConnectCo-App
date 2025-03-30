@@ -1,3 +1,5 @@
+import { PaiginationDTO } from ".";
+
 export interface StoreInformationDTO {
   storeId: number;
   name: string;
@@ -21,4 +23,8 @@ export interface StoreInformationDTO {
   appliedEventCount: number;
   isLike: boolean;
   isMine: boolean;
+}
+
+export interface StoreListDTO extends PaiginationDTO {
+  stores: StoreInformationDTO[];
 }

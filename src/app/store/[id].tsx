@@ -12,14 +12,13 @@ import Text from "@/src/components/common/text";
 import Content from "@/src/components/common/text/content";
 import { SCREEN } from "@/src/constants/screen";
 import { useGetStoreDetail } from "@/src/lib/tanstack/quries/store";
-import { StoreInformationDTO } from "@/src/models/store";
 import { postMessageInstance } from "@/src/utils/webview";
 
 const uri = process.env.EXPO_PUBLIC_DETAIL_MAP_URL!;
 
 export default function StoreScreen() {
   const { id } = useLocalSearchParams();
-  const { data } = useGetStoreDetail<StoreInformationDTO>(+id);
+  const { data } = useGetStoreDetail(+id);
 
   const coupons = data.result.coupons.map((coupon) => ({
     id: coupon.couponId,

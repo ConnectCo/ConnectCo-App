@@ -1,47 +1,31 @@
-import { type QueryKey, useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery, useSuspenseQuery } from "@tanstack/react-query";
 
-import { api } from "@/src/apis";
-import { FILTER } from "@/src/constants/common";
 import { COUPON } from "@/src/constants/coupon";
-import type { BaseResponseDTO } from "@/src/models";
-import type { CouponListDTO } from "@/src/models/coupon";
+import {
+  getCouponById,
+  getCouponBySearch,
+  getCouponByStore,
+  getMyCoupon,
+  getMyLikeCoupon,
+} from "@/src/services/coupon";
 
-import { useUserStore } from "../../zustand/user";
-
-import { useCommonSuspenseQuery } from ".";
-
-const useCommonCoupon = <T>(queryKey: QueryKey, url: string) => {
-  return useCommonSuspenseQuery<T>({ prefix: "coupons", queryKey, url });
+export const useGetCouponDetail = (id: number) => {
+  return useSuspenseQuery({
+    queryKey: [COUPON.DETAIL, id],
+    queryFn: async () => await getCouponById(id),
+  });
 };
 
-export const useGetCouponList = <T extends CouponListDTO>(type: FILTER) => {
-  const userStore = useUserStore((state) => state);
-  const paramsByStatus =
-    userStore.status !== "authenticated"
-      ? { latitude: userStore.latitude, longitude: userStore.longitude }
-      : {};
-
-  const params = {
-    ...paramsByStatus,
-    type,
-  };
-
+export const useGetMyLikeCoupon = () => {
   return useSuspenseInfiniteQuery({
-    queryKey: [COUPON.LIST, type],
-    queryFn: async ({ pageParam }) => {
-      const { data } = await api.get<BaseResponseDTO<T>>(
-        `/coupons/list?page=${pageParam}&size=10&${Object.entries(params)
-          .map(([key, value]) => `${key}=${value}`)
-          .join("&")}`
-      );
-      return data;
-    },
+    queryKey: [COUPON.MY_LIKE],
+    queryFn: async ({ pageParam }) => await getMyLikeCoupon(pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
-      if (lastPage?.result?.isLast) {
+      if (lastPage.result.isLast) {
         return undefined;
       }
-      return lastPage?.result?.page + 1;
+      return lastPage.result.page + 1;
     },
     select: (data) => {
       const result = data.pages.map((page) => page.result.coupons).flat();
@@ -52,6 +36,62 @@ export const useGetCouponList = <T extends CouponListDTO>(type: FILTER) => {
   });
 };
 
-export const useGetCouponDetail = <T>(id: number) => {
-  return useCommonCoupon<T>([COUPON.DETAIL, id], `${id}/detail`);
+export const useGetMyCouponList = () => {
+  return useSuspenseInfiniteQuery({
+    queryKey: [COUPON.MY_COUPON],
+    queryFn: async ({ pageParam }) => await getMyCoupon(pageParam),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.result.isLast) {
+        return undefined;
+      }
+      return lastPage.result.page + 1;
+    },
+    select: (data) => {
+      const result = data.pages.map((page) => page.result.coupons).flat();
+      return {
+        result,
+      };
+    },
+  });
+};
+
+export const useGetCouponByStore = (storeId: number) => {
+  return useSuspenseInfiniteQuery({
+    queryKey: [COUPON.ORGANIZATION, storeId],
+    queryFn: async ({ pageParam }) => await getCouponByStore({ storeId: storeId, page: pageParam }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.result.isLast) {
+        return undefined;
+      }
+      return lastPage.result.page + 1;
+    },
+    select: (data) => {
+      const result = data.pages.map((page) => page.result.coupons).flat();
+      return {
+        result,
+      };
+    },
+  });
+};
+
+export const useGetCouponBySearch = (query: string) => {
+  return useSuspenseInfiniteQuery({
+    queryKey: [COUPON.SEARCH, query],
+    queryFn: async ({ pageParam }) => await getCouponBySearch({ query, page: pageParam }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.result.isLast) {
+        return undefined;
+      }
+      return lastPage.result.page + 1;
+    },
+    select: (data) => {
+      const result = data.pages.map((page) => page.result.coupons).flat();
+      return {
+        result,
+      };
+    },
+  });
 };
