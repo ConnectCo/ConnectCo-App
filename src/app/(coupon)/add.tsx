@@ -7,6 +7,7 @@ import CommonAddScreen from "@/src/components/common/add";
 import ButtonCalendar from "@/src/components/common/calendar/button-calendar";
 import InputWithTitle from "@/src/components/common/input/input-with-title";
 import { SCREEN } from "@/src/constants/screen";
+import { useCreateCoupon } from "@/src/lib/tanstack/mutations/coupon";
 import { ImagePickerProps } from "@/src/types/image";
 import { formatDate } from "@/src/utils/date";
 
@@ -32,6 +33,8 @@ export default function AddScreen() {
   const router = useRouter();
   const [data, setData] = useState(INITIAL_DATA);
 
+  const { mutateAsync } = useCreateCoupon();
+
   const onPickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
@@ -40,10 +43,10 @@ export default function AddScreen() {
     });
 
     if (!result.canceled) {
-      const { uri, assetId } = result.assets[0];
+      const { uri, assetId, mimeType } = result.assets[0];
       const exist = data.images.find((image) => image.assetId === assetId);
       if (!exist) {
-        const newImages = [...data.images, { uri, assetId }];
+        const newImages = [...data.images, { uri, assetId, mimeType: mimeType || "" }];
         setData((prev) => ({ ...prev, images: newImages }));
       }
     }
@@ -62,9 +65,33 @@ export default function AddScreen() {
     onChangeText("endDate", formatDate(date));
   };
 
-  const onComplete = () => {
-    // API 요청 로직
-    router.back();
+  const onComplete = async () => {
+    const formData = new FormData();
+    const request = {
+      name: data.coupon,
+      expiredAt: data.endDate,
+      description: data.description,
+      priorityTarget: data.prioritryTarget,
+      notification: data.caution,
+    };
+    // if (data.images.length > 0) {
+    //   for (const image of data?.images) {
+    //     formData.append("couponImages", {
+    //       uri: image?.uri,
+    //       name: image?.assetId,
+    //       type: image?.mimeType, // 또는 image/jpeg, image/png 등 확장자에 맞게
+    //     } as any);
+    //   }
+    // }
+    // formData.append("couponImages", {
+    //   uri: data?.images[0]?.uri,
+    //   name: data?.images[0]?.assetId,
+    //   type: data?.images[0]?.mimeType, // 또는 image/jpeg, image/png 등 확장자에 맞게
+    // } as any);
+    // 위 2개는 403 발생, 아래는 500 발생
+    formData.append("couponImages", data?.images[0]?.uri || "");
+    formData.append("request", JSON.stringify(request));
+    await mutateAsync(formData);
   };
 
   return (

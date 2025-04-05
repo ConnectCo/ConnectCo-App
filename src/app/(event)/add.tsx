@@ -10,6 +10,7 @@ import Icon from "@/src/components/common/icon";
 import Input from "@/src/components/common/input";
 import InputWithTitle from "@/src/components/common/input/input-with-title";
 import { colors } from "@/src/constants/color";
+import { useCreateEvent } from "@/src/lib/tanstack/mutations/event";
 import { useAddressStore } from "@/src/lib/zustand/address";
 import { ImagePickerProps } from "@/src/types/image";
 import { formatDate } from "@/src/utils/date";
@@ -41,9 +42,11 @@ const INITIAL_DATA: InitialDataProps = {
 };
 
 export default function AddScreen() {
-  const { address, setAddress } = useAddressStore();
+  const { address, latitude, longitude, setAddress } = useAddressStore();
   const router = useRouter();
   const [data, setData] = useState(INITIAL_DATA);
+
+  const { mutateAsync } = useCreateEvent();
 
   const onPickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -53,10 +56,10 @@ export default function AddScreen() {
     });
 
     if (!result.canceled) {
-      const { uri, assetId } = result.assets[0];
+      const { uri, assetId, mimeType } = result.assets[0];
       const exist = data.images.find((image) => image.assetId === assetId);
       if (!exist) {
-        const newImages = [...data.images, { uri, assetId }];
+        const newImages = [...data.images, { uri, assetId, mimeType: mimeType || "" }];
         setData((prev) => ({ ...prev, images: newImages }));
       }
     }
@@ -79,9 +82,39 @@ export default function AddScreen() {
     onChangeText(target, formatDate(date));
   };
 
-  const onComplete = () => {
-    // API 요청 로직
-    router.back();
+  const onComplete = async () => {
+    const formData = new FormData();
+    const request = {
+      name: data.event,
+      detailAddress: address + " " + data.detailAddress,
+      latitude: latitude,
+      longitude: longitude,
+      startAt: data.startDate,
+      endAt: data.endDate,
+      expiredAt: data.endDate,
+      benefitTarget: data.target,
+      description: data.description,
+      priorityTarget: data.prioritryTarget,
+      notification: data.caution,
+    };
+    // if (data.images.length > 0) {
+    //   for (const image of data?.images) {
+    //     formData.append("eventImages", {
+    //       uri: image?.uri,
+    //       name: image?.assetId,
+    //       type: image?.mimeType, // 또는 image/jpeg, image/png 등 확장자에 맞게
+    //     } as any);
+    //   }
+    // }
+    // formData.append("eventImages", {
+    //   uri: data?.images[0]?.uri,
+    //   name: data?.images[0]?.assetId,
+    //   type: data?.images[0]?.mimeType, // 또는 image/jpeg, image/png 등 확장자에 맞게
+    // } as any);
+    // 위 2개는 403 발생, 아래는 500 발생
+    formData.append("eventImages", data?.images[0]?.uri || "");
+    formData.append("request", JSON.stringify(request));
+    await mutateAsync(formData);
   };
 
   useEffect(() => {

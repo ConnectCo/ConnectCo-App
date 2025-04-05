@@ -48,6 +48,7 @@ export default function StoreScreen() {
 
   return (
     <CommonDetail
+      id={id as string}
       images={data.result.images}
       type={SCREEN.STORE}
       name={data.result.name}

@@ -4,6 +4,8 @@ import { StyleSheet } from "react-native";
 
 import { colors } from "@/src/constants/color";
 import { SCREEN } from "@/src/constants/screen";
+import { PROFILE } from "@/src/constants/user";
+import { useUserStore } from "@/src/lib/zustand/user";
 
 import Flex from "../flex";
 import Icon from "../icon";
@@ -32,8 +34,17 @@ const screens = [
 ];
 
 export default function MainHeader({ title, type = SCREEN.EVENT }: MainHeaderProps) {
+  const userStore = useUserStore();
+
+  const isStoreMode = userStore.profileType === PROFILE.STORE && type === SCREEN.EVENT;
+  const isOrganizationMode =
+    userStore.profileType === PROFILE.ORGANIZATION && type === SCREEN.COUPON;
   const onlyAlarm = type === SCREEN.MAP || type === SCREEN.MYPAGE;
-  const withoutPlus = type === SCREEN.CHAT;
+  const withoutPlus =
+    type === SCREEN.CHAT ||
+    userStore.status !== "authenticated" ||
+    isStoreMode ||
+    isOrganizationMode;
   const iconByScreen = onlyAlarm ? screens.slice(2) : withoutPlus ? screens.slice(1) : screens;
 
   return (

@@ -54,6 +54,8 @@ export default function CommonDetail({
 
   const { mutateAsync } = useLike(type);
 
+  const isAuthenticated = userStore.status === "authenticated";
+
   const isStore = type === SCREEN.STORE;
 
   const leftButton = isMine ? "수정하기" : "1:1 채팅";
@@ -69,8 +71,6 @@ export default function CommonDetail({
     userStore.profileType === PROFILE.ORGANIZATION && type === SCREEN.EVENT && !isMine;
   const isStoreMode = userStore.profileType === PROFILE.STORE && type === SCREEN.COUPON && !isMine;
 
-  const isAuthenticated = userStore.status === "authenticated";
-
   const onPressLeft = () => {
     if (!isAuthenticated) {
       return Alert.alert("로그인 후 이용해주세요.");
@@ -84,6 +84,12 @@ export default function CommonDetail({
   };
 
   const onPressFavorite = () => {
+    if (isStoreMode) {
+      return Alert.alert("가게 프로필에서 가게는 찜을 할 수 없습니다.");
+    }
+    if (isOrganizationMode) {
+      return Alert.alert("단체 프로필에서 단체는 찜을 할 수 없습니다.");
+    }
     if (!isAuthenticated) {
       return Alert.alert("로그인 후 이용해주세요.");
     }
@@ -127,25 +133,27 @@ export default function CommonDetail({
         <View style={styles.divider} />
         <Flex gap={50}>
           <Flex gap={25}>{children}</Flex>
-          <Flex direction="row" gap={12}>
-            <TextButton onPress={onPressLeft} style={styles.button} type="outline">
-              {leftButton}
-            </TextButton>
-            {isOrganizationMode || isStoreMode ? null : (
-              <View style={{ flex: 1 }}>
-                <TextButton onPress={onPressRight} style={styles.button}>
-                  {rightButton}
-                </TextButton>
-                {appliedCount ? (
-                  <Flex justify="center" align="center" style={styles.appliedCountWrap}>
-                    <Text size="sm" weight={600} style={styles.appliedCount}>
-                      {appliedCount}
-                    </Text>
-                  </Flex>
-                ) : null}
-              </View>
-            )}
-          </Flex>
+          {isAuthenticated && (
+            <Flex direction="row" gap={12}>
+              <TextButton onPress={onPressLeft} style={styles.button} type="outline">
+                {leftButton}
+              </TextButton>
+              {isOrganizationMode || isStoreMode ? null : (
+                <View style={{ flex: 1 }}>
+                  <TextButton onPress={onPressRight} style={styles.button}>
+                    {rightButton}
+                  </TextButton>
+                  {appliedCount ? (
+                    <Flex justify="center" align="center" style={styles.appliedCountWrap}>
+                      <Text size="sm" weight={600} style={styles.appliedCount}>
+                        {appliedCount}
+                      </Text>
+                    </Flex>
+                  ) : null}
+                </View>
+              )}
+            </Flex>
+          )}
         </Flex>
       </Container>
     </ScrollView>

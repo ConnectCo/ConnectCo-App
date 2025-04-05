@@ -6,12 +6,14 @@ import { api } from "@/src/apis";
 import { COUPON } from "@/src/constants/coupon";
 import { EVENT } from "@/src/constants/event";
 import { SCREEN } from "@/src/constants/screen";
+import { STORE } from "@/src/constants/store";
 
 import { invalidateQueries, queryClient } from "../quries";
 
 export const useLike = (type: SCREEN) => {
-  const prefix = type === SCREEN.EVENT ? "events" : "coupons";
-  const queryKey = type === SCREEN.EVENT ? EVENT.DETAIL : COUPON.DETAIL;
+  const prefix = type === SCREEN.EVENT ? "events" : type === SCREEN.COUPON ? "coupons" : "stores";
+  const queryKey =
+    type === SCREEN.EVENT ? EVENT.DETAIL : type === SCREEN.COUPON ? COUPON.DETAIL : STORE.DETAIL;
 
   return useMutation({
     mutationFn: async (id: string) => {

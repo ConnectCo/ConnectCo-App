@@ -1,3 +1,5 @@
+import { router } from "expo-router";
+
 import { StyleSheet } from "react-native";
 
 import { colors } from "@/src/constants/color";
@@ -20,8 +22,8 @@ interface MyItemsProps {
 export default function MyItems({ type = SCREEN.EVENT, items, onPressAdd }: MyItemsProps) {
   const name = type === SCREEN.EVENT ? "이벤트" : type === SCREEN.STORE ? "가게" : "쿠폰";
 
-  const onRoute = () => {
-    // 디자인 바뀌면 라우팅 설정하기
+  const onRouteDetail = (id: number) => {
+    router.push(`/(${type})/${id}`);
   };
 
   return (
@@ -39,10 +41,10 @@ export default function MyItems({ type = SCREEN.EVENT, items, onPressAdd }: MyIt
       </Flex>
       <Flex gap={15}>
         {items.length === 0 ? (
-          <Text>나의 {name} 데이터가 없어요 :(</Text>
+          <Text style={styles.text}>나의 {name} 데이터가 없어요 :(</Text>
         ) : (
           items.map((item) => (
-            <Card key={item.id} {...item} type={type} onPress={() => onRoute()} />
+            <Card key={item.id} {...item} type={type} onPress={() => onRouteDetail(item.id)} />
           ))
         )}
       </Flex>
@@ -53,5 +55,8 @@ export default function MyItems({ type = SCREEN.EVENT, items, onPressAdd }: MyIt
 const styles = StyleSheet.create({
   container: {
     gap: 20,
+  },
+  text: {
+    textAlign: "center",
   },
 });

@@ -42,6 +42,8 @@ export const selectProfile = async ({
 }: {
   profileId: number;
   profileType: string;
+  profileName: string;
+  profileImageUrl: string;
 }): Promise<BaseResponseDTO<OAuthDTO>> => {
   const { data } = await api.post(
     `/auth/select-profile?profileId=${profileId}&profileType=${profileType}`

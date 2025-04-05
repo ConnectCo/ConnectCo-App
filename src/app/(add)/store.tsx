@@ -108,9 +108,6 @@ export default function StoreAdd() {
       } as any);
     }
     formData.append("request", JSON.stringify(request));
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value, "key, value");
-    }
     await mutateAsync(formData);
   };
 

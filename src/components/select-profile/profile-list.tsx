@@ -21,8 +21,13 @@ export default function ProfileList({ profiles, type = PROFILE.STORE }: ProfileL
   const title = type === PROFILE.STORE ? "가게" : "단체";
   const { mutateAsync, isPending } = useSelectProfileMutation();
 
-  const onProfileSelect = async (profileId: number) => {
-    await mutateAsync({ profileId, profileType: type });
+  const onProfileSelect = async (profile: ProfileProps) => {
+    await mutateAsync({
+      profileId: profile.profileId as number,
+      profileType: type,
+      profileName: profile.profileName as string,
+      profileImageUrl: profile.profileImageUrl,
+    });
   };
 
   const onAddProfile = () => {
@@ -47,7 +52,7 @@ export default function ProfileList({ profiles, type = PROFILE.STORE }: ProfileL
               key={item.profileId}
               style={styles.button}
               disabled={isPending}
-              onPress={() => onProfileSelect(item.profileId as number)}
+              onPress={() => onProfileSelect(item)}
             >
               <Flex gap={4}>
                 {item.profileImageUrl ? (

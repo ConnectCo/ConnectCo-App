@@ -17,7 +17,6 @@ export const useCreateStore = () => {
     mutationFn: createStore,
     onSuccess: (response) => {
       const { result } = response;
-      console.log(result);
       Alert.alert("등록되었습니다.", "가게 등록이 완료되었습니다.");
       invalidateQueries([AUTH.PROFILE_LIST, memberId]);
       router.back();

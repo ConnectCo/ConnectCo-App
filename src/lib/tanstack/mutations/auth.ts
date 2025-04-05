@@ -3,11 +3,14 @@ import { Alert } from "react-native";
 import { useMutation } from "@tanstack/react-query";
 
 import { AUTH } from "@/src/constants/auth";
+import { COUPON } from "@/src/constants/coupon";
+import { EVENT } from "@/src/constants/event";
+import { PROFILE } from "@/src/constants/user";
 import { login, logout, removeProfile, selectProfile, withdraw } from "@/src/services/auth";
 import { setItem } from "@/src/utils/secure-store";
 
 import { useUserStore } from "../../zustand/user";
-import { queryClient } from "../quries";
+import { invalidateQueries, queryClient } from "../quries";
 
 export const useRemoveProfileMutation = () => {
   return useMutation({
@@ -58,11 +61,13 @@ export const useLogoutMutation = () => {
   });
 };
 export const useSelectProfileMutation = () => {
-  const setUser = useUserStore((state) => state.setUser);
+  const { profileType, profileId, setUser } = useUserStore();
+  const queryKey = profileType === PROFILE.ORGANIZATION ? EVENT.MY_EVENT : COUPON.MY_COUPON;
 
   return useMutation({
     mutationFn: selectProfile,
-    onSuccess: async (response) => {
+    onSuccess: async (response, variables) => {
+      invalidateQueries([queryKey, profileId]);
       const { result } = response;
       await setItem("accessToken", result.accessToken);
       await setItem("refreshToken", result.refreshToken);
@@ -70,6 +75,8 @@ export const useSelectProfileMutation = () => {
         memberId: result.memberId,
         profileId: result.profile.profileId,
         profileType: result.profile.profileType,
+        profileName: variables.profileName,
+        profileImageUrl: variables.profileImageUrl,
         status: "authenticated",
       });
       Alert.alert("프로필 선택 완료");

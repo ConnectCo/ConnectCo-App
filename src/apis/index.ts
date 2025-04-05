@@ -1,3 +1,5 @@
+import { router } from "expo-router";
+
 import { Alert } from "react-native";
 
 import axios from "axios";
@@ -25,11 +27,11 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    console.log(error.response);
     if (
       (error.response?.status === 403 || error.response?.status === 401) &&
       !originalRequest._retry
     ) {
-      console.log(error.response);
       if (userStore.status === "select-profile" || userStore.status === "anonymous") {
         await removeTokens();
         userStore.setUser({
@@ -38,6 +40,10 @@ api.interceptors.response.use(
           profileId: -1,
           profileName: "",
         });
+
+        if (router.canDismiss()) {
+          router.dismissAll();
+        }
 
         Alert.alert("처음부터 다시 로그인 해주세요.");
         return Promise.reject(error);
