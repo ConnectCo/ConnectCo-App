@@ -19,6 +19,7 @@ export default function EventDetailScreen() {
 
   return (
     <CommonDetail
+      id={id as string}
       images={data.result.images}
       profile={{
         name: data.result.organization.name,

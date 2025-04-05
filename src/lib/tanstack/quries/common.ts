@@ -30,7 +30,7 @@ export const useGetList = <T extends PaiginationDTO>({
     queryKey: [LIST.ALL, type, filter],
     queryFn: async ({ pageParam }) => {
       const { data } = await api.get<BaseResponseDTO<T>>(
-        `/${prefix}?page=${pageParam}&size=10&${Object.entries(params)
+        `/${prefix}/list?page=${pageParam}&size=10&${Object.entries(params)
           .map(([key, value]) => `${key}=${value}`)
           .join("&")}`
       );

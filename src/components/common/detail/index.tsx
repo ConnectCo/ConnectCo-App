@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors } from "@/src/constants/color";
 import { SCREEN } from "@/src/constants/screen";
 import { PROFILE } from "@/src/constants/user";
+import { useLike } from "@/src/lib/tanstack/mutations/common";
 import { useUserStore } from "@/src/lib/zustand/user";
 
 import Button from "../button";
@@ -15,6 +16,7 @@ import ImageScroll from "../image-scroll";
 import Text from "../text";
 
 interface CommonDetailProps {
+  id: string;
   profile?: {
     name: string;
     id: number;
@@ -33,6 +35,7 @@ interface CommonDetailProps {
 }
 
 export default function CommonDetail({
+  id,
   profile,
   images,
   name,
@@ -48,6 +51,8 @@ export default function CommonDetail({
 }: CommonDetailProps) {
   const userStore = useUserStore((state) => state);
   const { bottom } = useSafeAreaInsets();
+
+  const { mutateAsync } = useLike(type);
 
   const isStore = type === SCREEN.STORE;
 
@@ -82,7 +87,7 @@ export default function CommonDetail({
     if (!isAuthenticated) {
       return Alert.alert("로그인 후 이용해주세요.");
     }
-    // 즐겨찾기 API 요청
+    mutateAsync(id);
   };
 
   return (

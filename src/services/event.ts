@@ -32,11 +32,6 @@ export const getMyLikeEvent = async (page: number) => {
   return data;
 };
 
-export const getEventList = async (query: string) => {
-  const { data } = await api.get(`/events/list?${query}`);
-  return data;
-};
-
 export const getMyEvent = async (page: number) => {
   const { data } = await api.get(`/events/mine?page=${page}&size=10`);
   return data;

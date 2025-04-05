@@ -3,6 +3,7 @@ import { SplashScreen } from "expo-router";
 
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { DevToolsBubble } from "react-native-react-query-devtools";
 
 import messaging from "@react-native-firebase/messaging";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
@@ -79,6 +80,7 @@ export default function RootProvider({ children }: { children: React.ReactNode }
   return (
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView>{children}</GestureHandlerRootView>
+      <DevToolsBubble />
     </QueryClientProvider>
   );
 }

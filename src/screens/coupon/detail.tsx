@@ -4,12 +4,11 @@ import CommonDetail from "@/src/components/common/detail";
 import Content from "@/src/components/common/text/content";
 import { SCREEN } from "@/src/constants/screen";
 import { useGetCouponDetail } from "@/src/lib/tanstack/quries/coupon";
-import { CouponDetailDTO } from "@/src/models/coupon";
 
 export default function CouponDetailScreen() {
   const { id } = useLocalSearchParams();
 
-  const { data } = useGetCouponDetail<CouponDetailDTO>(+id);
+  const { data } = useGetCouponDetail(+id);
 
   const onRouteStoreProfile = () => {
     router.push(`/store/${data.result.store.storeId}`);
@@ -21,6 +20,7 @@ export default function CouponDetailScreen() {
 
   return (
     <CommonDetail
+      id={id as string}
       images={data.result.images}
       type={SCREEN.COUPON}
       profile={{

@@ -1,4 +1,6 @@
 import { api } from "../apis";
+import { BaseResponseDTO } from "../models";
+import { CouponDetailDTO } from "../models/coupon";
 
 export const createCoupon = async (formData: FormData) => {
   const { data } = await api.post("/coupons", formData);
@@ -15,7 +17,7 @@ export const updateCoupon = async ({ id, formData }: { id: number; formData: For
   return data;
 };
 
-export const getCouponById = async (id: number) => {
+export const getCouponById = async (id: number): Promise<BaseResponseDTO<CouponDetailDTO>> => {
   const { data } = await api.get(`/coupons/${id}/detail`);
   return data;
 };
@@ -27,11 +29,6 @@ export const likeCoupon = async (id: number) => {
 
 export const getMyLikeCoupon = async (page: number) => {
   const { data } = await api.get(`/coupons/like?page=${page}&size=10`);
-  return data;
-};
-
-export const getCouponList = async (query: string) => {
-  const { data } = await api.get(`/coupons/list?${query}`);
   return data;
 };
 
