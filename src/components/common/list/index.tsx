@@ -46,6 +46,7 @@ export default function List({ type, filter }: ListProps) {
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.5}
           style={styles.flatList}
+          contentContainerStyle={styles.contentContainerStyle}
           bounces={false}
         />
       )}
@@ -56,6 +57,9 @@ export default function List({ type, filter }: ListProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  contentContainerStyle: {
+    gap: 15,
   },
   flatList: {
     overflow: "visible",

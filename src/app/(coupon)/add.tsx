@@ -1,7 +1,8 @@
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 
 import CommonAddScreen from "@/src/components/common/add";
 import ButtonCalendar from "@/src/components/common/calendar/button-calendar";
@@ -33,7 +34,7 @@ export default function AddScreen() {
   const router = useRouter();
   const [data, setData] = useState(INITIAL_DATA);
 
-  const { mutateAsync } = useCreateCoupon();
+  const { mutateAsync, isPending, isSuccess } = useCreateCoupon();
 
   const onPickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -74,25 +75,17 @@ export default function AddScreen() {
       priorityTarget: data.prioritryTarget,
       notification: data.caution,
     };
-    // if (data.images.length > 0) {
-    //   for (const image of data?.images) {
-    //     formData.append("couponImages", {
-    //       uri: image?.uri,
-    //       name: image?.assetId,
-    //       type: image?.mimeType, // 또는 image/jpeg, image/png 등 확장자에 맞게
-    //     } as any);
-    //   }
-    // }
-    // formData.append("couponImages", {
-    //   uri: data?.images[0]?.uri,
-    //   name: data?.images[0]?.assetId,
-    //   type: data?.images[0]?.mimeType, // 또는 image/jpeg, image/png 등 확장자에 맞게
-    // } as any);
-    // 위 2개는 403 발생, 아래는 500 발생
     formData.append("couponImages", data?.images[0]?.uri || "");
     formData.append("request", JSON.stringify(request));
     await mutateAsync(formData);
   };
+
+  useEffect(() => {
+    if (!isPending && isSuccess) {
+      Alert.alert("쿠폰이 등록되었습니다.");
+      router.back();
+    }
+  }, [isPending, isSuccess]);
 
   return (
     <CommonAddScreen

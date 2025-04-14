@@ -14,6 +14,7 @@ interface CommonAddScreenProps {
   description: string;
   prioritryTarget: string;
   caution: string;
+  disabled?: boolean;
   type?: SCREEN;
   onPickImage: () => void;
   onDelete: (id: string | null | undefined) => void;
@@ -27,6 +28,7 @@ export default function CommonAddScreen({
   description,
   prioritryTarget,
   caution,
+  disabled,
   type = SCREEN.EVENT,
   onPickImage,
   onDelete,
@@ -63,8 +65,8 @@ export default function CommonAddScreen({
           onChangeText={(e) => onChangeText("caution", e)}
         />
       </Flex>
-      <TextButton onPress={onComplete} style={styles.completeButton}>
-        작성완료
+      <TextButton disabled={disabled} onPress={onComplete} style={styles.completeButton}>
+        {disabled ? "등록 중..." : "작성완료"}
       </TextButton>
     </Container>
   );

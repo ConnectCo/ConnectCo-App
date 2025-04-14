@@ -10,14 +10,14 @@ interface EmptyProps {
 }
 
 export default function Empty({ type }: EmptyProps) {
-  const eventScreen = type === SCREEN.EVENT ? "이벤트" : "쿠폰";
+  const eventScreen = type === SCREEN.EVENT ? "이벤트를" : "쿠폰을";
 
   return (
     <Flex style={styles.emptyContainer}>
       <Text size="lg" weight={600} style={{ marginBottom: 10 }}>
         데이터가 없습니다.
       </Text>
-      <Text>새로운 {eventScreen}를 기다려주세요!</Text>
+      <Text>새로운 {eventScreen} 기다려주세요!</Text>
     </Flex>
   );
 }
