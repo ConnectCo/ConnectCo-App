@@ -7,10 +7,15 @@ export interface ChatMessageDTO {
 
 export interface ChatListDTO {
   chatRoomId: number;
-  otherMemberId: number;
-  otherMemberName: string;
+  otherProfileId: number;
+  otherProfileName: string;
   recentMessage: string;
   recentMessageTime: string;
-  profileImage: string;
-  unreadCount: number;
+  // profileImage: string;
+  // unreadCount: number;
+}
+
+export interface ChatRoomDTO {
+  chatRoomId: number;
+  chatList: ChatMessageDTO[];
 }

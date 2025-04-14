@@ -7,6 +7,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import Button from "@/src/components/common/button";
 import ChipButton from "@/src/components/common/button/chip-button";
+import TextButton from "@/src/components/common/button/text-button";
 import Container from "@/src/components/common/container";
 import Flex from "@/src/components/common/flex";
 import Icon from "@/src/components/common/icon";
@@ -16,6 +17,7 @@ import ProfileBottomSheet from "@/src/components/mypage/profile-bottom-sheet";
 import { colors } from "@/src/constants/color";
 import { SCREEN } from "@/src/constants/screen";
 import { PROFILE } from "@/src/constants/user";
+import { useLogoutMutation } from "@/src/lib/tanstack/mutations/auth";
 import { useGetMyItem, useGetMyLike } from "@/src/lib/tanstack/quries/common";
 import { useUserStore } from "@/src/lib/zustand/user";
 import { CardContentProps } from "@/src/types/card";
@@ -29,6 +31,8 @@ export default function MypageScreen() {
   const { data: myItemData } = useGetMyItem(userStore.profileType as PROFILE);
   // const { data: myLikeData } = useGetMyLike(userStore.profileType as PROFILE);
 
+  const { mutateAsync } = useLogoutMutation();
+
   const type = userStore.profileType === PROFILE.ORGANIZATION ? SCREEN.EVENT : SCREEN.COUPON;
 
   const onRouteAdd = (path: Route) => {
@@ -41,6 +45,10 @@ export default function MypageScreen() {
 
   const onRouteHistory = () => {
     router.push("/(tabs)/(mypage)/history");
+  };
+
+  const onLogout = async () => {
+    await mutateAsync();
   };
 
   return (
@@ -89,6 +97,7 @@ export default function MypageScreen() {
           type={type}
           onPressAdd={() => onRouteAdd("/(coupon)/add")}
         />
+        <TextButton onPress={onLogout}>로그아웃</TextButton>
       </ScrollView>
       {isProfileBottomSheetOpen && (
         <ProfileBottomSheet

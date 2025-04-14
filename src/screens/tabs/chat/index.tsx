@@ -25,7 +25,7 @@ export default function ChatListScreen() {
     <ScrollView style={styles.container}>
       <View style={styles.banner} />
       {data.result.map((chat) => (
-        <ChatItem key={chat.otherMemberId} {...chat} />
+        <ChatItem key={chat.otherProfileId} {...chat} />
       ))}
     </ScrollView>
   );

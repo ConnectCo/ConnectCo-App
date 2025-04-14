@@ -10,7 +10,7 @@ import { colors } from "@/src/constants/color";
 
 export default function ChatScreen() {
   const params = useLocalSearchParams();
-  const { otherMemberName } = params;
+  const { otherProfileName } = params;
 
   return (
     <KeyboardAvoidingView
@@ -18,7 +18,7 @@ export default function ChatScreen() {
       style={styles.container}
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
     >
-      <BackHeader title={otherMemberName as string} />
+      <BackHeader title={otherProfileName as string} />
       <Suspense fallback={<Loading />}>
         <ChatMessage />
       </Suspense>

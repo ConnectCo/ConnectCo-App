@@ -14,39 +14,40 @@ const width = Dimensions.get("window").width;
 
 export default function ChatItem({
   chatRoomId,
-  otherMemberName,
+  otherProfileName,
   recentMessage,
   recentMessageTime,
-  profileImage,
-  unreadCount,
+  // profileImage,
+  // unreadCount,
 }: ChatListDTO) {
   const onNavToChat = () => {
-    router.push({ pathname: "/chat/[chatRoomId]", params: { chatRoomId, otherMemberName } });
+    router.push({ pathname: "/chat/[chatRoomId]", params: { chatRoomId, otherProfileName } });
   };
 
   return (
     <Button onPress={onNavToChat} style={[styles.container, styles.row]}>
       <View style={[styles.row, styles.profile]}>
-        <Image source={profileImage} alt="유저 프로필" style={styles.image} contentFit="cover" />
+        {/* <Image source={profileImage} alt="유저 프로필" style={styles.image} contentFit="cover" /> */}
+        <View style={styles.image} />
         <View style={styles.profileBox}>
           <View style={[styles.row, styles.profileNameTime]}>
             <Text size="lg" weight={600}>
-              {otherMemberName}
+              {otherProfileName}
             </Text>
             <Text size="sm" style={{ color: colors.gray500 }}>
-              {formatDateTime(recentMessageTime)}
+              {recentMessageTime ? formatDateTime(recentMessageTime) : "채팅 시작 전"}
             </Text>
           </View>
           <Text numberOfLines={1} weight={500}>
-            {recentMessage}
+            {recentMessage || "주고받은 메시지가 없습니다."}
           </Text>
         </View>
       </View>
-      {unreadCount > 0 && (
+      {/* {unreadCount > 0 && (
         <View style={styles.unreadCount}>
           <Text style={styles.unreadCountText}>{unreadCount}</Text>
         </View>
-      )}
+      )} */}
     </Button>
   );
 }

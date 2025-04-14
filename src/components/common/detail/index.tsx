@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors } from "@/src/constants/color";
 import { SCREEN } from "@/src/constants/screen";
 import { PROFILE } from "@/src/constants/user";
+import { useCreateChatRoom, useEnterChatRoom } from "@/src/lib/tanstack/mutations/chat";
 import { useLike } from "@/src/lib/tanstack/mutations/common";
 import { useUserStore } from "@/src/lib/zustand/user";
 
@@ -53,10 +54,13 @@ export default function CommonDetail({
   const { bottom } = useSafeAreaInsets();
 
   const { mutateAsync } = useLike(type);
+  const { mutateAsync: enterChatRoomMutate } = useEnterChatRoom();
+  const { mutateAsync: createChatRoomMutate } = useCreateChatRoom();
 
   const isAuthenticated = userStore.status === "authenticated";
 
   const isStore = type === SCREEN.STORE;
+  const isOrganization = type === SCREEN.EVENT;
 
   const leftButton = isMine ? "수정하기" : "1:1 채팅";
   const rightButton = isStore
@@ -78,7 +82,17 @@ export default function CommonDetail({
     if (isMine) {
       // 수정하기 라우팅
     } else {
-      // API 요청에서 받아온 1:1 채팅 방 ID를 이용하여 라우팅
+      createChatRoomMutate({
+        senderId: userStore.profileId as number,
+        receiverId: profile?.id || 0,
+        senderProfileType: userStore.profileType as PROFILE,
+        receiverProfileType: isOrganization ? PROFILE.ORGANIZATION : PROFILE.STORE,
+      });
+      // 채팅방 입장 API
+      // enterChatRoomMutate({
+      //   otherProfileId: profile?.id || 0,
+      //   otherProfileType: isOrganization ? PROFILE.ORGANIZATION : PROFILE.STORE,
+      // });
       // 채팅 방 ID가 없다면 채팅방 생성하는 API 요청
     }
   };
