@@ -1,19 +1,21 @@
 import { useMutation } from "@tanstack/react-query";
 
+import { LIST } from "@/src/constants/common";
 import { EVENT } from "@/src/constants/event";
+import { SCREEN } from "@/src/constants/screen";
 import { createEvent, likeEvent, removeEvent, updateEvent } from "@/src/services/event";
 
-import { queryClient } from "../quries";
+import { invalidateQueries, queryClient } from "../quries";
 
 export const useCreateEvent = () => {
   return useMutation({
     mutationFn: createEvent,
     onSuccess: () => {
-      console.log("Event created successfully");
-      queryClient.invalidateQueries({ queryKey: [EVENT.LIST] });
+      invalidateQueries([EVENT.MY_EVENT]);
+      invalidateQueries([LIST.ALL, SCREEN.EVENT]);
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
     },
   });
 };
@@ -25,7 +27,7 @@ export const useRemoveEvent = () => {
       queryClient.invalidateQueries({ queryKey: [EVENT.LIST] });
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
     },
   });
 };
@@ -38,7 +40,7 @@ export const useUpdateEvent = (id: number) => {
       queryClient.invalidateQueries({ queryKey: [EVENT.DETAIL, id] });
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
     },
   });
 };
@@ -50,7 +52,7 @@ export const useLikeEvent = (id: number) => {
       queryClient.invalidateQueries({ queryKey: [EVENT.DETAIL, id] });
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
     },
   });
 };

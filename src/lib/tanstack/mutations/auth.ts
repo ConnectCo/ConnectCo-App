@@ -48,11 +48,16 @@ export const useLogoutMutation = () => {
 
   return useMutation({
     mutationFn: logout,
-    onSuccess: () => {
-      setItem("accessToken", "");
-      setItem("refreshToken", "");
+    onSuccess: async () => {
+      await setItem("accessToken", "");
+      await setItem("refreshToken", "");
       setUser({
         status: "anonymous",
+        memberId: -1,
+        profileId: -1,
+        profileType: null,
+        profileName: "",
+        profileImageUrl: "",
       });
     },
     onError: (error) => {

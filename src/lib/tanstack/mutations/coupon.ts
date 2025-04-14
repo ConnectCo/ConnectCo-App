@@ -10,8 +10,7 @@ import { invalidateQueries } from "../quries";
 export const useCreateCoupon = () => {
   return useMutation({
     mutationFn: createCoupon,
-    onSuccess: (data) => {
-      console.log("Coupon created successfully", data);
+    onSuccess: () => {
       invalidateQueries([COUPON.MY_COUPON]);
       invalidateQueries([LIST.ALL, SCREEN.COUPON]);
     },

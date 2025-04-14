@@ -94,6 +94,7 @@ export default function AddScreen() {
       prioritryTarget={data.prioritryTarget}
       caution={data.caution}
       type={SCREEN.COUPON}
+      disabled={isPending}
       onPickImage={onPickImage}
       onDelete={onDelete}
       onChangeText={onChangeText}
