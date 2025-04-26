@@ -15,8 +15,7 @@ import { useGetEventCouponList } from "@/src/lib/tanstack/quries/map";
 import { useUserStore } from "@/src/lib/zustand/user";
 import { postMessageInstance } from "@/src/utils/webview";
 
-// const uri = process.env.EXPO_PUBLIC_MAP_URL!;
-const uri = "http://localhost:5173";
+const uri = process.env.EXPO_PUBLIC_MAP_URL!;
 
 export default function MapScreen() {
   const [items, setItems] = useState([]);
