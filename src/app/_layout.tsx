@@ -5,12 +5,12 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 
 import BackHeader from "@/src/components/common/header/back-header";
+import LocationSettingHeader from "@/src/components/common/header/location-setting-header";
 import { couponStacks } from "@/src/components/stacks/coupon";
 import { eventStacks } from "@/src/components/stacks/event";
 
 import RootProvider from "../components/provider/root-provider";
 import { useUserStore } from "../lib/zustand/user";
-
 export const unstable_settings = {
   initialRouteName: "(tabs)/(event)/index",
 };
@@ -48,6 +48,10 @@ export default function RootLayout() {
         <Stack.Screen
           name="(add)/store"
           options={{ header: () => <BackHeader title="가게 등록하기" type="primary" /> }}
+        />
+        <Stack.Screen
+          name="location-setting"
+          options={{ header: () => <LocationSettingHeader /> }}
         />
       </Stack>
       <StatusBar style="auto" />
