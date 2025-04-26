@@ -37,8 +37,8 @@ export const useUserStore = create(
       profileType: null,
       profileName: "",
       profileImageUrl: "",
-      latitude: 0,
-      longitude: 0,
+      latitude: 37.5662952,
+      longitude: 126.9779451,
       setUser: (value) => set((state) => ({ ...state, ...value })),
     }),
     options

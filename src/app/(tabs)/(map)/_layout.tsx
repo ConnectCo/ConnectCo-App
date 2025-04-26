@@ -8,7 +8,7 @@ export default function MapLayout() {
     <Stack>
       <Stack.Screen
         name="index"
-        options={{ header: () => <MainHeader title="내 주변" type={SCREEN.MAP} /> }}
+        options={{ header: () => <MainHeader title="내 주변" type={SCREEN.MAP} center /> }}
       />
     </Stack>
   );

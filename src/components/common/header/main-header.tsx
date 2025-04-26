@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { colors } from "@/src/constants/color";
 import { SCREEN } from "@/src/constants/screen";
@@ -16,6 +16,7 @@ import Header from ".";
 interface MainHeaderProps {
   title: string;
   type?: SCREEN;
+  center?: boolean;
 }
 
 const screens = [
@@ -33,7 +34,11 @@ const screens = [
   },
 ];
 
-export default function MainHeader({ title, type = SCREEN.EVENT }: MainHeaderProps) {
+export default function MainHeader({
+  title,
+  type = SCREEN.EVENT,
+  center = false,
+}: MainHeaderProps) {
   const userStore = useUserStore();
 
   const isStoreMode = userStore.profileType === PROFILE.STORE && type === SCREEN.EVENT;
@@ -49,10 +54,13 @@ export default function MainHeader({ title, type = SCREEN.EVENT }: MainHeaderPro
 
   return (
     <Header>
-      <Text size="xxl" weight={700} style={styles.text}>
-        {title}
-      </Text>
-      <Flex direction="row" align="center" gap={4}>
+      {center && <View style={styles.flex} />}
+      <View style={styles.flex}>
+        <Text size="xxl" weight={700} style={styles.text} align={center ? "center" : "left"}>
+          {title}
+        </Text>
+      </View>
+      <Flex direction="row" align="center" justify="end" gap={4} style={styles.flex}>
         {iconByScreen.map(({ href, ScreenIcon }, idx) => (
           <Link key={href} href={href === "/add" ? `/(${type})${href}` : href}>
             <ScreenIcon />
@@ -66,5 +74,8 @@ export default function MainHeader({ title, type = SCREEN.EVENT }: MainHeaderPro
 const styles = StyleSheet.create({
   text: {
     color: colors.white,
+  },
+  flex: {
+    flex: 1,
   },
 });

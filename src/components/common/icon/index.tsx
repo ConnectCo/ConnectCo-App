@@ -202,6 +202,11 @@ const Icon = {
       />
     </Svg>
   ),
+  Toggle: ({ size = 10, fill = colors.white }: IconProps) => (
+    <Svg width={size} height={size} viewBox="0 0 10 6" fill="none">
+      <Path d="M5 6L9.33013 0H0.669873L5 6Z" fill={fill} />
+    </Svg>
+  ),
 };
 
 export default Icon;

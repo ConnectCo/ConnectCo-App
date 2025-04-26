@@ -1,6 +1,7 @@
 import { api } from "../apis";
+import { FILTER } from "../constants/common";
 import { BaseResponseDTO } from "../models";
-import { EventDetailDTO } from "../models/event";
+import { EventDetailDTO, EventListDTO } from "../models/event";
 
 export const createEvent = async (formData: FormData) => {
   const { data } = await api.post("/events", formData);
@@ -50,5 +51,25 @@ export const getEventByOrganization = async ({
 
 export const getEventBySearch = async ({ query, page }: { query: string; page: number }) => {
   const { data } = await api.get(`/events/search?query=${query}&page=${page}&size=10`);
+  return data;
+};
+
+export const getEventList = async ({
+  size,
+  latitude,
+  longitude,
+}: {
+  size: number;
+  latitude: number;
+  longitude: number;
+}): Promise<BaseResponseDTO<EventListDTO>> => {
+  const params = new URLSearchParams();
+  params.append("page", "0");
+  params.append("size", size.toString());
+  params.append("type", FILTER.DEADLINE);
+  params.append("latitude", latitude.toString());
+  params.append("longitude", longitude.toString());
+
+  const { data } = await api.get(`/events/list?${params.toString()}`);
   return data;
 };

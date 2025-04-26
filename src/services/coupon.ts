@@ -1,6 +1,7 @@
 import { api } from "../apis";
+import { FILTER } from "../constants/common";
 import { BaseResponseDTO } from "../models";
-import { CouponDetailDTO } from "../models/coupon";
+import { CouponDetailDTO, CouponListDTO } from "../models/coupon";
 
 export const createCoupon = async (formData: FormData) => {
   const { data } = await api.post("/coupons", formData);
@@ -44,5 +45,25 @@ export const getCouponByStore = async ({ storeId, page }: { storeId: number; pag
 
 export const getCouponBySearch = async ({ query, page }: { query: string; page: number }) => {
   const { data } = await api.get(`/coupons/search?query=${query}&page=${page}&size=10`);
+  return data;
+};
+
+export const getCouponList = async ({
+  size,
+  latitude,
+  longitude,
+}: {
+  size: number;
+  latitude: number;
+  longitude: number;
+}): Promise<BaseResponseDTO<CouponListDTO>> => {
+  const params = new URLSearchParams();
+  params.append("page", "0");
+  params.append("size", size.toString());
+  params.append("type", FILTER.DEADLINE);
+  params.append("latitude", latitude.toString());
+  params.append("longitude", longitude.toString());
+
+  const { data } = await api.get(`/coupons/list?${params.toString()}`);
   return data;
 };
